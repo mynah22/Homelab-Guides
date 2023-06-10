@@ -49,7 +49,7 @@ With that said, let's get to the build steps:
     * VGA Cable plugged into monitor and server
     * Keybord plugged into server
     * At least one 2.5" SATA disk installed into caddy / slot
-    * ESXI bootable USB (See Rufus and Ventoy guides) inserted into USB slot
+    * ESXI 7 (ESXI 8+ is not compatible with the g7 380!) bootable USB (See Rufus and Ventoy guides) inserted into USB slot 
     * VMWare account & ESXI license (free)
 
 
