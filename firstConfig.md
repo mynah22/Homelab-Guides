@@ -85,26 +85,38 @@ With everything in the Server Setup section above ready, we are ready to get sta
 - To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
 
 - The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
-    #### How to get to the RAID menu
-    1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
-    2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black 
-    
-        ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
-    3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu        
-        [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
-        ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
-        [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
-    1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
-        ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
 
-    ### Initializing disks 
-    1. Welcome to the RAID controller menu ![raid main menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
-    6. Create logical device
-    7. Set logical device as boot
-    8. F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
-    9. proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
-    10. you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrage physical disks to the server.
-    11. exit the raid menu, and the server will start attempting to boot from all devices
+    - **How to get to the RAID menu**
+        1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
+        2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black 
+            ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+        3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu        
+            [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
+
+            ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
+
+            [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
+        1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
+            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
+
+    - **Initializing disks**
+        - This menu is used to tell the raid controller what to do with attached drives. It does not write or remove any data, it simply associates attached physical disks with 'logical drives' (RAID arrays that the controller presents as single disks)
+
+            ![raid main menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
+        - The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
+            1. DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
+            2. F8 to delete a drive, then F3 to confirm
+
+                ![raid delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) ![raid confirm delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
+            3. you should have no logical drives left to delete
+
+                ![raid empty](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) ![raid confirm delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) 
+        - Create logical device
+        - Set logical device as boot
+        - F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
+        - proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
+        - you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrange physical disks to the server.
+        - exit the raid menu, and the server will start attempting to boot from all devices
 
 ### Install hypervisor
 - With a USB stick installed, the USB stick will take boot precedence, and you should see the ESXI 6.0.0 installer boot
@@ -114,7 +126,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
     * Pull USB stick and reboot
 
 * If all goes well, your server should reboot and load ESXI
-    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initializing disks' section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
         * I have been batting 1.000 in getting disks to boot if I: 
             1. enter RAID controller menu
             2. delete all logical drives
