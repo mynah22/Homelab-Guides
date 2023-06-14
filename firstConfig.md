@@ -1,25 +1,27 @@
 # Homelab on HP DL380 G7 and ESXI
 
-As part of decommisinoning my old homelab, I have rebuilt and documented most of the major components here
+As part of decommisinoning my old homelab, I have rebuilt and documented most of the major components here. 
 
-## Caveat
-The only version of ESXI that runs on this server is 6.0.0. This is an old version, and is unsupported. I cannot find a way to obtain license keys and installation ISOs for this version. You will need both. If you are not currently in possesion of a 6.0.0 installation ISO AND a valid ESXI 6 license key  you will have to install another hypervisor such as proxmox.
+### Caveat
+The newest version of ESXI that runs on the server used in this build is 6.0.0 - This is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem. 
 
-## Hardware:
-HP DL380 G7 2u rack server (Server, ESXI hyperisor)
-Cable modem 
-Router (probably also with WAP functionality)
-A few ethernet cords (I count 3, but 4 couldn't hurt)
-Archaic desktop (FreeNAS host via ISCSI) (not needed)
-A PC with ethernet port (for configuration of hypervisor / VMs)
+I cannot find a way to obtain license keys or installation ISOs for 6.0.0. If you do not already have them, then will need to either use a different server compatible with ESXI 7+, or a different hypervisor like proxmox
+
+
+### Hardware utilized in this build:
+- HP DL380 G7 2u rack server
+- A few ethernet cords (I count 3, but 4 couldn't hurt)
+- A PC with ethernet port (for configuration of hypervisor / VMs)
+- Archaic desktop (FreeNAS host via ISCSI) (not needed)
 
 
 ## Big picture architecture:
 HP Rack server has the ESXI hypervisor installed. ESXI hosts 2 Virtual Machines -  PFSense and Ubuntu Server
 
-PFSense provides a variety of standard network services, as well as a DNS blackhole for adblocking, and custom DNS / DHCP configuration. 
+1. PFSense provides a variety of standard network services, as well as a DNS blackhole for adblocking, and custom DNS / DHCP configuration. 
 
-The Ubuntu VM directly runs a Wireguard instance, providing VPN access (PFSense configuration required)
+2. The Ubuntu VM directly runs a Wireguard instance, providing VPN access
+
 The Ubuntu VM does not run any other services directly - instead, it is a docker host running the following containers:
 1. Traefik
     - Reverse proxy & load balancer
@@ -34,7 +36,8 @@ The Ubuntu VM does not run any other services directly - instead, it is a docker
     - Self hosted Ebook library
 
 Additionally, I had set up a very old desktop as a NAS.
-This is really not neccessary - the server I had was equipped with 8 SATA slots and harware RAID. I indlude this information mostly for my reference. 
+
+This is really not neccessary - the server I had was equipped with 8 SATA slots and harware RAID, but will be documented for my reference.
 
 NAS details:
 - OS: TrueNAS 
@@ -44,25 +47,24 @@ NAS details:
 
 ## Getting Started
 
-I highly reccomend looking at the Basic Config Network guide - this guide describes a very easy way to test your homelab / network while keeping your existing network functioning. 
+I highly reccomend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architechture used for a few different situations. The 'Intro Network' is reccomended at first, so make sure you take a look at it
 
-Basically, leave your network the same as it is currently, and you will just plug your the port you assign to WAN for PFSense into your local network, and configure PFSense to operate on a different subnet.
- 
 With that said, let's get to the build steps:
 
 ## Server Setup
-- Initial set up requires the following:
-    * Server and VGA capable monitor plugged into power
-    * VGA Cable plugged into monitor and server
-    * Keybord plugged into server
-    * At least one 2.5" SATA disk installed into caddy / slot
-        * Mount your sata disk into a drive caddy
-        * insert it fully into slot
-        * best to attach all disks you plan to use at first, that way you do not need to get into the RAID menu when you add them later
-    * ESXI 6.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
-    * Bootable USB inserted into USB slot 
-    * VMWare account & ESXI license (free)
-    * Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
+### Materials
+Initial set up requires the following:
+* Server and VGA capable monitor plugged into power
+* VGA Cable plugged into monitor and server
+* Keybord plugged into server
+* At least one 2.5" SATA disk installed into caddy / slot
+    * Mount your sata disk into a drive caddy
+    * insert it fully into slot
+    * best to attach all disks you plan to use at first, that way you do not need to get into the RAID menu when you add them later
+* ESXI 6.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
+* Bootable USB inserted into USB slot - see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides
+* VMWare account & ESXI license (free)
+* Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
 
 
 
@@ -70,12 +72,10 @@ With that said, let's get to the build steps:
 
 - With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
 - This was one of the trickiest things to get right when rebuilding my old configuration. Here is the most reliable technique I could come up with
-        - if you can see a disk 
 - To get everything working, you ***MUST*** enter the RAID controller menu on first boot
-    * *note that the steps will be slightly different if you are adding drives later. See the HP 380 Add Drive Guide*
-
+    * *use the guide [here](dl380g7AddDisk.md) if you add disks later*
     * The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
-
+        ### How to get to the RAID menu
         1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
         2. Once you see the F9 and F11 options, start pressing F8. You can stop once the screen goes black and this screen appears
         3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu - IMMEDIATELY start pressing f8
@@ -95,7 +95,15 @@ With that said, let's get to the build steps:
     * Pull USB stick and reboot
 
 - If all goes well, your server should reboot and load ESXI
-    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB sitck where you have the ESXI 6.0.0 installer and reinstall ESXI. I have been batting 1.000 in getting disks to boot if I: enter RAID controller menu, delete all logical drives, create new logical drive, select new logical drive as boot device, boot to usb & install hypervisor, remove USB and reboot to hypervisor. Once the boot disk is booting leave it alone; adding and removing non-boot devies seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots.***
+    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB sitck where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+        * I have been batting 1.000 in getting disks to boot if I: 
+            1. enter RAID controller menu
+            2. delete all logical drives
+            3. create new logical drive
+            4. select new logical drive as boot device
+            5. boot to usb & install hypervisor
+            6. remove USB and reboot to hypervisor
+        * Once the boot disk succeeds in booting just leave it alone; adding and removing non-boot devies seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots
     * Further configuration is done via the webgui. you will need to connect to your server over the network
     * either plug the server's first logical NIC (port 1) into your home network, or plug one end of an ehternet cable into port 1, and one directly into your computer (diagrams)
     * once dhcp succeeds (you plugged into your home network) or fails (you plugged directly into your computer) the IP address of the server will be listed
