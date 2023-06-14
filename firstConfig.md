@@ -5,23 +5,25 @@ As part of decommissioning my old homelab, I have rebuilt and documented most of
 ### Caveat
 The newest version of ESXI that runs on the server used in this build is 6.0.0 - This is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem. 
 
-I cannot find a way to obtain license keys or installation ISOs for 6.0.0. If you do not already have them, then will need to either use a different server compatible with ESXI 7+, or a different hypervisor like proxmox
+The license for 6.0.0 is free, but I cannot find a way to obtain license keys or installation ISOs any longer. If you do not already have them, then will need to either use a different server compatible with ESXI 7+, or a different hypervisor like proxmox
 
 
-### Hardware utilized in this build:
+### Hardware utilized in this build
 - HP DL380 G7 2u rack server
 - A few ethernet cords (I count 3, but 4 couldn't hurt)
 - A PC with ethernet port (for configuration of hypervisor / VMs)
 - Archaic desktop (FreeNAS host via ISCSI) (not needed)
 
 
-## Big picture architecture:
+## Services overview
+### Hypervisor & guest VMs
 HP Rack server has the ESXI hypervisor installed. ESXI hosts 2 Virtual Machines -  PFSense and Ubuntu Server
 
 1. PFSense provides a variety of standard network services, as well as a DNS blackhole for adblocking, and custom DNS / DHCP configuration. 
 
-2. The Ubuntu VM directly runs a Wireguard instance, providing VPN access
+2. The Ubuntu VM directly runs a Wireguard instance, providing VPN access, and hosting other services via docker
 
+### Docker containers
 The Ubuntu VM does not run any other services directly - instead, it is a docker host running the following containers:
 1. Traefik
     - Reverse proxy & load balancer
@@ -70,25 +72,37 @@ Initial set up requires the following:
 
 
 
-### Initialize disk in RAID menu
+### Initialize disk(s) in RAID menu
+With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
 
-- With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
-- This was one of the trickiest things to get right when rebuilding my old configuration. Here is the most reliable technique I could come up with
-- To get everything working, you ***MUST*** enter the RAID controller menu on first boot
-    * *use the guide [here](dl380g7AddDisk.md) if you add disks later*
-    * The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
-        #### How to get to the RAID menu
-        1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
-        2. Once you see the F9 and F11 options, start pressing F8. You can stop once the screen goes black and this screen appears
-        3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu - IMMEDIATELY start pressing f8
-        4. congrats you have gotten to the RAID menu!
-        5. Delete ALL logical devices! very important
-        6. Create logical device
-        7. Set logical device as boot
-        8. F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
-        9. proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
-        10. you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrage physical disks to the server.
-        11. exit the raid menu, and the server will start attempting to boot from all devices
+- RAID (Redundant Array of Inexpensive Disks) is a set of storage technologies that allow multiple disks to be used in tandem. As a reminder, here are a few common RAID modes:
+    * 0 : 'Striped' - treats disks in the array as one big drive. No redundancy
+    * 1 : 'Mirrored' - data is written to disks identically - if one goes down the other still has everything. No increase in storage capacity
+    * 10 (1+0) - requires 4 disks. A stripped array of 2 disks is mirrored with another 2 disks
+    * 5 / 50 - cool modes utilizing the XOR function to create parity drives able to recover any other drive - this server's RAID controller requires a license to set those up
+
+
+- To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
+
+- The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
+    #### How to get to the RAID menu
+    1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
+    2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+    3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu        
+        - [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
+        - ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
+        - [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
+    1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
+        - ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
+
+    ### Initializing disks 
+    1. Welcome to the RAID controller menu ![raid main menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
+    6. Create logical device
+    7. Set logical device as boot
+    8. F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
+    9. proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
+    10. you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrage physical disks to the server.
+    11. exit the raid menu, and the server will start attempting to boot from all devices
 
 ### Install hypervisor
 - With a USB stick installed, the USB stick will take boot precedence, and you should see the ESXI 6.0.0 installer boot
@@ -241,7 +255,7 @@ Initial set up requires the following:
         * There are currently a few services listening on multiple ports of the server, and it can be easy to get turned around. Here is a summary:
             * ILO (hardware access) port is not shared with ESXI, and should remain unplugged always
             * the first physical port (labeled '1', vmnic0) has the ESXI web management server listening. It will obtain an ip via DHCP if plugged into a network with a DHCP server (like your home router), but can also be connected to via an APIPA / Link Local address on a network without DHCP (like plugging direct into your PC). Our port group config made sure this port is NOT shared with any VMs for security reasons
-            * physical ports 2 - 8 (7 NICs total) have been shared with the PFSense VM, using sperate virtual switches (so every port is isolated)
+            * physical ports 2 - 8 (7 NICs total) have been shared with the PFSense VM, using separate virtual switches (so every port is isolated)
             * the second physical port (labeled '2', vmnic1, em0) is assigned as the WAN interface for PFSense - this will either be your home network (while you get started), or your cable modem / 'the internet' if you move your server to the edge of your network.
             * the third physical port (labeled '3', vmnic2, em1) is assigned as the LAN interface for PFSense. Since we started inside our home network, we set an IP on the LAN interface that does NOT match the subnet of the home network (this is so NAT routing can function). A DHCP server is running on the LAN interface, so any devices plugged into the LAN server port (labeled '3', vmnic2, em1) will obtain an IP address
             * the 4th-8th physical ports are visible to PFSense, but not yet configured (easiest to do so in PFSense webgui below)
