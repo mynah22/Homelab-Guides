@@ -13,20 +13,24 @@ I reccomend taking a look at the Primary Technologies and Services for a quick p
 
 
 ## Index
+
+### Intro guides
+- [Basic Homelab](basicBuild.md)
+- [Simple Network Explainations](simpleNetworks.md)
 - [Primary Technologies](primaryServicesAndTechnologies.md)
 
 ### My Builds
-- First Config
+- [First Config](firstConfig.md)
 - Current Config
 
 ### Hypervisors
-- Proxmox reference
-- ESXI reference
+- [Proxmox reference](proxmoxIndex.md)
+- [ESXI reference](esxiIndex.md)
 
 ### Network
-- PFSense reference
+- [PFSense reference](pfsenseIndex.md)
 
 ### Hardware
-- HP DL 380G7 reference
-- TP-Link SG108E reference
-- Netgear R6400 reference
+- [HP DL 380G7 reference](dl380g7Index.md)
+- [TP-Link SG108E reference]()
+- [Netgear R6400 reference]()
