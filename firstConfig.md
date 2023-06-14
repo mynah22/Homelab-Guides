@@ -87,13 +87,15 @@ With everything in the Server Setup section above ready, we are ready to get sta
 - The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
     #### How to get to the RAID menu
     1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
-    2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+    2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black 
+    
+        ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
     3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu        
-        - [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
-        - ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
-        - [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
+        [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
+        ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
+        [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
     1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
-        - ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
+        ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
 
     ### Initializing disks 
     1. Welcome to the RAID controller menu ![raid main menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
