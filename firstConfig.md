@@ -1,6 +1,6 @@
 # Homelab on HP DL380 G7 and ESXI
 
-As part of decommisinoning my old homelab, I have rebuilt and documented most of the major components here. 
+As part of decommissioning my old homelab, I have rebuilt and documented most of the major components here. 
 
 ### Caveat
 The newest version of ESXI that runs on the server used in this build is 6.0.0 - This is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem. 
@@ -27,7 +27,7 @@ The Ubuntu VM does not run any other services directly - instead, it is a docker
     - Reverse proxy & load balancer
     - Manage free SSL certs to encrypt traffic for other services
 2. Minecraft server
-    - Minecraft server contiainer
+    - Minecraft server container
 3. Bitwarden
     - Self hosted password manager
 4. Nextcloud
@@ -37,7 +37,7 @@ The Ubuntu VM does not run any other services directly - instead, it is a docker
 
 Additionally, I had set up a very old desktop as a NAS.
 
-This is really not neccessary - the server I had was equipped with 8 SATA slots and harware RAID, but will be documented for my reference.
+This is really not necessary - the server I had was equipped with 8 SATA slots and hardware RAID, but will be documented for my reference.
 
 NAS details:
 - OS: TrueNAS 
@@ -47,7 +47,7 @@ NAS details:
 
 ## Getting Started
 
-I highly reccomend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architechture used for a few different situations. The 'Intro Network' is reccomended at first, so make sure you take a look at it
+I highly recommend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architecture used for a few different situations. The 'Intro Network' is recommended at first, so make sure you take a look at it
 
 With that said, let's get to the build steps:
 
@@ -56,9 +56,9 @@ With that said, let's get to the build steps:
 Initial set up requires the following:
 * Server and VGA capable monitor plugged into power
 * VGA Cable plugged into monitor and server
-* Keybord plugged into server
+* Keyboard plugged into server
 * At least one 2.5" SATA disk installed into caddy / slot
-    * Mount your sata disk into a drive caddy
+    * Mount your SATA disk into a drive caddy
     * insert it fully into slot
     * best to attach all disks you plan to use at first, that way you do not need to get into the RAID menu when you add them later
 * ESXI 6.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
@@ -75,7 +75,7 @@ Initial set up requires the following:
 - To get everything working, you ***MUST*** enter the RAID controller menu on first boot
     * *use the guide [here](dl380g7AddDisk.md) if you add disks later*
     * The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
-        ### How to get to the RAID menu
+        #### How to get to the RAID menu
         1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
         2. Once you see the F9 and F11 options, start pressing F8. You can stop once the screen goes black and this screen appears
         3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu - IMMEDIATELY start pressing f8
@@ -85,34 +85,38 @@ Initial set up requires the following:
         7. Set logical device as boot
         8. F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
         9. proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
-        10. you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / rearrage physical disks to the server. 
+        10. you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrage physical disks to the server.
+        11. exit the raid menu, and the server will start attempting to boot from all devices
 
 ### Install hypervisor
-- With a USB stick installed, the USB stick will take boot precidence, and you should be able to boot into the ESXI 6.0.0 installer
+- With a USB stick installed, the USB stick will take boot precedence, and you should see the ESXI 6.0.0 installer boot
 - Proceed with steps in the ESXI Installation Guide - it's pretty simple:
     * Select the disk you would like to install to
     * Set a password
     * Pull USB stick and reboot
 
-- If all goes well, your server should reboot and load ESXI
+* If all goes well, your server should reboot and load ESXI
     * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB sitck where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
         * I have been batting 1.000 in getting disks to boot if I: 
             1. enter RAID controller menu
             2. delete all logical drives
             3. create new logical drive
             4. select new logical drive as boot device
-            5. boot to usb & install hypervisor
-            6. remove USB and reboot to hypervisor
-        * Once the boot disk succeeds in booting just leave it alone; adding and removing non-boot devies seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots
-    * Further configuration is done via the webgui. you will need to connect to your server over the network
-    * either plug the server's first logical NIC (port 1) into your home network, or plug one end of an ehternet cable into port 1, and one directly into your computer (diagrams)
-    * once dhcp succeeds (you plugged into your home network) or fails (you plugged directly into your computer) the IP address of the server will be listed
-    * if you plugged into your computer directly, ensure your computer is disconnected from all other networks (including Wi-fi). Wait for your computer to show a APIPA / Link-local IP address (169.254.x.x) 
-    * Open a browser on your computer and point it to the IP address listed on the server
-    * click 'Open the VMWare Host Client' to open the web interface
-        * the 'Download vSphere Client for Windows' will allow you to download windows-native management software. Go ahead and grab it (you might like the interface better), but I will be using the webGUI for my guides. 
-    * congrats, you are now able to fully configure your server and VMs!
-    * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all conmfiguration will be done via the webgui
+            5. add other logical drives as desired
+            6. boot to usb & install hypervisor
+            7. remove USB and reboot to hypervisor
+        * Once the boot disk succeeds in booting just leave it alone; adding and removing non-boot devices seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots
+
+
+* Further configuration is done via the webgui - to access the webgui you will need to connect your PC to your server over the network
+* either plug the server's first logical NIC (port 1) into your home network, or plug one end of an ethernet cable into port 1, and one directly into your computer (diagrams)
+* once dhcp succeeds (you plugged into your home network) or fails (you plugged directly into your computer) the IP address of the server will be listed
+* if you plugged into your computer directly, ensure your computer is disconnected from all other networks (including Wi-fi). Wait for your computer to show a APIPA / Link-local IP address (169.254.x.x) 
+* Open a browser on your computer and point it to the IP address listed on the server
+* click 'Open the VMWare Host Client' to open the web interface
+    * the 'Download vSphere Client for Windows' will allow you to download windows-native management software. Go ahead and grab it (you might like the interface better), but I will be using the webGUI for my guides. 
+* congrats, you are now able to fully configure your server and VMs!
+* you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all conmfiguration will be done via the webgui
 
 ### License ESXI
 * once logged in to the webgui, click Manage (under Host) > licensing > assign licnese, and enter your ESXI 6 license key (you may have to expand the Navigator menu)
