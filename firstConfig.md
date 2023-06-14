@@ -65,6 +65,8 @@ Initial set up requires the following:
 * Bootable USB inserted into USB slot - see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides
 * VMWare account & ESXI license (free)
 * Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
+* an ethernet cable
+* an open port on your home network (or an unmanaged switch to add more ports)
 
 
 
@@ -96,7 +98,7 @@ Initial set up requires the following:
     * Pull USB stick and reboot
 
 * If all goes well, your server should reboot and load ESXI
-    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB sitck where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initialize disk in RAID menu' section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
         * I have been batting 1.000 in getting disks to boot if I: 
             1. enter RAID controller menu
             2. delete all logical drives
@@ -107,16 +109,39 @@ Initial set up requires the following:
             7. remove USB and reboot to hypervisor
         * Once the boot disk succeeds in booting just leave it alone; adding and removing non-boot devices seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots
 
+### Access ESXI web configuration
+* Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
 
-* Further configuration is done via the webgui - to access the webgui you will need to connect your PC to your server over the network
-* either plug the server's first logical NIC (port 1) into your home network, or plug one end of an ethernet cable into port 1, and one directly into your computer (diagrams)
-* once dhcp succeeds (you plugged into your home network) or fails (you plugged directly into your computer) the IP address of the server will be listed
-* if you plugged into your computer directly, ensure your computer is disconnected from all other networks (including Wi-fi). Wait for your computer to show a APIPA / Link-local IP address (169.254.x.x) 
-* Open a browser on your computer and point it to the IP address listed on the server
+* In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
+
+
+* There are two easy ways of doing this: DHCP and Link-Local (APIPA)
+
+1. DHCP
+    - the Dynamic Host Configuration Protocol is an effective way for clients to obtain network configuration and unused IP addresses when they connect to a network
+    - if you are following the 'Intro Network' architecture, all you have to do the ESXI webgui to obtain a DHCP address is:
+        1. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an open port on your home network
+        1. ESXI will obtain a DHCP lease from your home router
+2. Link-local (APIPA)
+    - if a client does not get any responses from a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
+    - configuring a Link-Local network is as simple as placing devices on a network without a DHCP server:
+        1. Disconnect your PC from all networks, including wireless
+        2. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an ethernet port on your PC
+        3. After a short while, the DHCP clients on your PC and the server will time out, and obtain random APIPA addresses
+
+
+* Once the server obtains a DHCP or APIPA IP address, it will update the IP it displays
+
+* When the server displays a valid IP address, use your PC on the same network to browse to that IP
+
+* Click through the Certificate Error (see note below)
+
+    - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine. This also happens with PFSense later*
+
 * click 'Open the VMWare Host Client' to open the web interface
-    * the 'Download vSphere Client for Windows' will allow you to download windows-native management software. Go ahead and grab it (you might like the interface better), but I will be using the webGUI for my guides. 
+    * the 'Download vSphere Client for Windows' will allow you to download windows-native management software. Feel free to grab it (you might like the interface better), but I will be using the webGUI for my guides. 
 * congrats, you are now able to fully configure your server and VMs!
-* you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all conmfiguration will be done via the webgui
+* you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the webgui
 
 ### License ESXI
 * once logged in to the webgui, click Manage (under Host) > licensing > assign licnese, and enter your ESXI 6 license key (you may have to expand the Navigator menu)
