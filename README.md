@@ -13,7 +13,7 @@ I reccomend taking a look at the Primary Technologies and Services for a quick p
 
 
 ## Index
-- [Primary Technologies](../blob/master/primaryServicesAndTechnologies)
+- [Primary Technologies](../mian/primaryServicesAndTechnologies)
 
 ### My Builds
 - First Config
