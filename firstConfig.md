@@ -89,13 +89,18 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
     - **How to get to the RAID menu**
         1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
-        2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black 
+        2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. 
+        
             ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+
+            You can stop pressing F8 once the screen goes black 
+
         3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
         [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
         [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
         [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
         1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
+        
             ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
 
     - **Initializing disks**
