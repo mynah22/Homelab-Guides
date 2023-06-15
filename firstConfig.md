@@ -50,11 +50,13 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
     The RAID menu is not hard to get to if you know how, but  ***there is only a narrow window when you can enter the menu***
     1. Hold power button for about a second to turn the power on, and after a while you will be presented with a boot screen 
-    2. Once you see the F9 and F11 options, **start pressing F8** - this is the ***only*** chance you have to enter the RAID menu. 
-    
-        ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+    2. Once you see the F9 and F11 options, **start pressing F8** - this is the ***only*** chance you have to enter the RAID menu.
 
-        You can stop pressing F8 once the screen goes black 
+        You can stop pressing F8 once the screen goes black
+
+        ![press f8 here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proLiantInitialBoot.jpg)
+
+         
 
     3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
     [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
@@ -128,11 +130,26 @@ With everything in the Server Setup section above ready, we are ready to get sta
     6. *you do not need to come back to the RAID menu again unless you are adding / changing disk configuration* 
 
 ## **Installing hypervisor (ESXI)**
-- Boot should continue 
-- Proceed with steps in the ESXI Installation Guide - it's pretty simple:
-    * Select the disk you would like to install to
-    * Set a password
-    * Pull USB stick and reboot
+- When you exit the RAID menu, the server will start to attempt to boot from the various bootable hardware (CD, USB, network/PXE over ethernet and fiber, and finally the RAID controller), in the order configured in BIOS
+- the server attempts to boot from the inserted USB stick before hard drives because USB drives have a higher boot priority
+- I use Ventoy, so I was presented with an OS select screen (screenshots
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)), then ESXI began to boot. If you are using Rufus or a similar tool you should see ESXI load directly
+- When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay [screenshot]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+- ESXI will take a few minutes to load (screenshots 
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_3.jpg))
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_4.jpg))
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_5.jpg)))
+
+### **Install ESXI to boot disk**
+ Proceed with steps in the ESXI Installation Guide - it's pretty simple:
+1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+2. F11 to accept EULA (screenshots 
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+3. Select the disk you would like to install to - ***this has to be the logical disk you set as the boot disk in the RAID menu.*** ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)) - 
+* Set a password
+* Pull USB stick and reboot
 
 * If all goes well, your server should reboot and load ESXI
     * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initializing disks' section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
