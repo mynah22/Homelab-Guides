@@ -121,7 +121,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
         - No ethernet cables plugged into server
         - Bootable ESXI installation USB inserted into server
         
-    5. Press F8 if you are ready to exit the RAID menu - otherwise press ESCAPE to go back to the main RAID menu (good idea to double check / write your config down). You can press ESCAPE at the [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) when you are ready to install the hypervisor
+    5. Press F8 if you are ready to exit the RAID menu - otherwise press ENTER to go back to the main RAID menu (good idea to double check / write your config down). You can press ESCAPE at the [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) when you are ready to install the hypervisor
     6. *you do not need to come back to the RAID menu again unless you are adding / changing disk configuration* 
 
 ## **Installing hypervisor (ESXI)**
