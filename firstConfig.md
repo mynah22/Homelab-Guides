@@ -66,12 +66,13 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
 - **RAID main menu**
 
-    [The RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) you just entered
-    is used to tell the raid controller what to do with attached drives
+    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
+
+    The RAID menu you just entered is used to tell the raid controller what to do with attached drives
     
     We will define what physical drives make up the 'logical drives' (RAID arrays that the hypervisor will see as a single disk). 
     
-    Be prepared to lose all data on a drive if you change it's RAID configuration 
+    *Be prepared to lose all data on a drive if you change it's RAID configuration*
     
 - **Deleting logical drives in the RAID menu**
 
@@ -96,7 +97,9 @@ With everything in the Server Setup section above ready, we are ready to get sta
     1. Use TAB, ENTER, SPACE, and UP/DOWN to configure the logical disks as needed. Here are some examples
         - Single disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate3.jpg))
         - RAID 1 array (two disks mirrored - this controller calls that RAID 1 + 0 ) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate5.jpg))
-    2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots: RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg) RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
+    2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots:
+    RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg)
+    RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
     3. Repeat until you have assigned all disks to a logical drive
 
  
@@ -203,12 +206,3 @@ With everything in the Server Setup section above ready, we are ready to get sta
             - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps. 
     
     
-    7. DNS blackhole set up
-        * A DNS blackhole is a very effective way of blocking ads / trackers  / malware on the web. I works for all devices on the network, including devices that cannot install an adblocker locally. 
-        * this is definately not required, but only takes a few clicks in PFSense, and is one of the biggest benefits I get out of managing my own network, so I do it right away
-            1. There is one, noteable drabwack to running a DNS blackhole: occasionally, it will affect the performance of internet applications / websites. This is actually really easy to deal with if you follow the PFSense DNS Blackhole Allowlist Guide, but if you get frustrated you can always uninstall the PFBlockerNG-Devel package and keep seeing horrible ads :(
-            2. System > Package Manager
-            3. Available Packages > search for 'pfblockerng'> click 'install' ON PFBLOCKERNG-DEVEL PACKAGE (2nd search result)
-            4. click confirm
-            5. after a moment you should see the success message
-            6. click the PFSense logo at the top left left of the PFSense webgui to return to the main menu. The pfBlockerNG status area on the main page will go green oncew the blocklists load 
