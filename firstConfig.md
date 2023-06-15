@@ -158,20 +158,19 @@ With everything in the Server Setup section above ready, we are ready to get sta
 9. Remove the USB boot drive from the server, the press ENTER to reboot - ESXI will take a moment to shut down ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)), then the server will reboot
 
 ### **Connect to ESXI host**
-* With the USB drive removed and network cables disconnected from the server, it will attempt to boot from the logical drive assigned as the boot disk by the RAID array
-    * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
-        * I have been batting 1.000 in getting disks to boot if I: 
-            1. enter RAID controller menu
-            2. delete all logical drives
-            3. create new logical drive
-            4. select new logical drive as boot device
-            5. add other logical drives as desired
-            6. boot to usb & install hypervisor
-            7. remove USB and reboot to hypervisor
-        * Once the boot disk succeeds in booting just leave it alone; adding and removing non-boot devices seems to work without any real trouble, as does installing new bootable OSes on a logical drive that currently boots
+With the USB drive removed and network cables disconnected from the server, it will attempt to boot from the logical drive assigned as the boot disk by the RAID array
 
-### Access ESXI web configuration
-* Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
+If all goes well, you should see ESXI begin to boot  (screenshots 
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+
+* ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+
+
+Once ESXI has booted, you will be presented with [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+
+Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
 
 * In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
 
