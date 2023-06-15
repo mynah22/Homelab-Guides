@@ -100,9 +100,8 @@ With everything in the Server Setup section above ready, we are ready to get sta
         [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
         [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
         1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
-        
-            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
 
+            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
     - **Initializing disks**
         - [This menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
  is used to tell the raid controller what to do with attached drives - it associates attached physical disks with 'logical drives' (RAID arrays that the controller presents as single disks). Be prepared to lose all data on a drive if you change anything with this menu 
@@ -112,12 +111,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
             **Deleting logical drives in the RAID menu**
 
             1. DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
-            2. F8 to delete a drive, then F3 to confirm
-
-                ![raid delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) ![raid confirm delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
- 
-                [(Saving screen)](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg)
-                [(Confirmation screen)](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg)
+            2. F8 to delete a drive, then F3 to confirm (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
 
             3. you should have no logical drives left to delete
 
