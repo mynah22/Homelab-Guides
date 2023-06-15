@@ -67,7 +67,8 @@ Initial set up requires the following:
 * Bootable USB inserted into USB slot - see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides
 * VMWare account & ESXI license (free)
 * Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
-* an ethernet cable
+* an ethernet cable ready for use
+* no ethernet cables plugged into server
 * an open port on your home network (or an unmanaged switch to add more ports)
 
 
@@ -90,19 +91,17 @@ With everything in the Server Setup section above ready, we are ready to get sta
         1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
         2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. You can stop once the screen goes black 
             ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
-        3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu        
-            [screen 1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg) 
-
-            ![screen 2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)  
-
-            [screen 3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) 
+        3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
+        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
+        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
+        [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
         1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
             ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
 
     - **Initializing disks**
-        - This menu is used to tell the raid controller what to do with attached drives. It does not write or remove any data / partitions, it simply associates attached physical disks with 'logical drives' (RAID arrays that the controller presents as single disks)
+        - [This menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
+ is used to tell the raid controller what to do with attached drives - it associates attached physical disks with 'logical drives' (RAID arrays that the controller presents as single disks). Be prepared to lose all data on a drive if you change anything with this menu 
 
-            ![raid main menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
         - The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
             
             **Deleting logical drives in the RAID menu**
@@ -111,7 +110,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
             2. F8 to delete a drive, then F3 to confirm
 
                 ![raid delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) ![raid confirm delete](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
-
+ 
                 [(Saving screen)](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg)
                 [(Confirmation screen)](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg)
 
