@@ -99,23 +99,26 @@ With everything in the Server Setup section above ready, we are ready to get sta
         [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
         [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
         [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
-        1. IMMEDIATELY start pressing F8 -  you must press F8 while the RAID controller loads:
+        1. **Immediately start pressing F8** -  you must press F8 while the RAID controller loads:
 
-            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController.jpg) 
+            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController2.jpg) 
     - **Initializing disks**
-        - [This menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) 
- is used to tell the raid controller what to do with attached drives - it associates attached physical disks with 'logical drives' (RAID arrays that the controller presents as single disks). Be prepared to lose all data on a drive if you change anything with this menu 
+        - [The RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) you just entered
+          is used to tell the raid controller what to do with attached drives
+          
+          We will define 'logical drives' (RAID arrays that the controller presents as single disks) and associated physical disks. 
+          
+          Be prepared to lose all data on a drive if you change it's RAID configuration 
 
         - The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
             
             **Deleting logical drives in the RAID menu**
 
+            1. start from the main [RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
             1. DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
             2. F8 to delete a drive, then F3 to confirm (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
 
-            3. you should have no logical drives left to delete
-
-                ![raid empty](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete6.jpg)
+            3. repeat 1-3 until you have no logical drives left to delete ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete6.jpg))
 
         - Now we must create logical drives so the controller properly maps physical disks to RAID arrays:
 
