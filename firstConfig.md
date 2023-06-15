@@ -77,9 +77,9 @@ Initial set up requires the following:
 With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
 
 - RAID (Redundant Array of Inexpensive Disks) is a set of storage technologies that allow multiple disks to be used in tandem. As a reminder, here are a few common RAID modes:
-    * 0 : 'Striped' - treats disks in the array as one big drive. No redundancy
+    * 0 : 'Striped' - treats disks in the array as one big drive. No redundancy. This RAID controller calls everything RAID 0, even standalone disks
     * 1 : 'Mirrored' - data is written to disks identically - if one goes down the other still has everything. No increase in storage capacity
-    * 10 (1+0) - requires 4 disks. A stripped array of 2 disks is mirrored with another 2 disks
+    * 10 (1+0) - A striped array is mirrored with another array. Usually described as requiring 4 disks -  Because this controller calls everything RAID 0, it describes a 2-disk RAID 1 config as RAID 1+0 
     * 5 / 50 - cool modes utilizing the XOR function to create parity drives able to recover any other drive - this server's RAID controller requires a license to set those up
 
 
@@ -116,16 +116,27 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
             1. start from the main [RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
             1. DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
-            2. F8 to delete a drive, then F3 to confirm (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
+            2. F8 to delete a drive, then F3 to confirm
+            (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg)
+            [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
+            [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) 
+            [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
 
             3. repeat 1-3 until you have no logical drives left to delete ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete6.jpg))
 
         - Now we must create logical drives so the controller properly maps physical disks to RAID arrays:
 
             **Creating logical drives in the RAID menu**
+            To get started, enter the 'Create Logical Drive' submenu([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate1.jpg))
 
-            1. In the main RAID menu, enter 'Create Logical Drive' [(screenshot)](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate1.jpg)
-            1. 
+            You will configure one array at at time:
+
+            1. Use TAB, ENTER, SPACE, and UP/DOWN to configure the logical disks as needed. Here are some examples
+                - Single disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate3.jpg))
+                - RAID 1 array (two disks mirrored) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate5.jpg))
+            2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots: RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg) RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
+            3.
+            
 
         - Set logical device as boot
         - F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
