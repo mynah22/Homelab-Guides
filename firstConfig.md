@@ -137,9 +137,9 @@ With everything in the Server Setup section above ready, we are ready to get sta
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)), then ESXI began to boot. If you are using Rufus or a similar tool you should see ESXI load directly
 - When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay [screenshot]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
 - ESXI will take a few minutes to load (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_3.jpg))
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_4.jpg))
-[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_5.jpg)))
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_3.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_4.jpg)
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_5.jpg))
 
 ### **Install ESXI to boot disk**
  Proceed with steps in the ESXI Installation Guide - it's pretty simple:
@@ -148,8 +148,8 @@ With everything in the Server Setup section above ready, we are ready to get sta
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
 3. Select the disk you would like to install to - ***this has to be the logical disk you set as the boot disk in the RAID menu.*** ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)) - 
-* Set a password
-* Pull USB stick and reboot
+4. Set a password
+5. Pull USB stick and reboot
 
 * If all goes well, your server should reboot and load ESXI
     * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the 'No system disk' message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the 'Initializing disks' section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
