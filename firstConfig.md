@@ -183,7 +183,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 ### Install and configure PFSense VM
 - The first order of business is to set up the VM that will be managing the network; PFSense
 - PFSense config:
-    1. My steps are based on the official guide here: https://docs.netgate.com/pfsense/en/latest/recipes/virtualize-esxi.html - just make sure to NOT assign vmnic0 to any VMs - There are known and actively exploited vulerabilities in version 6 of the ESXI hypervisor, which we can completely mitigate by leaving it disconnected when not using the esxi web configuration. 
+    1. My steps are based on the official guide here: https://docs.netgate.com/pfsense/en/latest/recipes/virtualize-esxi.html - just make sure to NOT assign vmnic0 to any VMs - There are known and actively exploited vulnerabilities in version 6 of the ESXI hypervisor, which we can completely mitigate by leaving it disconnected when not using the esxi web configuration. 
     1. Set up networking:
         * We will have to configure virtual networks in order to expose physical ports to our VMs
         * Networking > virtual switches > add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
@@ -203,7 +203,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
             6. name = LAN5, Virtual Switch = LAN5
             7. name = LAN6, Virtual Switch = LAN6
         * Here's what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created:
-        * Port names can bwe confusing:
+        * Port names can be confusing:
             - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly reccomended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps. 
     2. Add installation ISO to server
         * Storage > datastores > Datastore Browser
