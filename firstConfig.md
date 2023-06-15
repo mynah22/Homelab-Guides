@@ -1,80 +1,43 @@
-# Homelab on HP DL380 G7 and ESXI
+# HP DL380 G7 - configuring ESXI 
 
-As part of decommissioning my old homelab, I have rebuilt and documented most of the major components here. 
+This guide runs through the steps needed to install ESXI on an HP DL380 G7 rack server
 
-### Caveat
-The newest version of ESXI that runs on the server used in this build is 6.0.0 - This is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem. 
-
-The license for 6.0.0 is free, but I cannot find a way to obtain license keys or installation ISOs any longer. If you do not already have them, then will need to either use a different server compatible with ESXI 7+, or a different hypervisor like proxmox
-
-
-### Hardware utilized in this build
-- HP DL380 G7 2u rack server
-- A few ethernet cords (I count 3, but 4 couldn't hurt)
-- A PC with ethernet port (for configuration of hypervisor / VMs)
-- Archaic desktop (FreeNAS host via ISCSI) (not needed)
+Please note the following caveats:
+- *Version 6.0.0 of ESXI is the newest that will work on this server- this is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem*
+- *The license for 6.0.0 is free, but I cannot find a way to obtain license keys or installation ISOs any longer. If you do not already have them, then you will need to either use a different hypervisor like proxmox, or a different server compatible with ESXI 7+*
 
 
-## Services overview
-### Hypervisor & guest VMs
-HP Rack server has the ESXI hypervisor installed. ESXI hosts 2 Virtual Machines -  PFSense and Ubuntu Server
 
-1. PFSense provides a variety of standard network services, as well as a DNS blackhole for adblocking, and custom DNS / DHCP configuration. 
+I highly recommend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architecture used for a few different situations. 
 
-2. The Ubuntu VM directly runs a Wireguard instance, providing VPN access, and hosting other services via docker
+The 'Intro Network' is advised at first, I recommend you take a look at it
 
-### Docker containers
-The Ubuntu VM does not run any other services directly - instead, it is a docker host running the following containers:
-1. Traefik
-    - Reverse proxy & load balancer
-    - Manage free SSL certs to encrypt traffic for other services
-2. Minecraft server
-    - Minecraft server container
-3. Bitwarden
-    - Self hosted password manager
-4. Nextcloud
-    - Self hosted storage cloud
-5. Calibre web
-    - Self hosted Ebook library
-
-Additionally, I had set up a very old desktop as a NAS.
-
-This is really not necessary - the server I had was equipped with 8 SATA slots and hardware RAID, but will be documented for my reference.
-
-NAS details:
-- OS: TrueNAS 
-- Filesystem: ZFS (Software RAID 1)
-- Access via ISCSI
-
-
-## Getting Started
-
-I highly recommend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architecture used for a few different situations. The 'Intro Network' is recommended at first, so make sure you take a look at it
-
-With that said, let's get to the build steps:
-
-## Server Setup
-### Materials
+## Materials
 Initial set up requires the following:
-* Server and VGA capable monitor plugged into power
+* Server and VGA monitor plugged into power
 * VGA Cable plugged into monitor and server
 * Keyboard plugged into server
 * At least one 2.5" SATA disk installed into caddy / slot
-    * Mount your SATA disk into a drive caddy
-    * insert it fully into slot
-    * best to attach all disks you plan to use at first, that way you do not need to get into the RAID menu when you add them later
-* ESXI 6.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
+    1. Remove existing partitions from the drive
+    1. Mount your SATA disk into a drive caddy
+    1. Press the red button on the caddy to release the locking lever
+    2. Insert the caddy fully into the drive bay
+    3. Push the locking lever back into the caddy to lock the caddy to the drive bay.
+    1. you should see status LEDs visible on the right side of the caddy 
+    3. It's best to follow steps 1-6 for all disks you plan to use - that way you do not need to get into the RAID menu when you add them later
+* ESXI 6.0.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
 * Bootable USB inserted into USB slot - see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides
-* VMWare account & ESXI license (free)
+* VMWare account & ESXI license (free, see caveats at the top of this guide)
 * Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
 * an ethernet cable ready for use
 * no ethernet cables plugged into server
-* an open port on your home network (or an unmanaged switch to add more ports)
+* an open port on your home network
 
+# **Instructions**
 
-
-### Initialize disk(s) in RAID menu
+## **Initialize disk(s) in RAID menu**
 With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
+- To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
 
 - RAID (Redundant Array of Inexpensive Disks) is a set of storage technologies that allow multiple disks to be used in tandem. As a reminder, here are a few common RAID modes:
     * 0 : 'Striped' - treats disks in the array as one big drive. No redundancy. This RAID controller calls everything RAID 0, even standalone disks
@@ -83,69 +46,86 @@ With everything in the Server Setup section above ready, we are ready to get sta
     * 5 / 50 - cool modes utilizing the XOR function to create parity drives able to recover any other drive - this server's RAID controller requires a license to set those up
 
 
-- To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
+- **How to get to the RAID menu**
 
-- The RAID menu is not hard to get to if you know the trick, but there is a narrow window when you can enter it:
+    The RAID menu is not hard to get to if you know how, but  ***there is only a narrow window when you can enter the menu***
+    1. Hold power button for about a second to turn the power on, and after a while you will be presented with a boot screen 
+    2. Once you see the F9 and F11 options, **start pressing F8** - this is the ***only*** chance you have to enter the RAID menu. 
+    
+        ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
 
-    - **How to get to the RAID menu**
-        1. Turn server on. Hold power button for about a second, and after a little while you will be presented with the Boot Screen 
-        2. Once you see the F9 and F11 options, **start pressing F8** - this is the only chance you have to enter the RAID menu. 
+        You can stop pressing F8 once the screen goes black 
+
+    3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
+    [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
+    [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
+    [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
+    4. *Immediately start pressing F8* -  you must press F8 while the RAID controller loads:
+
+        ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController2.jpg) 
+
+- **RAID main menu**
+
+    [The RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) you just entered
+    is used to tell the raid controller what to do with attached drives
+    
+    We will define what physical drives make up the 'logical drives' (RAID arrays that the hypervisor will see as a single disk). 
+    
+    Be prepared to lose all data on a drive if you change it's RAID configuration 
+    
+- **Deleting logical drives in the RAID menu**
+
+    The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
+    1. Use UP/DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
+    2. F8 to delete a drive, then F3 to confirm
+    (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg)
+    [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
+    [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) 
+    [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
+
+    3. Keep going until you [run out](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete6.jpg)
+
+    Now we must create logical drives so the controller properly maps physical disks to RAID arrays:
+
+- **Creating logical drives in the RAID menu**
+
+    To get started, enter the 'Create Logical Drive' submenu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate1.jpg))
+
+    You will configure one array at at time:
+
+    1. Use TAB, ENTER, SPACE, and UP/DOWN to configure the logical disks as needed. Here are some examples
+        - Single disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate3.jpg))
+        - RAID 1 array (two disks mirrored - this controller calls that RAID 1 + 0 ) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate5.jpg))
+    2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots: RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg) RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
+    3. Repeat until you have assigned all disks to a logical drive
+
+ 
+- **Take a second to look at your logical drive numbers**
+
+    It's a good idea to double check what logical drive number each array was assigned
+    1. in [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg), highlight 'View logical drives', hit ENTER
+    2. you will be presented with a [view](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate12.jpg) of your logical drives - write this information down
+    3. if you hit ENTER while highlighting an array you will see [a screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate13.jpg) displaying the physical slots each disk is inserted into. Write this info down or label it on the disk caddies
+    4. ESC to return to the main RAID menu
+
+
+- **Setting a boot disk**
+
+    Last thing in the RAID menu - setting a boot drive
+    
+    1. in [main RAID menu]( https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate7.jpg), highlight 'Select Boot Volume', hit ENTER
+    2. on the [next screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate8.jpg), highlight 'Direct Attached Storage', hit ENTER
+    3. then, on [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate9.jpg), highlight the array you would like to install your hypervisor onto, hit ENTER. Then F8 on the [confirmation screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate10.jpg).
+        - *note- as you can see from the screenshot, you are only given the logical drive number, not any details about it's size or physical slot. This is why it is a good idea to write that info down from the 'View Logical Drives' submenu*
+    4. once you are on this [final boot select screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate11.jpg), you are ready to install a hypervisor. take a second to pause before you hit F8 to reboot and make sure you have the following things ready:
+        - No ethernet cables plugged into server
+        - Bootable ESXI installation USB inserted into server
         
-            ![press f8 here](screenshots/firstConfig/proLiantInitialBoot.jpg)
+    5. Press F8 if you are ready to exit the RAID menu - otherwise press ESCAPE to go back to the main RAID menu (good idea to double check / write your config down). You can press ESCAPE at the [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) when you are ready to install the hypervisor
+    6. *you do not need to come back to the RAID menu again unless you are adding / changing disk configuration* 
 
-            You can stop pressing F8 once the screen goes black 
-
-        3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
-        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
-        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
-        [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
-        1. **Immediately start pressing F8** -  you must press F8 while the RAID controller loads:
-
-            ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController2.jpg) 
-    - **Initializing disks**
-        - [The RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) you just entered
-          is used to tell the raid controller what to do with attached drives
-          
-          We will define 'logical drives' (RAID arrays that the controller presents as single disks) and associated physical disks. 
-          
-          Be prepared to lose all data on a drive if you change it's RAID configuration 
-
-        - The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
-            
-            **Deleting logical drives in the RAID menu**
-
-            1. start from the main [RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
-            1. DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
-            2. F8 to delete a drive, then F3 to confirm
-            (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete2.jpg)
-            [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete3.jpg) 
-            [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete5.jpg) 
-            [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete4.jpg) )
-
-            3. repeat 1-3 until you have no logical drives left to delete ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete6.jpg))
-
-        - Now we must create logical drives so the controller properly maps physical disks to RAID arrays:
-
-            **Creating logical drives in the RAID menu**
-            To get started, enter the 'Create Logical Drive' submenu([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate1.jpg))
-
-            You will configure one array at at time:
-
-            1. Use TAB, ENTER, SPACE, and UP/DOWN to configure the logical disks as needed. Here are some examples
-                - Single disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate3.jpg))
-                - RAID 1 array (two disks mirrored) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate5.jpg))
-            2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots: RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg) RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
-            3.
-            
-
-        - Set logical device as boot
-        - F8 to proceed to boot. USB is of a higher priority than hard drives, so you should see your usb stick load
-        - proceed with installation of your hypervisor / os of choice. We are using ESXI 6.0 in this example below
-        - you DO NOT have to take these steps when installing a new hypervisor to a disk, just when you add / re-arrange physical disks to the server.
-        - exit the raid menu, and the server will start attempting to boot from all devices
-
-### Install hypervisor
-- With a USB stick installed, the USB stick will take boot precedence, and you should see the ESXI 6.0.0 installer boot
+## **Installing hypervisor (ESXI)**
+- Boot should continue 
 - Proceed with steps in the ESXI Installation Guide - it's pretty simple:
     * Select the disk you would like to install to
     * Set a password
