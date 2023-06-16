@@ -281,10 +281,10 @@ Here is the mapping of the various names of each port if you followed my steps
     * NIC name: vmnic3
     * port label: '4'
     * this port will be one of the internal ports managed by PFSense
-- Port groups 'LAN3-LAN6' are attached to their own vSwitch in ESXI. 
+- Port groups 'LAN3-LAN6' are attached to their own vSwitches in ESXI. 
     * NIC name: vmnic4 - vmnic7
     * port label: none
-    * these ports will internal ports managed by PFSense
+    * these ports will be internal ports managed by PFSense
 
 ## Hypervisor set up complete
 

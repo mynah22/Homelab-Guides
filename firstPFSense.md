@@ -8,8 +8,8 @@ The first order of business is to set up the VM that will be managing the networ
 
 My steps are based on the official guide [here](https://docs.netgate.com/pfsense/en/latest/recipes/virtualize-esxi.html).
 
-## Create PFSense Virtual Machine
-1. Add installation ISO to server
+## **Create PFSense Virtual Machine**
+1. **Add installation ISO to server**
     * Storage > datastores > Datastore Browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupDatastoreBrowser.jpg))
     * create a folder in datastore1 names 'OS ISOs' (screenshots
     [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateDir.jpg)
@@ -17,7 +17,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
     * Click upload and upload the PFSense 2.6.0 installation .ISO ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadISO.jpg))
     * you can see the progress in the top right of the datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadProgress.jpg))
 
-3. Create PFSense VM
+3. **Create PFSense VM**
     * Virtual Machines > Create / Register VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM.jpg))
     * Create a new virtual machine, next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM2.jpg))
     * Select a name and guest OS screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM3.jpg))
@@ -27,7 +27,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         * Guest OS Version - FreeBSD (64 bit)
         * Next
     * Select the datastore you will install this VM onto, then click Next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM4.jpg))
-    * **Customize settings screen** 
+    * Customize settings screen
         * *note, these are simply my recommendations for resource allocation. I've never had any issues with the following settings for PFSense*
         * CPU : 4 (cores)
         * Memory : 2048 MB
@@ -37,46 +37,58 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         * Click 'Add Network Adapter' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetAdapt.jpg)) 6 times (so you end up with 7 adapters), then select each of the other port groups you set up (LAN, LAN2-6). It should look like [this](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg) when done
         * Click [Next](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsNext.jpg)
         * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg)
-    * After a brief delay, you will see your virtual machine show in the Virtual Machines section of the ESXI webgui
-4. Launch and configure PFSense VM
-    * at this point you have a virtual machine with resources allocated, a blank virtual hard drive, and an installation ISO inserted into the virtual DVD drive. We will boot the installation ISO, install pfsense onto the virtual hard drive, and step through the basic post-installation configuration of PFSense (which should only take a few minutes)
-    * Virtual machines > Click your VM name > click the 'play' button
-    * after a delay, a console window will pop up. This is the output of your VM. Nothing is on the hard drive, so it will boot from the ISO inserted into the virtual DVD drive. 
-    * After a minute or two of loading, you will be presented with a copyright notice - at this point the PFSense set up is essentially the same as PFSense Basic Guide, but is listed here since it is really simple
+    * After a brief delay, you will see your virtual machine show in the Virtual Machines section of the ESXI webgui ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVMSuccess.jpg))
+4. **Install PFSense onto VM**
 
-        1. ENTER to accept the agreement
-        1. ENTER to install PFSense
-        1. ENTER to continue with default keymap
-        1. ENTER for Auto (ZFS) disk config
-        1. ENTER to confirm disk config
-        1. ENTER to proceed with ZFS in stripe mode
-        1. SPACE to select VMware Virtual Disk, ENTER to proceed
-        1. LEFT, ENTER to aknowledge disk overwrite
-        1. Installation will commence, in a couple of minutes you will be at this screen. ENTER to skip a manual shell
-        1. ENTER again to reboot the VM. Installation of PFSense onto the virtual hard drive is complete!
-    * while your vm reboots, go ahead and remove the installation ISO from the VM
-        1. close the console window ( don't worry, vm keeps running and will reboot on it's own)
-        2. virtual machines > your PFSense VM name > edit
-        3. uncheck 'Connect' next to CD/DVD drive, click save
-    * go back to your VM and click the console preview to return to the PFSense VM
-    * Now for the initial network configuration in PFsense (again, basically the same as the PFsense Basic Guide, but with more available NICs)
-        1. You should be presented with a prompt asking if you want to set up VLANS. If not you should end up at the main menu - if so type 1 and ENTER in order to get to the interface assignment / vlan set up prompt
-        2. N for no vlan set up
-        3. type 'em0', then ENTER to assign em0 to WAN
-        4. type 'em1', then ENTER to assign em1 to LAN
-        5. leave prompt empty then ENTER to skip optional interfaces
-        6. type 'y', then ENTER to confirm
-        7. wait for a couple of minutes for config to be applied, then you will be at the main menu
-        8. At the main menu, '2' and ENTER to assign IP address on the LAN interface
-            * type '2', ENTER to configure LAN
-            * enter a new LAN IP address. MAKE SURE THIS IS NOT THE SAME IP RANGE AS YOUR CURRENT HOME NETWORK (usually 192.168.1.1), (I used 10.0.0.1), then ENTER
-            * enter 24 as subnet mask (corresponds to 255.255.255.0), ENTER
-            * don't enter an upstream gateway, ENTER
-            * ENTER for no ipv6 address
-            * type 'y', ENTER for DHCP server, type '10.0.0.2' ENTER for start of DHCP range, then '10.0.0.255' ENTER for end of DHCP range
-            * type 'n', ENTER to not revert to http
-            * you will recive a confirmation after your changes are applied. ENTER to return to main menu
-    * okay, we are now ready to enter the PFsense webgui in order to finish our basic configuration.
+    At this point you have a virtual machine with resources allocated, a blank virtual hard drive, and an installation ISO inserted into the virtual DVD drive. 
+    
+    We will boot the installation ISO, install PFSense onto the virtual hard drive, and step through the basic post-installation configuration of PFSense
+    
+    * Virtual machines > Click your VM name > click the 'play' button ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseLuanchVM.jpg))
+    * after a delay, a console window will pop up. This is the output of your VM. Nothing is on the hard drive, so it will boot from the ISO inserted into the virtual DVD drive (screenshot
+    [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseLuanchVM2.jpg)
+    [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseLuanchVM3.jpg))
+    * After a delay, you will be presented with a copyright notice - at this point the PFSense set up is essentially the same as PFSense Basic Guide, but is listed here since it is really simple
+
+        1. ENTER to accept the agreement ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs0.jpg))
+        1. ENTER to install PFSense ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs1.jpg))
+        1. ENTER to continue with default keymap ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs2.jpg))
+        1. ENTER for Auto (ZFS) disk config ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs3.jpg))
+        1. ENTER to confirm disk config ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs4.jpg))
+        1. ENTER to proceed with ZFS in stripe mode ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs5.jpg))
+        1. SPACE to select VMware Virtual Disk, ENTER to proceed ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs6.jpg))
+        1. LEFT, ENTER to acknowledge disk overwrite ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs7.jpg))
+        1. Installation will commence ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8.jpg))
+        1. in a couple of minutes you will be at [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs9.jpg). ENTER to skip a manual shell
+        1. ENTER again to reboot the VM. This may take a couple of minutes ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs10.jpg))
+
+4. **Configure PFSense** 
+
+PFSense will now boot from the Virtual Hard drive rather than the installation CD ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs11.jpg))
+
+Booting has completed once you are at [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs12.jpg)
+
+Now for the initial network configuration in PFsense (again, basically the same as the PFsense Basic Guide, but with more available NICs)
+
+**Check Interface Assignments**
+
+
+2. N for no vlan set up
+3. type 'em0', then ENTER to assign em0 to WAN
+4. type 'em1', then ENTER to assign em1 to LAN
+5. leave prompt empty then ENTER to skip optional interfaces
+6. type 'y', then ENTER to confirm
+7. wait for a couple of minutes for config to be applied, then you will be at the main menu
+8. At the main menu, '2' and ENTER to assign IP address on the LAN interface
+    * type '2', ENTER to configure LAN
+    * enter a new LAN IP address. MAKE SURE THIS IS NOT THE SAME IP RANGE AS YOUR CURRENT HOME NETWORK (usually 192.168.1.1), (I used 10.0.0.1), then ENTER
+    * enter 24 as subnet mask (corresponds to 255.255.255.0), ENTER
+    * don't enter an upstream gateway, ENTER
+    * ENTER for no ipv6 address
+    * type 'y', ENTER for DHCP server, type '10.0.0.2' ENTER for start of DHCP range, then '10.0.0.255' ENTER for end of DHCP range
+    * type 'n', ENTER to not revert to http
+    * you will recive a confirmation after your changes are applied. ENTER to return to main menu
+* okay, we are now ready to enter the PFsense webgui in order to finish our basic configuration.
 5. Finish pfsense config via webgui
     * A note on port names:
         - if you followed the steps above exactly, then your port names will match what I list here. Otherwise, you may have mapped them to different physical ports. You can check which physical nic is mapped to which port group by clicking the port group name under Networking. Here is an example. the vmnic numbering starts at 0, so vmnic0 is the port labeled '1;, vmnic1 is the port labeled '2' etc.
