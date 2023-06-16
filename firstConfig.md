@@ -250,4 +250,26 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 
 ### **Understand port assignments**
 Port names can be confusing:
-    - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps.
+- The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names.
+    - *NOTE: the numbers written on ports 1-4 are ONE HIGHER than the hardware NIC names that you see in BIOS & ESXI - vmnic0 corresponds to the port labeled '1', vmnic1 is '2' and so on*
+- If you click on a port group you can see what NIC is attached: (screenshots 
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
+)
+- Here is the mapping of the various names of each port if you followed my steps
+    - The ILO port is for hardware management and will go unused
+    - The default port groups 'Management Network' and 'VM Network' are attached to vSwitch0 in ESXI
+        * the only NIC attached is vmnic0, labeled '1' on the server
+        * we are leaving this port / port group / vswitch unattached to other networks for security reasons
+    - Port group 'WAN' is attached to vSwitch WAN in ESXI. 
+        * NIC name: vmnic1
+        * port label: '2'
+        * we will be attaching an outside network to this port
+    - Port group 'LAN' is attached to vSwitch WAN in ESXI. 
+        * NIC name: vmnic2
+        * port label: '3'
+        * this port will be one of the internal ports managed by PFSense
+    - Port group 'LAN2' is attached to vSwitch WAN in ESXI. 
+        * NIC name: vmnic3
+        * port label: '4'
+        * this port will be one of the internal ports managed by PFSense
