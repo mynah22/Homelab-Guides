@@ -225,7 +225,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 
  The idea with this configuration is to use a dedicated and secure network appliance (PFSense) to manage all traffic. To do so, we will be creating 
 
- [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
+[Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
 1. vswitch Name = WAN , Uplink 1 = vmnic1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch.jpg))
 2. vswitch Name = LAN , Uplink 1 = vmnic2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch2.jpg))
 3. vswitch Name = LAN2 , Uplink 1 = vmnic3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch3.jpg))
@@ -234,7 +234,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 6. vswitch Name = LAN4 , Uplink 1 = vmnic6
 7. vswitch Name = LAN4 , Uplink 1 = vmnic7
 
-Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
+[Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVPortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
 1. name = WAN, Virtual Switch = WAN 
 2. name = LAN, Virtual Switch = LAN 
 3. name = LAN2, Virtual Switch = LAN2 
