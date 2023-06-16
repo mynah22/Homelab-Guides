@@ -174,7 +174,7 @@ Once ESXI has booted, you will be presented with a simple window showing the net
 
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6_2.jpg)
 
-Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
+All further configuration of ESZI and VMS is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing everything about the hypervisor & Virtual Machines.
 
 In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
 
@@ -236,16 +236,16 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 7. vswitch Name = LAN4 , Uplink 1 = vmnic7
 
 [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
-1. name = WAN, Virtual Switch = WAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate1.jpg))
-2. name = LAN, Virtual Switch = LAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate2.jpg)) 
-3. name = LAN2, Virtual Switch = LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate3.jpg)) 
+1. name = WAN, Virtual Switch = WAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup1.jpg))
+2. name = LAN, Virtual Switch = LAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup2.jpg)) 
+3. name = LAN2, Virtual Switch = LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup3.jpg)) 
 4. name = LAN3, Virtual Switch = LAN3 
 5. name = LAN4, Virtual Switch = LAN4
 6. name = LAN5, Virtual Switch = LAN5
 7. name = LAN6, Virtual Switch = LAN6
 
 
-[Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
+[Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
 
 ### **Understand port assignments**
