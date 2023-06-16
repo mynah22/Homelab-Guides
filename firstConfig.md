@@ -170,7 +170,9 @@ If all goes well, you should see ESXI begin to boot  (screenshots
 * ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate18.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
 
 
-Once ESXI has booted, you will be presented with ![this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6.jpg)
+Once ESXI has booted, you will be presented with a simple window showing the network status of the web configuration server
+
+![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6_2.jpg)
 
 Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
 
