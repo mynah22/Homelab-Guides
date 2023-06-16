@@ -250,36 +250,41 @@ Please make sure to NOT assign vmnic0 (and the default port groups - 'Management
 [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
 
-### **Understand port assignments**
+### **Understanding port assignments**
 Port names can be confusing:
-- The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names.
-    - *NOTE: the numbers written on ports 1-4 are ONE HIGHER than the hardware NIC names that you see in BIOS & ESXI - vmnic0 corresponds to the port labeled '1', vmnic1 is '2' and so on*
+
+The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names.
+- *NOTE: the numbers written on ports 1-4 are ONE HIGHER than the hardware NIC names that you see in BIOS & ESXI - vmnic0 corresponds to the port labeled '1', vmnic1 is '2' and so on*
+
+**Ways to ID ports**
+
 - If you click on a port group you can see what NIC is attached: (screenshots 
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
 )
 - if you click on a physical NIC it will display the MAC address of the NIC ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiNICMAC.jpg))
-- Here is the mapping of the various names of each port if you followed my steps
-    - The ILO port is for hardware management and will go unused
-    - The default port groups 'Management Network' and 'VM Network' are attached to vSwitch0 in ESXI
-        * the only NIC attached is vmnic0, labeled '1' on the server
-        * we are leaving this port / port group / vswitch unattached to other networks for security reasons
-    - Port group 'WAN' is attached to vSwitch WAN in ESXI. 
-        * NIC name: vmnic1
-        * port label: '2'
-        * we will be attaching an outside network to this port
-    - Port group 'LAN' is attached to vSwitch LAN in ESXI. 
-        * NIC name: vmnic2
-        * port label: '3'
-        * this port will be one of the internal ports managed by PFSense
-    - Port group 'LAN2' is attached to vSwitch LAN2 in ESXI. 
-        * NIC name: vmnic3
-        * port label: '4'
-        * this port will be one of the internal ports managed by PFSense
-    - Port groups 'LAN3-LAN6' are attached to their own vSwitch in ESXI. 
-        * NIC name: vmnic4 - vmnic7
-        * port label: none
-        * these ports will internal ports managed by PFSense
+
+Here is the mapping of the various names of each port if you followed my steps
+- The ILO port is for hardware management and will go unused
+- The default port groups 'Management Network' and 'VM Network' are attached to vSwitch0 in ESXI
+    * the only NIC attached is vmnic0, labeled '1' on the server
+    * we are leaving this port / port group / vswitch unattached to other networks for security reasons
+- Port group 'WAN' is attached to vSwitch WAN in ESXI. 
+    * NIC name: vmnic1
+    * port label: '2'
+    * we will be attaching an outside network to this port
+- Port group 'LAN' is attached to vSwitch LAN in ESXI. 
+    * NIC name: vmnic2
+    * port label: '3'
+    * this port will be one of the internal ports managed by PFSense
+- Port group 'LAN2' is attached to vSwitch LAN2 in ESXI. 
+    * NIC name: vmnic3
+    * port label: '4'
+    * this port will be one of the internal ports managed by PFSense
+- Port groups 'LAN3-LAN6' are attached to their own vSwitch in ESXI. 
+    * NIC name: vmnic4 - vmnic7
+    * port label: none
+    * these ports will internal ports managed by PFSense
 
 ## Hypervisor set up complete
 
