@@ -290,4 +290,4 @@ Here is the mapping of the various names of each port if you followed my steps
 
 The next step is to set up a PFSense VM in order to manage our network
 
-That is documented in the [ESXI PFSense guide](firstConfigPFSense.md) 
+That is documented in the [ESXI PFSense guide](/firstConfig/firstConfigPFSense.md) 
