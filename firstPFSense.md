@@ -10,29 +10,33 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
 ## Create PFSense Virtual Machine
 1. Add installation ISO to server
-    * Storage > datastores > Datastore Browser
-    * create a folder in datastore1 names 'OS ISOs'
-    * Click upload and upload the PFSense 2.6.0 installation .ISO
-    * Go ahead and upload the Ubuntu 22.04 ISO also
-    * Once the files have been uploaded, you are ready to build your VM!
+    * Storage > datastores > Datastore Browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupDatastoreBrowser.jpg))
+    * create a folder in datastore1 names 'OS ISOs' (screenshots
+    [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateDir.jpg)
+    [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateOSISOFolder.jpg))
+    * Click upload and upload the PFSense 2.6.0 installation .ISO ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadISO.jpg))
+    * you can see the progress in the top right of the datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadProgress.jpg))
+
 3. Create PFSense VM
-    * Virtual Machines > Create / Register VM
-    * Create a new virtual machine, next
+    * Virtual Machines > Create / Register VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM.jpg))
+    * Create a new virtual machine, next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM2.jpg))
+    * Select a name and guest OS screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM3.jpg))
         * Name - up to you, 'PFSense' is an obvious choice
         * Compatibility - ESXI 6.0 Virtual machine
         * Guest OS family - other
         * Guest OS Version - FreeBSD (64 bit)
         * Next
-    * Select the datastore you will install this VM onto, then click Next
-    * Customize settings:
-        * *note, these are simply my reccomendations for resource allocation. I've never had any issues with the following settings for PFSense*
-        * CPU : 2 (cores)
+    * Select the datastore you will install this VM onto, then click Next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM4.jpg))
+    * **Customize settings screen** 
+        * *note, these are simply my recommendations for resource allocation. I've never had any issues with the following settings for PFSense*
+        * CPU : 4 (cores)
         * Memory : 2048 MB
         * Hard Disk 1 : 25 GB
-        * CD/DVD drive 1 : datastore ISO file (select the pfsense iso you uploaded), make sure connect is checked
-        * Click 'Add Network Adapter' 6 times (so you end up with 7 adapters), then select each of your port groups you set up (WAN, LAN, LAN2-6). It should look like this when done
-        * Next
-        * Finish
+        * CD/DVD drive 1 : datastore ISO file (select the pfsense iso you uploaded)
+        * Change 'Network adapter 1' to WAN
+        * Click 'Add Network Adapter' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetAdapt.jpg)) 6 times (so you end up with 7 adapters), then select each of the other port groups you set up (LAN, LAN2-6). It should look like [this](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg) when done
+        * Click [Next](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsNext.jpg)
+        * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg)
     * After a brief delay, you will see your virtual machine show in the Virtual Machines section of the ESXI webgui
 4. Launch and configure PFSense VM
     * at this point you have a virtual machine with resources allocated, a blank virtual hard drive, and an installation ISO inserted into the virtual DVD drive. We will boot the installation ISO, install pfsense onto the virtual hard drive, and step through the basic post-installation configuration of PFSense (which should only take a few minutes)

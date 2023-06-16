@@ -258,6 +258,7 @@ Port names can be confusing:
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
 )
+- if you click on a physical NIC it will display the MAC address of the NIC ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiNICMAC.jpg))
 - Here is the mapping of the various names of each port if you followed my steps
     - The ILO port is for hardware management and will go unused
     - The default port groups 'Management Network' and 'VM Network' are attached to vSwitch0 in ESXI
