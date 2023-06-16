@@ -212,9 +212,13 @@ Once your PC and ESXI management webserver are on the network, open a web browse
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
-### License ESXI
+### **License ESXI**
 * If it's not already expanded, click 'navigator' on the left side to expand the main menu
-![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (you may have to expand the Navigator menu)
+![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) 
+* click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (screenshots 
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiLicenseServer.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm.jpg)
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm2.jpg))
 
     1. Set up networking:
         * We will have to configure virtual networks in order to expose physical ports to our VMs
