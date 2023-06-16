@@ -34,13 +34,16 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         * Hard Disk 1 : 25 GB
         * CD/DVD drive 1 : datastore ISO file (select the pfsense iso you uploaded)
         * Change 'Network adapter 1' to WAN
-        * Click 'Add Network Adapter' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetAdapt.jpg)) 6 times (so you end up with 7 adapters), then select each of the other port groups you set up (LAN, LAN2-6). It should look like [this](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg) when done
+        * Click 'Add Network Adapter' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetAdapt.jpg)) 6 times (so you end up with 7 adapters)
+            * ***note: don't worry about assigning Port Groups on this screen - you will certainly end up with mixed up port assignments. We will make sure they are correct shortly***
         * Click [Next](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsNext.jpg)
         * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg)
-    * After a brief delay, you will see your virtual machine show in the Virtual Machines section of the ESXI webgui ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVMSuccess.jpg))
+    * After a brief delay, you will see your virtual machine show in the Virtual Machines section of the ESXI webgui. Click it to bring up that VM's detail ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVMSuccess.jpg))
+    * click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14.jpg))
+    * 
 4. **Install PFSense onto VM**
 
-    At this point you have a virtual machine with resources allocated, a blank virtual hard drive, and an installation ISO inserted into the virtual DVD drive. 
+    At this point you have a virtual machine with resources allocated and virtual network interfaces mapped, a blank virtual hard drive, and an installation ISO inserted into the virtual DVD drive. 
     
     We will boot the installation ISO, install PFSense onto the virtual hard drive, and step through the basic post-installation configuration of PFSense
     
