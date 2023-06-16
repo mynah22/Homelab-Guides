@@ -224,7 +224,9 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 
  We will have to configure virtual networks in order to expose physical ports to our VMs
 
- The idea with this configuration is to use a dedicated and secure network appliance (PFSense) to manage all traffic. To do so, we will be creating 
+ The idea with this configuration is to use a dedicated and secure network appliance (PFSense) to manage all traffic. To do so, we will be creating isolated virtual switches, so ports will only share traffic if the PFSense firewall passes them on. 
+
+Please make sure to NOT assign vmnic0 (and the default port groups - 'Management Network' and 'VM Network') to any VMs - There are known and actively exploited vulnerabilities in version 6 of the ESXI hypervisor, which we can completely mitigate by leaving the esxi web configuration disconnected when not in use
 
 [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
 1. vswitch Name = WAN , Uplink 1 = vmnic1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch.jpg))
@@ -265,11 +267,21 @@ Port names can be confusing:
         * NIC name: vmnic1
         * port label: '2'
         * we will be attaching an outside network to this port
-    - Port group 'LAN' is attached to vSwitch WAN in ESXI. 
+    - Port group 'LAN' is attached to vSwitch LAN in ESXI. 
         * NIC name: vmnic2
         * port label: '3'
         * this port will be one of the internal ports managed by PFSense
-    - Port group 'LAN2' is attached to vSwitch WAN in ESXI. 
+    - Port group 'LAN2' is attached to vSwitch LAN2 in ESXI. 
         * NIC name: vmnic3
         * port label: '4'
         * this port will be one of the internal ports managed by PFSense
+    - Port groups 'LAN3-LAN6' are attached to their own vSwitch in ESXI. 
+        * NIC name: vmnic4 - vmnic7
+        * port label: none
+        * these ports will internal ports managed by PFSense
+
+## Hypervisor set up complete
+
+The next step is to set up a PFSense VM in order to manage our network
+
+That is documented in the [ESXI PFSense guide](firstConfigPFSense.md) 
