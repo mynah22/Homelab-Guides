@@ -208,7 +208,7 @@ Once your PC and ESXI management webserver are on the network, open a web browse
  - Click through the [Certificate Error](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
     - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
 
-* On the [Welcome Screen]()click 'Open the VMWare Host Client' to open the web interface
+* On the [Welcome Screen]() click 'Open the VMWare Host Client' to open the web interface
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
