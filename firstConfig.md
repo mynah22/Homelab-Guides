@@ -58,10 +58,11 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
          
 
-    3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu (screenshots 
-    [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
-    [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
-    [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
+    3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu 
+        - (screenshots 
+        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO1.jpg)
+        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO2.jpg)
+        [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantILO3.jpg) )
     4. *Immediately start pressing F8* -  you must press F8 while the RAID controller loads:
 
         ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController2.jpg) 
@@ -70,9 +71,11 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
 
-    The RAID menu you just entered is used to tell the raid controller what to do with attached drives
+    The RAID menu you just entered is used to configure RAID controller on how it will handle attached physical disks
     
     We will define what physical drives make up the 'logical drives' (RAID arrays that the hypervisor will see as a single disk). 
+
+    
     
     *Be prepared to lose all data on a drive if you change it's RAID configuration*
     
@@ -157,7 +160,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 8. Once installation is complete you will be presented with this [success screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg). 
 9. Remove the USB boot drive from the server, the press ENTER to reboot - ESXI will take a moment to shut down ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)), then the server will reboot
 
-### **Connect to ESXI host**
+### **Network connection to ESXI management interface**
 With the USB drive removed and network cables disconnected from the server, it will attempt to boot from the logical drive assigned as the boot disk by the RAID array
 
 If all goes well, you should see ESXI begin to boot  (screenshots 
@@ -172,39 +175,46 @@ Once ESXI has booted, you will be presented with [this screen](https://github.co
 
 Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
 
-* In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
+In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
 
 
-* There are two easy ways of doing this: DHCP and Link-Local (APIPA)
+There are two easy ways of doing this: DHCP and Link-Local (APIPA)
 
-1. DHCP
+1. **DHCP**
     - the Dynamic Host Configuration Protocol is an effective way for clients to obtain network configuration and unused IP addresses when they connect to a network
     - if you are following the 'Intro Network' architecture, all you have to do the ESXI webgui to obtain a DHCP address is:
         1. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an open port on your home network
         1. ESXI will obtain a DHCP lease from your home router
-2. Link-local (APIPA)
+        2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) - note that the IP address will depend on the range of the DHCP server it obtained it's lease from
+2. **Link-local (APIPA)**
     - if a client does not get any responses from a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
     - configuring a Link-Local network is as simple as placing devices on a network without a DHCP server:
         1. Disconnect your PC from all networks, including wireless
         2. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an ethernet port on your PC
         3. After a short while, the DHCP clients on your PC and the server will time out, and obtain random APIPA addresses
+        4. Your server should display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) once it's attempts to communicate with a DCHP server have timed out. Note that the IP will depend on what random APIPA address your NIC has decided to use
 
 
-* Once the server obtains a DHCP or APIPA IP address, it will update the IP it displays
+*Again, the goal here is to have your computer on the same network as the ESXI webserver so that you can communicate with it. Checking your PC's subnet and pinging the IP on the server are obvious ways to confirm that you are on the same network*
 
-* When the server displays a valid IP address, use your PC on the same network to browse to that IP
 
-* Click through the Certificate Error (see note below)
+### **ESXI Web Management**
+Once your PC and ESXI management webserver are on the network, open a web browser and browse to the IP address shown on the ESXI status page (
+[DHCP](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) / 
+[APIPA](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
 
-    - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine. This also happens with PFSense later*
 
-* click 'Open the VMWare Host Client' to open the web interface
-    * the 'Download vSphere Client for Windows' will allow you to download windows-native management software. Feel free to grab it (you might like the interface better), but I will be using the webGUI for my guides. 
+
+ - Click through the [Certificate Error](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+    - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
+
+* On the [Welcome Screen]()click 'Open the VMWare Host Client' to open the web interface
 * congrats, you are now able to fully configure your server and VMs!
-* you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the webgui
+* you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
 ### License ESXI
-* once logged in to the webgui, click Manage (under Host) > licensing > assign licnese, and enter your ESXI 6 license key (you may have to expand the Navigator menu)
+* If it's not already expanded, click 'navigator' on the left side to expand the main menu
+![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (you may have to expand the Navigator menu)
 
     1. Set up networking:
         * We will have to configure virtual networks in order to expose physical ports to our VMs
