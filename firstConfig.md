@@ -145,7 +145,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_5.jpg))
 
 ### **Install ESXI to boot disk**
- Proceed with steps in the ESXI Installation Guide - it's pretty simple:
+ Proceed with steps in the [ESXI Installation Guide]() - it's pretty simple:
 1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
 2. F11 to accept EULA (screenshots 
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
@@ -194,12 +194,11 @@ There are two easy ways of doing this: DHCP and Link-Local (APIPA)
         3. After a short while, the DHCP clients on your PC and the server will time out, and obtain random APIPA addresses
         4. Your server should display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) once it's attempts to communicate with a DCHP server have timed out. Note that the IP will depend on what random APIPA address your NIC has decided to use
 
-
 *Again, the goal here is to have your computer on the same network as the ESXI webserver so that you can communicate with it. Checking your PC's subnet and pinging the IP on the server are obvious ways to confirm that you are on the same network*
 
 
 ### **ESXI Web Management**
-Once your PC and ESXI management webserver are on the network, open a web browser and browse to the IP address shown on the ESXI status page (
+Once your PC and ESXI management webserver are on the same network, open a web browser and browse to the IP address shown on the ESXI status page (
 [DHCP](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) / 
 [APIPA](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
 
@@ -213,33 +212,39 @@ Once your PC and ESXI management webserver are on the network, open a web browse
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
 ### **License ESXI**
-* If it's not already expanded, click 'navigator' on the left side to expand the main menu
+1. If it's not already expanded, click 'navigator' on the left side to expand the main menu
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) 
-* click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (screenshots 
+2. Click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (screenshots 
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiLicenseServer.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm.jpg)
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm2.jpg))
 
-    1. Set up networking:
-        * We will have to configure virtual networks in order to expose physical ports to our VMs
-        * Networking > virtual switches > add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
-            1. vswitch Name = WAN , Uplink 1 = vmnic1
-            2. vswitch Name = LAN , Uplink 1 = vmnic2
-            3. vswitch Name = LAN2 , Uplink 1 = vmnic3
-            4. vswitch Name = LAN3 , Uplink 1 = vmnic4
-            5. vswitch Name = LAN4 , Uplink 1 = vmnic5
-            6. vswitch Name = LAN4 , Uplink 1 = vmnic6
-            7. vswitch Name = LAN4 , Uplink 1 = vmnic7
-        * Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
-            1. name = WAN, Virtual Switch = WAN
-            2. name = LAN, Virtual Switch = LAN
-            3. name = LAN2, Virtual Switch = LAN2
-            4. name = LAN3, Virtual Switch = LAN3
-            5. name = LAN4, Virtual Switch = LAN4
-            6. name = LAN5, Virtual Switch = LAN5
-            7. name = LAN6, Virtual Switch = LAN6
-        * Here's what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created:
-        * Port names can be confusing:
-            - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps. 
-    
-    
+### **Set up networking:**
+
+ We will have to configure virtual networks in order to expose physical ports to our VMs
+
+ The idea with this configuration is to use a dedicated and secure network appliance (PFSense) to manage all traffic. To do so, we will be creating 
+
+ [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
+1. vswitch Name = WAN , Uplink 1 = vmnic1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch.jpg))
+2. vswitch Name = LAN , Uplink 1 = vmnic2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch2.jpg))
+3. vswitch Name = LAN2 , Uplink 1 = vmnic3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch3.jpg))
+4. vswitch Name = LAN3 , Uplink 1 = vmnic4
+5. vswitch Name = LAN4 , Uplink 1 = vmnic5
+6. vswitch Name = LAN4 , Uplink 1 = vmnic6
+7. vswitch Name = LAN4 , Uplink 1 = vmnic7
+
+Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
+1. name = WAN, Virtual Switch = WAN 
+2. name = LAN, Virtual Switch = LAN 
+3. name = LAN2, Virtual Switch = LAN2 
+4. name = LAN3, Virtual Switch = LAN3 
+5. name = LAN4, Virtual Switch = LAN4
+6. name = LAN5, Virtual Switch = LAN5
+7. name = LAN6, Virtual Switch = LAN6
+
+
+Here's what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created:
+
+Port names can be confusing:
+    - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps.
