@@ -234,7 +234,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 6. vswitch Name = LAN4 , Uplink 1 = vmnic6
 7. vswitch Name = LAN4 , Uplink 1 = vmnic7
 
-[Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVPortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
+[Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
 1. name = WAN, Virtual Switch = WAN 
 2. name = LAN, Virtual Switch = LAN 
 3. name = LAN2, Virtual Switch = LAN2 
