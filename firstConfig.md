@@ -133,45 +133,44 @@ With everything in the Server Setup section above ready, we are ready to get sta
     6. *you do not need to come back to the RAID menu again unless you are adding / changing disk configuration* 
 
 ## **Installing hypervisor (ESXI)**
-- When you exit the RAID menu, the server will start to attempt to boot from the various bootable hardware (CD, USB, network/PXE over ethernet and fiber, and finally the RAID controller), in the order configured in BIOS
-- the server attempts to boot from the inserted USB stick before hard drives because USB drives have a higher boot priority
+- When you exit the RAID menu, the server will start to attempt to boot from the various bootable hardware (CD, USB, network/PXE over ethernet and fiber, and finally the RAID controller), in the order configured in BIOS 
 - I use Ventoy, so I was presented with an OS select screen (screenshots
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)), then ESXI began to boot. If you are using Rufus or a similar tool you should see ESXI load directly
-- When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay [screenshot]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantESXIVentoy.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantESXIVentoy2.jpg)) - I selected the ESXI 6.0.0 image and it began to boot. If you are using Rufus or a similar tool you should see ESXI load directly
+- When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay [screenshot]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_2.jpg))
 - ESXI will take a few minutes to load (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_3.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_4.jpg)
-[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_5.jpg))
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_3.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_4.jpg)
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_5.jpg))
 
 ### **Install ESXI to boot disk**
  Proceed with steps in the [ESXI Installation Guide]() - it's pretty simple:
-1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_6.jpg))
 2. F11 to accept EULA (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_7.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_8.jpg))
 3. Select the disk you would like to install to using arrow keys, then press ENTER - *this has to be the logical disk you set as the boot disk in the RAID menu.* ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg))
-4. Select your keyboard layout, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg))
+4. Select your keyboard layout, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_10.jpg))
 5. Set a password, ENTER (screenshots
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg))
-6. F11 to confirm install to selected disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg))
-7. ESXI will take a few minutes to install ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg))
-8. Once installation is complete you will be presented with this [success screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg). 
-9. Remove the USB boot drive from the server, the press ENTER to reboot - ESXI will take a moment to shut down ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg)), then the server will reboot
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_11.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_12.jpg))
+6. F11 to confirm install to selected disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_13.jpg))
+7. ESXI will take a few minutes to install ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_14.jpg))
+8. Once installation is complete you will be presented with this [success screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_15.jpg). 
+9. Remove the USB boot drive from the server, the press ENTER to reboot - ESXI will take a moment to shut down ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_16.jpg)), then the server will reboot
 
 ### **Network connection to ESXI management interface**
 With the USB drive removed and network cables disconnected from the server, it will attempt to boot from the logical drive assigned as the boot disk by the RAID array
 
 If all goes well, you should see ESXI begin to boot  (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
-[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot2.jpg)
+[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot3.jpg)
+[3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot4.jpg))
 
-* ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_Disks.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+* ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate18.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
 
 
-Once ESXI has booted, you will be presented with [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+Once ESXI has booted, you will be presented with ![this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6.jpg)
 
 Further configuration is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing the hypervisor & Virtual Machines over HTTPS.
 
@@ -185,29 +184,29 @@ There are two easy ways of doing this: DHCP and Link-Local (APIPA)
     - if you are following the 'Intro Network' architecture, all you have to do the ESXI webgui to obtain a DHCP address is:
         1. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an open port on your home network
         1. ESXI will obtain a DHCP lease from your home router
-        2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) - note that the IP address will depend on the range of the DHCP server it obtained it's lease from
+        2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) - note that the IP address will depend on the range of the DHCP server it obtained it's lease from
 2. **Link-local (APIPA)**
     - if a client does not get any responses from a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
     - configuring a Link-Local network is as simple as placing devices on a network without a DHCP server:
         1. Disconnect your PC from all networks, including wireless
         2. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an ethernet port on your PC
         3. After a short while, the DHCP clients on your PC and the server will time out, and obtain random APIPA addresses
-        4. Your server should display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) once it's attempts to communicate with a DCHP server have timed out. Note that the IP will depend on what random APIPA address your NIC has decided to use
+        4. Your server should display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot7.jpg) once it's attempts to communicate with a DCHP server have timed out. Note that the IP will depend on what random APIPA address your NIC has decided to use
 
 *Again, the goal here is to have your computer on the same network as the ESXI webserver so that you can communicate with it. Checking your PC's subnet and pinging the IP on the server are obvious ways to confirm that you are on the same network*
 
 
 ### **ESXI Web Management**
 Once your PC and ESXI management webserver are on the same network, open a web browser and browse to the IP address shown on the ESXI status page (
-[DHCP](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg) / 
-[APIPA](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg))
+[DHCP](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) / 
+[APIPA](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot7.jpg))
 
 
 
- - Click through the [Certificate Error](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi_2.jpg)
+ - Click through the [Certificate Error](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/certError.jpg)
     - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
 
-* On the [Welcome Screen]() click 'Open the VMWare Host Client' to open the web interface
+* On the [Welcome Screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/connectionChoicesESXI.jpg) click 'Open the VMWare Host Client' to open the web interface
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
@@ -235,16 +234,18 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 7. vswitch Name = LAN4 , Uplink 1 = vmnic7
 
 [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
-1. name = WAN, Virtual Switch = WAN 
-2. name = LAN, Virtual Switch = LAN 
-3. name = LAN2, Virtual Switch = LAN2 
+1. name = WAN, Virtual Switch = WAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate1.jpg))
+2. name = LAN, Virtual Switch = LAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate2.jpg)) 
+3. name = LAN2, Virtual Switch = LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate3.jpg)) 
 4. name = LAN3, Virtual Switch = LAN3 
 5. name = LAN4, Virtual Switch = LAN4
 6. name = LAN5, Virtual Switch = LAN5
 7. name = LAN6, Virtual Switch = LAN6
 
 
-Here's what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created:
+[Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
+
+### **Understand port assignments**
 Port names can be confusing:
     - The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names. Here is a table that maps all of the names if you followed my steps.
