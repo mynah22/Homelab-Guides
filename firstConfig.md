@@ -174,7 +174,7 @@ Once ESXI has booted, you will be presented with a simple window showing the net
 
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6_2.jpg)
 
-All further configuration of ESZI and VMS is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing everything about the hypervisor & Virtual Machines.
+All further configuration of ESXI and Virtual Machines is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing everything about the hypervisor & Virtual Machines.
 
 In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
 
@@ -222,11 +222,16 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 
 ### **Set up networking:**
 
- We will have to configure virtual networks in order to expose physical ports to our VMs
+We will have to configure virtual networks in order to expose physical ports to our VMs
 
- The idea with this configuration is to use a dedicated and secure network appliance (PFSense) to manage all traffic. To do so, we will be creating isolated virtual switches, so ports will only share traffic if the PFSense firewall passes them on. 
+The idea with this configuration is to use a dedicated network appliance (PFSense) to manage all traffic. To do so, we will be creating isolated virtual  networks on each physical port, and assigning them to the pfsense vm. 
 
-Please make sure to NOT assign vmnic0 (and the default port groups - 'Management Network' and 'VM Network') to any VMs - There are known and actively exploited vulnerabilities in version 6 of the ESXI hypervisor, which we can completely mitigate by leaving the esxi web configuration disconnected when not in use
+- *note on vSwitches and port groups:*
+
+    *We are building a virtual network architecture where each physical port is isolated, with it's own virtual switch and port group. This very straightforward architecture lets us use PFSense (as a firewall / router) to manage traffic between ports.*
+
+    *ESXI vSwitches and port groups can create very complex networks, and can be leveraged for many of the functions we are using PFSense for.  I want to stress that using ESXI for network functions **should be avoided**. ESXI is **not designed to be a primary network appliance**. PFSense IS built to be a primary network appliance - It has bulletproof security, can provide any network service you need, and is super easy to configure to boot. Use PFSense for all traffic management, including between VMs.*
+
 
 [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
 1. vswitch Name = WAN , Uplink 1 = vmnic1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch.jpg))
@@ -249,42 +254,7 @@ Please make sure to NOT assign vmnic0 (and the default port groups - 'Management
 
 [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
-
-### **Understanding port assignments**
-Port names can be confusing:
-
-The port number physically listed on the server, the hardware NIC name, port group in ESXI, and interface name in PFSense are all different. Labelling your ports is highly recommended, but you won't be able to fit all of the names.
-- *NOTE: the numbers written on ports 1-4 are ONE HIGHER than the hardware NIC names that you see in BIOS & ESXI - vmnic0 corresponds to the port labeled '1', vmnic1 is '2' and so on*
-
-**Ways to ID ports**
-
-- If you click on a port group you can see what NIC is attached: (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
-)
-- if you click on a physical NIC it will display the MAC address of the NIC ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiNICMAC.jpg))
-
-Here is the mapping of the various names of each port if you followed my steps
-- The ILO port is for hardware management and will go unused
-- The default port groups 'Management Network' and 'VM Network' are attached to vSwitch0 in ESXI
-    * the only NIC attached is vmnic0, labeled '1' on the server
-    * we are leaving this port / port group / vswitch unattached to other networks for security reasons
-- Port group 'WAN' is attached to vSwitch WAN in ESXI. 
-    * NIC name: vmnic1
-    * port label: '2'
-    * we will be attaching an outside network to this port
-- Port group 'LAN' is attached to vSwitch LAN in ESXI. 
-    * NIC name: vmnic2
-    * port label: '3'
-    * this port will be one of the internal ports managed by PFSense
-- Port group 'LAN2' is attached to vSwitch LAN2 in ESXI. 
-    * NIC name: vmnic3
-    * port label: '4'
-    * this port will be one of the internal ports managed by PFSense
-- Port groups 'LAN3-LAN6' are attached to their own vSwitches in ESXI. 
-    * NIC name: vmnic4 - vmnic7
-    * port label: none
-    * these ports will be internal ports managed by PFSense
+A detailed [explanation](firstPFSense.md#check-interface-assignments) of port assignments and names can be found in the next guide
 
 ## Hypervisor set up complete
 
