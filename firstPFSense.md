@@ -100,9 +100,27 @@ We are going to go through all of these mappings so that you are able to documen
     - vmnic1 is the NIC on the port labelled '2'
     - vmnic2 is the NIC on the port labelled '3'
     - vmnic3 is the NIC on the port labelled '4'
+    - vmnic4-7 need to be mapped to physical ports
 
-    go to Networking > Physical NICs and click 'Refresh' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs23.jpg))
-    - 
+    #### **ID physical ports**
+    go to Networking > Physical NICs ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs24.jpg))
+
+
+    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs23.jpg)
+    
+    We are going to ID unknown ports by plugging an ethernet cable into a known port and an unknown port:
+    
+    1. plug an ethernet cable into a known port (I chose the one labeled '4') on one side, and one of the unknown ports on the other 
+    2. Refresh the Physical NICs page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs22.jpg))
+    3. You should see three NICs with a link: 
+        - vmnic0 (esxi hypervisor - the network where you are connected to the webgui)
+        - the known port you plugged into (port '4' in my example)
+        - one of the unknown ports
+
+        in this example, we know that the unknown port we plugged into corresponds to vmnic7 
+
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs25.jpg)
+    4. 
 
 
 **Ways to ID ports**
