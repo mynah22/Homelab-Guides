@@ -120,15 +120,33 @@ We are going to go through all of these mappings so that you are able to documen
         in this example, we know that the unknown port we plugged into corresponds to vmnic7 
 
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs25.jpg)
-    4. 
+    4. repeat steps for all unknown ports, you now know the NIC names of all physical ports!
 
 
-**Ways to ID ports**
 
-- If you click on a port group you can see what NIC is attached: (screenshots 
-[1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
-[2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
-)
+2. ### **Port Group Names**
+    you now should be able to look at a physical port and say it's NIC name (vmnic0-7) 
+
+    We will now determine which NICs are attached to the port groups in ESXI
+
+    1. Double check the vSwitch / port group assignments
+
+        We have set things up in ESXI so that each NIC is assigned to a single, isolated vSwitch and port group
+
+        vswitch0 should ONLY be used for the default 'VM Network' and 'Management Network' port groups - this is for security reasons
+
+        There should be 7 vSwitches, named WAN, LAN, and LAN2-6. These should each be the sole members of 7 identically named port groups. Here's what is should look like in Networking>Port groups: 
+        
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs26.jpg)
+    
+    2. Check which NIC is on each port group
+
+        If you click on a port group you can see what NIC is attached: (screenshots 
+        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
+        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
+        )
+
+        
 - if you click on a physical NIC it will display the MAC address of the NIC ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiNICMAC.jpg))
 
 
