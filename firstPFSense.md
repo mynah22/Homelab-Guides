@@ -145,7 +145,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         
         - At the PFSense console main menu, '2' and ENTER to assign IP address on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs35.jpg))
         - '2' for LAN, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs36.jpg))
-        - type the ip address ***you want PFSense to have***. I used the first IP in the range - 10.0.1.1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs38.jpg)). ENTER
+        - type the ip address ***you want PFSense to have***. I used the first IP in the range - 10.0.1.1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs38.jpg)). **Write this IP down - you will need it to connect to the PFSense webconfigurator**. ENTER
         - enter the bitwise subnet mask - 24 in our case ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs39.jpg)). ENTER
         - We are configuring a LAN - ENTER for no upstream gateway ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs40.jpg))
         - ENTER for no ipv6 address ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs41.jpg))
@@ -156,21 +156,38 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         - Things will reload and you will se the new ip assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs46.jpg)). Press ENTER to return to the PFSense console main menu
 
     4. #### **Network rearrange**
+
+        *note: we are disconnecting the ESXI management server. You can always attach port 1 / vmnic0 to the same network as your PC in order to access the ESXI webgui. **Write down the PFSense LAN ip if you have not already***
+
         We are going to move some cabling to accomplish the following goals:
         - ILO (hardware management) port not in use
-        - port 1 is used for ESXI management ONLY, and is unplugged when not configuring VMs
+        - port 1 (vmnic0) is used for ESXI management ONLY, and is unplugged when not configuring VMs
         - port 2 (or whichever port you have assigned to WAN in PFSense) is used for the WAN connection. This will be your home network at first, but can easily be your cable modem if / when you feel comfortable moving PFSense to the edge of your network.
         - the remaining 6 ports are managed by PFSense
         - at first, port 3 (or whichever port you have assigned to LAN in PFSense) will be the only way to connect to / configure PFSense
 
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/firstConfigDoubleNat.jpg)
 
-        Here is the rundown:
+        Here a rundown of the new cabling:
+        - remove all network cabling from your server
+        - disconnect your PC from all networks, including wifi
+        - plug an ethernet cable into 
+            1. the physical port corresponding to the LAN interface as assigned in PFSense in the [assign interfaces](#assign-interfaces) section above (aren't you glad you made a map of port to interface names?)
+            2. The PC you are using to configure your homelab
+        - plug another cable into
+            1. the physical port corresponding to the WAN interface as assigned in PFSense in the [assign interfaces](#assign-interfaces) section above
+            2. an open port in your home network
 
+    5. ### **Finish pfsense config via webgui**
 
+        With the above network changes, you should be able to use a browser on your PC to connect to the PFSense webgui
 
+        -  Click through the [Certificate Error](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/certError.jpg)
+        
+            *when you browse to the PFSense webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
 
-5. Finish pfsense config via webgui
+        - Whaddup PFSense Webgui logon! ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/certError.jpg))
+
     * What we are going to do is create a flat LAN, with WAN plugged into your home network, and all other ports grouped into one 'LAN' interface. This will give you a bunch of ports you can plug into while you get started, but as you build more advanced networks you can start to split ports into seperate, isolated networks as needed (and manage traffic between them with firewall rules)
     * For now, disconnect all cables from the server, and disconnect your PC from all networks (including Wi-Fi). 
     * Then connect am ethernet cable to your PC on one side, and the server port assigned to LAN (labeled '3', vmnic2, em1) on the other. 
