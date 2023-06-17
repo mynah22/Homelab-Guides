@@ -85,120 +85,92 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
     - In the ESXI webgui, you can interact with the hypervisor while the VM console window is open, just drag it out of the way. The VM will also keep running if you [close](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs17.jpg) the window - click the [console preview image](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs18.jpg) to open the VM output again
 
     PFSense has been installed and is ready to be configured!
-## **Understanding port assignments**
-Port names can be confusing:
 
-The port number physically listed on the server, the hardware NIC name, port group/vswitch in ESXI, and interface name in PFSense are all different. 
+4. ### **Configure PFSense**
+    to proceed, you are really going to want to make sure you know which pfsense interface names for all of the physical ports on the server
 
-We are going to go through all of these mappings so that you are able to document / label your ports with confidence
+    Thankfully, this is easy if you have followed [the Understanding Port Assignment instructions here](firstConfig.md#understanding-port-assignments).
 
-1. ### **Physical ports & NIC names**
-    There are 9 total ethernet ports on this server. Four are unlabeled, and the other five are labeled 1-4 and 'ILO'. 
-    - the ILO port is for hardware management, and will not be available for our use
-    - the four labeled and four unlabeled NICs are named vmnic0-vmnic7
-    - vmnic0 is the NIC on the port labelled '1'
-    - vmnic1 is the NIC on the port labelled '2'
-    - vmnic2 is the NIC on the port labelled '3'
-    - vmnic3 is the NIC on the port labelled '4'
-    - vmnic4-7 need to be mapped to physical ports
+    Having determined the NIC and port group of each physical port, we are ready to do the post installation configuration of pfsense:
 
-    #### **ID physical ports**
-    go to Networking > Physical NICs ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs24.jpg))
+    1. #### **Determine interface mapping**
+        - Type '1' at the PFSense main menu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs16.jpg)), press ENTER
+        - you should see a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28.jpg). It displays the interfaces that PFSense sees, including their name and MAC address. 
+        - In the PFSense page on the ESXI web management, click a network adapter to expand it's view
+        - You can see the MAC address of the network adapter. Look for the interface in the PFSense window with the matching MAC address
 
+            ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs29.jpg)
 
-    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs23.jpg)
-    
-    We are going to ID unknown ports by plugging an ethernet cable into a known port and an unknown port:
-    
-    1. plug an ethernet cable into a known port (I chose the one labeled '4') on one side, and one of the unknown ports on the other 
-    2. Refresh the Physical NICs page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs22.jpg))
-    3. You should see three NICs with a link: 
-        - vmnic0 (esxi hypervisor - the network where you are connected to the webgui)
-        - the known port you plugged into (port '4' in my example)
-        - one of the unknown ports
+        [The Understanding Port Assignment instructions](firstConfig.md#understanding-port-assignments) left you with a map of the following information for the 7 NICs we are managing with PFSense:
+        - physical port label
+        - NIC name
+        - ESXI port group / vSwitch name
 
-        in this example, we know that the unknown port we plugged into corresponds to vmnic7 
+        to that map, add the interface name as PFSense sees it. For example, I had the following for one of my ports:
+        - Port label: 'a'
+        - NIC name: vmnic5
+        - ESXI port group / vSwitch name: LAN6
+        - PFSense interface: em6
 
-        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs25.jpg)
-    4. repeat steps for all unknown ports, you now know the NIC names of all physical ports!
+        Using the above technique (expand network adapter, match to interface name in pfsense using MAC), add the interface names for all 7 ports we are managing (WAN, LAN, and LAN2-6)
 
+        that's it - all names for ports have been mapped! Your future self will thank you for taking the time to understand and write these details down :)
 
+    2. #### **Assign Interfaces**
+        Back to the PFSense console:
 
-2. ### **Port Group Names**
-    you now should be able to look at a physical port and say it's NIC name (vmnic0-7) 
+        Before we mapped interface names to port groups, we had entered '1' in the PFSense console main menu
 
-    We will now determine which NICs are attached to the port groups in ESXI
+        That option ('assign interfaces'), is used to assign the role of the network interfaces that PFSense sees. One of PFSense's primary functions is as a NAT router - to perform that function, it has to know which port is designated for the WAN connection, and which port(s) are on the 'inside' of the NAT (LAN ports)
 
-    1. Double check the vSwitch / port group assignments
+        - N for no vlan set up([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs34.jpg)), ENTER
+        - type the interface name that corresponds to the WAN port group (see Determine Interface Mapping above), ENTER to assign that interface as WAN in PFSense ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs30.jpg))
+        - type the interface name that corresponds to the LAN port group, ENTER to assign as LAN in PFSense ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs31.jpg))
+        - You could assign optional interfaces (LAN2-LAN6) here, but it's easier in the PFSense webgui - ENTER to skip ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs32.jpg))
+        - type 'y', then ENTER to confirm assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs33.jpg))
+        - PFSense will take a little while to apply the interface settings. You will then return to the console main menu
+    3. #### **Change LAN IP Configuration**
+        The network we are building is sitting inside of our home network ("Double NAT"). To make this work, the network inside the PFSense NAT needs to operate on a different subnet than the WAN (in our case - our home network)
 
-        We have set things up in ESXI so that each NIC is assigned to a single, isolated vSwitch and port group
+        By default PFSense will use the 192.168.1.0/24 subnet (255.255.255.0 mask). Your home network is likely running on a 192.168 subnet, and there is a good chance that it is running on 192.168.1.0/24
 
-        vswitch0 should ONLY be used for the default 'VM Network' and 'Management Network' port groups - this is for security reasons
-
-        There should be 7 vSwitches, named WAN, LAN, and LAN2-6. These should each be the sole members of 7 identically named port groups. Here's what is should look like in Networking>Port groups: 
+        Connect a machine to your home network, and determine your home network's subnet (`ipconfig` is a cli tool on windows that will display this info - [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs37.jpg)), you should be able to find this info in the settings menu of any operating system
         
-        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs26.jpg)
-    
-    2. Check which NIC is on each port group
+        There are a few IP ranges that are reserved for 'private' networks (inside at NAT router, not internet-facing IPs):
+        - 192.168.0.0/16
+        - 172.16.0.0/12
+        - 10.0.0.0/8
 
-        If you click on a port group you can see what NIC is attached: (screenshots 
-        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg)
-        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap.jpg)
-        )
-
+        subnets are defined *per interface*, so pick a /24 network (255.255.255.0) within one of the private ranges above that does not overlap with your home network subnet. I went with 10.0.1.0/24 (10.0.1.1 - 10.0.1.255)
         
-- if you click on a physical NIC it will display the MAC address of the NIC ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiNICMAC.jpg))
+        - At the PFSense console main menu, '2' and ENTER to assign IP address on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs35.jpg))
+        - '2' for LAN, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs36.jpg))
+        - type the ip address ***you want PFSense to have***. I used the first IP in the range - 10.0.1.1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs38.jpg)). ENTER
+        - enter the bitwise subnet mask - 24 in our case ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs39.jpg)). ENTER
+        - We are configuring a LAN - ENTER for no upstream gateway ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs40.jpg))
+        - ENTER for no ipv6 address ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs41.jpg))
+        - type 'y' to enable DHCP on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs42.jpg))
+        - The PFSense DHCP server we just enabled will assign IPs in a fixed range. Enter the beginning of that range (I went with 10.0.1.2  - the next available IP), ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs43.jpg))
+        - Enter the end of the DHCP range. I went with 100 IPs, so 10.0.1.102 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs44.jpg)), ENTER
+        - type 'n' then ENTER to keep webconfigurator connections encrypted ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs45.jpg)) 
+        - Things will reload and you will se the new ip assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs46.jpg)). Press ENTER to return to the PFSense console main menu
+
+    4. #### **Network rearrange**
+        We are going to move some cabling to accomplish the following goals:
+        - ILO (hardware management) port not in use
+        - port 1 is used for ESXI management ONLY, and is unplugged when not configuring VMs
+        - port 2 (or whichever port you have assigned to WAN in PFSense) is used for the WAN connection. This will be your home network at first, but can easily be your cable modem if / when you feel comfortable moving PFSense to the edge of your network.
+        - the remaining 6 ports are managed by PFSense
+        - at first, port 3 (or whichever port you have assigned to LAN in PFSense) will be the only way to connect to / configure PFSense
+
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/firstConfigDoubleNat.jpg)
+
+        Here is the rundown:
 
 
-### **Check Interface Assignments**
-
-    we're going to take a take a second to identify the following:
-    
-    - The mapping of physical ports to vSwitches/port groups in ESXI
-    - What the corresponding interfaces are named in PFSense
-
-    This will allow us to firmly map the PFSense interfaces to physical ports, and is an excellent time to take some quick notes / screenshots, and to label ports
 
 
-
-    **Physical ports to vSwitches / port groups:**
-
-    - Under Virtual Machines, [click](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs20.jpg) the PFSense VM to open it's configuration page
-    - Under 'Hardware Configuration' you will see the network adapters assigned to the pfsense vm. [Click](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs20.jpg the network name and you will see the [port group details page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs21.jpg). Record this information for all 7 interfaces assigned to PFSense (WAN, LAN, LAN2-6) - I like to take a screenshot (greenshot is an excellent free utility) of each page
-    -  
-
-    **Physical ports to NIC names**
-    
-    network interfaces are numbered starting at 0 (vmnic0, vmnic1, vmnic2 etc). The first four (vmnic0 - vmnic3) are the built in ports, while 
-
-4. **Configure PFSense**
-    1. Type '1' at the PFSense main menu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs16.jpg)), ENTER
-    2. N for no vlan set up([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs16.jpg)), ENTER
-    3. type 'em0', then ENTER to assign em0 to WAN
-    4. type 'em1', then ENTER to assign em1 to LAN
-    5. leave prompt empty then ENTER to skip optional interfaces
-    6. type 'y', then ENTER to confirm
-    7. wait for a couple of minutes for config to be applied, then you will be at the main menu
-    8. At the main menu, '2' and ENTER to assign IP address on the LAN interface
-    * type '2', ENTER to configure LAN
-    * enter a new LAN IP address. MAKE SURE THIS IS NOT THE SAME IP RANGE AS YOUR CURRENT HOME NETWORK (usually 192.168.1.1), (I used 10.0.0.1), then ENTER
-    * enter 24 as subnet mask (corresponds to 255.255.255.0), ENTER
-    * don't enter an upstream gateway, ENTER
-    * ENTER for no ipv6 address
-    * type 'y', ENTER for DHCP server, type '10.0.0.2' ENTER for start of DHCP range, then '10.0.0.255' ENTER for end of DHCP range
-    * type 'n', ENTER to not revert to http
-    * you will recive a confirmation after your changes are applied. ENTER to return to main menu
-* okay, we are now ready to enter the PFsense webgui in order to finish our basic configuration.
 5. Finish pfsense config via webgui
-    * A note on port names:
-        - if you followed the steps above exactly, then your port names will match what I list here. Otherwise, you may have mapped them to different physical ports. You can check which physical nic is mapped to which port group by clicking the port group name under Networking. Here is an example. the vmnic numbering starts at 0, so vmnic0 is the port labeled '1;, vmnic1 is the port labeled '2' etc.
-    * There are currently a few services listening on multiple ports of the server, and it can be easy to get turned around. Here is a summary:
-        * ILO (hardware access) port is not shared with ESXI, and should remain unplugged always
-        * the first physical port (labeled '1', vmnic0) has the ESXI web management server listening. It will obtain an ip via DHCP if plugged into a network with a DHCP server (like your home router), but can also be connected to via an APIPA / Link Local address on a network without DHCP (like plugging direct into your PC). Our port group config made sure this port is NOT shared with any VMs for security reasons
-        * physical ports 2 - 8 (7 NICs total) have been shared with the PFSense VM, using separate virtual switches (so every port is isolated)
-        * the second physical port (labeled '2', vmnic1, em0) is assigned as the WAN interface for PFSense - this will either be your home network (while you get started), or your cable modem / 'the internet' if you move your server to the edge of your network.
-        * the third physical port (labeled '3', vmnic2, em1) is assigned as the LAN interface for PFSense. Since we started inside our home network, we set an IP on the LAN interface that does NOT match the subnet of the home network (this is so NAT routing can function). A DHCP server is running on the LAN interface, so any devices plugged into the LAN server port (labeled '3', vmnic2, em1) will obtain an IP address
-        * the 4th-8th physical ports are visible to PFSense, but not yet configured (easiest to do so in PFSense webgui below)
     * What we are going to do is create a flat LAN, with WAN plugged into your home network, and all other ports grouped into one 'LAN' interface. This will give you a bunch of ports you can plug into while you get started, but as you build more advanced networks you can start to split ports into seperate, isolated networks as needed (and manage traffic between them with firewall rules)
     * For now, disconnect all cables from the server, and disconnect your PC from all networks (including Wi-Fi). 
     * Then connect am ethernet cable to your PC on one side, and the server port assigned to LAN (labeled '3', vmnic2, em1) on the other. 

@@ -254,7 +254,82 @@ The idea with this configuration is to use a dedicated network appliance (PFSens
 
 [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
-A detailed [explanation](firstPFSense.md#check-interface-assignments) of port assignments and names can be found in the next guide
+
+## **Understanding port assignments**
+Port names can be confusing:
+
+The port number physically listed on the server, the hardware NIC name, port group/vswitch in ESXI, and interface name in PFSense are all different. 
+
+We are going to go through all of these mappings so that you are able to document / label your ports with confidence
+
+1. ### **Physical ports & NIC names**
+    There are 9 total ethernet ports on this server. Four are unlabeled, and the other five are labeled 1-4 and 'ILO'. 
+    - the ILO port is for hardware management, and will not be available for our use
+    - the four labeled and four unlabeled NICs are named vmnic0-vmnic7:
+    - vmnic0 is the NIC on the port labelled '1'
+    - vmnic1 is the NIC on the port labelled '2'
+    - vmnic2 is the NIC on the port labelled '3'
+    - vmnic3 is the NIC on the port labelled '4'
+    - vmnic4-7 need to be mapped to physical ports
+
+    #### **ID physical ports**
+    go to Networking > Physical NICs ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs24.jpg))
+
+
+    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs23.jpg)
+    
+    We are going to ID unknown ports by plugging an ethernet cable into a known port and an unknown port:
+    
+    1. plug an ethernet cable into a known port (I chose the one labeled '4') on one side, and one of the unknown ports on the other 
+    2. Refresh the Physical NICs page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs22.jpg))
+    3. You should see three NICs with a link: 
+        - vmnic0 (esxi hypervisor - the network where you are connected to the webgui)
+        - the known port you plugged into (port '4' in my example)
+        - one of the unknown ports
+
+        in [this example]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs25.jpg)), we know that the unknown port we plugged into corresponds to vmnic7 
+
+    4. repeat steps for all unknown ports, you now know the NIC names of all physical ports!
+
+
+
+2. ### **Port Group Names**
+    you now should be able to look at a physical port and say it's NIC name (vmnic0-7) 
+
+    We will now determine which NICs are attached to the port groups in ESXI
+
+    1. Double check the vSwitch / port group assignments
+
+        - We have set things up in ESXI so that each NIC is assigned to a single, isolated vSwitch and port group
+
+        - vSwitch0 should ONLY be used for the default 'VM Network' and 'Management Network' port groups, this is for security reasons. vmnic0 is attached to this vSwitch - this allows us to connect to the esxi web management, but should not be attached to any other virtual networks. We WILL NOT be managing port 1 in pfsense. [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs27.jpg) is what vSwitch0 should look like (vm netowork, management network, and vmnic0 are the only things attached)
+
+        - There should be 7 vSwitches, named WAN, LAN, and LAN2-6. These should each be the sole members of 7 identically named port groups. [Here's](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs26.jpg) what is should look like in Networking>Port groups
+    2. Check which NIC is on each port group
+
+        If you [click](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap2.jpg) on a port group you can see what NIC is attached:
+
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPortMap3.jpg)
+
+        Repeat for all port groups - you now know which NIC is on each port group
+
+3. ### **Check your understanding**
+    as an exercise, pick one of the unlabelled physical ports. At this point, you should be able to determine the name of the NIC (vmnic_), and the port group name (WAN, LAN, or LAN2-6). Doing this a couple of times will help you keep all of these port names straight in your head - and make sure you get your labelling right!
+
+4. ### **Labelling and documentation**
+    port 1 is our esxi management port and can be labelled as such
+
+    You should record the following information for each of the other port:
+    - physical label (good time to add one to the blank ports - I went with 'a', 'b', 'c', 'd')
+    - NIC name (vmnic0-vmnic7)
+    - ESXI port group / vswitch name
+
+    keep this info handy, you will be adding another name once we build PFSense
+
+5. ### **PFSense Interface Names**
+    We will be able to easily map these port groups to their PFSense interface name with the information we gathered here - at that point you will have all names and physical ports mapped 
+
+
 
 ## Hypervisor set up complete
 
