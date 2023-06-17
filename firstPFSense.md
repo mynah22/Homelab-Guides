@@ -186,20 +186,36 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         
             *when you browse to the PFSense webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
 
-        - Whaddup PFSense Webgui logon! ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/certError.jpg))
+        - Whaddup PFSense Webgui logon! 
+            - Username: admin 
+            - Password: pfsense 
+        
+            ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs47.jpg))
+        
+        #### **PFSense setup wizard**
+        1. click 'Next' on the [first screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs48.jpg)
+        2. click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
+        2. **General information page**
+            - Hostname: the hostname that PFSense will respond to. I like the default 'pfSense'
+            - Domain: the domain of the internal network. If you own a Domain Name, then it should the domain.TLD (ie google.com). Otherwise the only rules are:
+                - do not use a domain that resolves on WAN (don't use ebay.com - probably )
+                - do not use a domain with .local as the TLD
+                - apparently these are the recommended TLDs to use for an internal network. I've included them with an example domain name:
+                    - .home (yourDomainName.home) - homelab.home
+                    - .lan (yourDomainName.lan) - joebob.lan
+                    - .private (yourDomainName.private) - testnetwork.private
+                    - .internal (yourDomainName.) - janesnet.internal
+            - Primary / Secondary DNS Servers
 
-    * What we are going to do is create a flat LAN, with WAN plugged into your home network, and all other ports grouped into one 'LAN' interface. This will give you a bunch of ports you can plug into while you get started, but as you build more advanced networks you can start to split ports into seperate, isolated networks as needed (and manage traffic between them with firewall rules)
-    * For now, disconnect all cables from the server, and disconnect your PC from all networks (including Wi-Fi). 
-    * Then connect am ethernet cable to your PC on one side, and the server port assigned to LAN (labeled '3', vmnic2, em1) on the other. 
-        - This will prevent your PC from being able to communicate with the ESXI web management console. That's okay, we will be able to reconnect after a short configuration on PFSense
-    * Your PC will grab a DHCP IP from PFSense after connecting the ethernet cable
-    * Browse to the IP you configured in step 8 above (also listed as the Gateway ip in `ipconfig` or your OS's equivilent)
-    * you will be presented with an HTTPS certificate error. This is because the PFSense server is encrypting your connection (very good!), but is using a self signed certificate that is not known to your PC. Installing the self signed certificate on your computer, or adding a CA to PFSense are options to get around this issue (and come witht the benefit of making a Man in the Middle attack more obvious), but are not neccesary and will not be covered in my guides. 
-    * Click through the HTTPS error and you will be presented with the PFSense logon screen
-        - Username: admin
-        - Passowrd: pfsense
-    * Click 'Next' on the first screen
-    * Click 'Next' on the Netgate support screen
+                - *note: by default, PFSense will use 127.0.0.1 (ie the loopback IP - use the PFSense server for DNS lookups) first, THEN use the primary / secondary DNS server. There is no need to set the primary to 127.0.0.1 - the local DNS server where cached lookups, Host / Domain Overrides & Aliases are kept is always consulted first, THEN the remote DNS servers you define as primary / secondary here. DNS Blackhole works because it actually resolves an IP address (that does not respond) - if it did not resolve an IP then it would defer the the DNS servers defined here.* 
+                * Set the primary / secondary DNS as you like - I like to steer clear of my ISPs DNS, and use alternates (common ones are the google, opendns, and cloudflare dns services like 8.8.8.8, 4.4.4.4 & 1.1.1.1). [This tool](https://grc.com/dns/benchmark.htm) can determine the fastest DNS servers for your network if you are serious about finding the server with the best performance. If you care about DNS security then you probably already have your preferences and I will not expound further. 
+            - uncheck 'override DNS'
+            - click 'Next'
+
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs50.jpg)
+        4.      click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
+        2. click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
+        2. click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
     * PFSense general information:
         * Set a hostname (hostname that will resolve to the pfsense server) and domain (use your WAN domain if you own one, or name your network whatever you want - just don't use `.local` or a domain that resolves on the WAN!)
         * Primary / seconday DNS setting: 
