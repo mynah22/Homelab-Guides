@@ -322,38 +322,73 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
         This section is a brief description of a few of the most obvious / simple ways to expand the network we have built
 
-        - Enable other interfaces
+        - **Enable other interfaces**
 
-            The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently
-            1. Configure interface
+            The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently. 
+
+            To do this, we will:
+            - Enable the interface
+            - configure ip & subnet settings for the interface
+            - spin up a DHCP server on the interface, and configure the DHCP range
+            - Create a firewall rule to allow traffic from this port to be routed  elsewhere
+
+            You will build more firewall rules as you segment your network, but this configuration is a quick way to get your interfaces up and running 
+
+            1. *Configure interface*
 
                 interfaces > LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg)) 
             
                 - Enable interface,
                 - set ipv4 to static
-                - set an ipv4 address and subnet that does not overlap with an internal network
-                - click 'save'
-            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg)
-            - click 'apply'
-            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs79.jpg)
+                - set an ipv4 address and subnet that does not overlap with an internal network (LAN subnet was 10.0.1.0/24, so I set LAN2 as 10.0.2.0/24)
+                - click 'save' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg))
+            - click 'apply' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs79.jpg))
 
-            2. Configure DHCP server
+            2. *Configure DHCP server*
                 - Services > DHCP Server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs78.jpg))
-                - click 'Enable DHCP server'. set the range of DHCP addresses (I chose 100 IPs) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pf82.jpg))
-                - click 'save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pf83.jpg))
-            3. Configure firewall rules
+                - click 'Enable DHCP server'. set the range of DHCP addresses (I chose 100 IPs) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs82.jpg))
+                - click 'save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs83.jpg))
+            3. *Configure firewall rules*
+
+                There are no firewall rules on this interface. This means that all packets originating on this interface will be treated with the default action - they will be blocked
+
+                We are going to create a firewall rule that will allow all ipv4 traffic to be routed
+
                 firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
                 
                 Click the interface you are configuring
 
-                add a rule:
-                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs85.jpg)
+                add a rule ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs84.jpg))
+
+                rule settings:
+                - Action: Pass (if a packet matches this rule, allow it to be routed)
+                - address family: IPv4 (this rule applies to ipv4 packets)
+                - Protocol: Any (this rule applies to any protocol)
+                - Source & destination : any (packets can match this rule regardless of source or destination ip)
+                - click Save
+
+                    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs85.jpg)
+
+                - click 'apply changes' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs86.jpg))
+            
+            alright, LAN2 is ready to rock! Now, any device you plug into LAN2 can send packets to LAN or WAN
+
+            Quick note about DHCP and subnets:
+            - We have enabled individual DHCP servers on each interface
+            - Connected devices will obtain DHCP IP configuration from the server on that interface. With the settings I used in my example, here are the IP configurations I obtained after plugging into [LAN](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs88.jpg) and [LAN2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs87.jpg) 
 
 
-        - Put an unmanaged switch on LAN
-            - The LAN port is already functional. Connecting this port to an unmanaged switch gives you a few ports on the same network
-        - vLAN trunk port
-            - you can use a single 
+
+        - **Connect an unmanaged switch to a LAN port**
+            
+            This method allows the connection of multiple devices to a single internal network. 
+            
+            Start by plugging an ethernet cable into a LAN port on one end, and connect the other end to an unmanaged switch. By doing this, any devices you connect to the unmanaged switch will become part of the LAN network to which the switch is connected.
+
+        - **vLAN trunk port**
+            This is a technique that allows you to route / firewall traffic between ports on a managed switch
+
+            
 
     
 
