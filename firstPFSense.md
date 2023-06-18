@@ -178,7 +178,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
             1. the physical port corresponding to the WAN interface as assigned in PFSense in the [assign interfaces](#assign-interfaces) section above
             2. an open port in your home network
 
-    5. ### **Finish pfsense config via webgui**
+    5. #### **Finish pfsense config via webgui**
 
         With the above network changes, you should be able to use a browser on your PC to connect to the PFSense webgui
 
@@ -204,7 +204,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
                     - .home (yourDomainName.home) - homelab.home
                     - .lan (yourDomainName.lan) - joebob.lan
                     - .private (yourDomainName.private) - testnetwork.private
-                    - .internal (yourDomainName.) - janesnet.internal
+                    - .internal (yourDomainName.internal) - janesnet.internal
             - Primary / Secondary DNS Servers
 
                 - *note: by default, PFSense will use 127.0.0.1 (ie the loopback IP - use the PFSense server for DNS lookups) first, THEN use the primary / secondary DNS server. There is no need to set the primary to 127.0.0.1 - the local DNS server where cached lookups, Host / Domain Overrides & Aliases are kept is always consulted first, THEN the remote DNS servers you define as primary / secondary here. DNS Blackhole works because it actually resolves an IP address (that does not respond) - if it did not resolve an IP then it would defer the the DNS servers defined here.* 
@@ -213,41 +213,103 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
             - click 'Next'
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs50.jpg)
-        4.      click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
-        2. click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
-        2. click 'Next' on the [support page](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs49.jpg)
-    * PFSense general information:
-        * Set a hostname (hostname that will resolve to the pfsense server) and domain (use your WAN domain if you own one, or name your network whatever you want - just don't use `.local` or a domain that resolves on the WAN!)
-        * Primary / seconday DNS setting: 
-            * by default, PFSense will use 127.0.0.1 (ie the loopback IP - use the PFSense server for DNS lookups) first, THEN use the primary / secondary DNS server. There is no need to set the primary to 127.0.0.1 - the local DNS server where cached lookups are are stored & Host / Domain Overrides and Aliases are configured is always consulted first, THEN the remote DNS servers you define as primary / secondary here. DNS Blackhole works because it actually resolves an IP address (that does not respond) - if it did not resolve an IP then it would defer the the DNS servers defined here. 
-            * Set the primary / secondary DNS as you like - I like to steer clear of my ISPs DNS, and use alternates (common ones are the google, opendns, and cloudflare dns services like 8.8.8.8, 4.4.4.4 & 1.1.1.1). This tool can help determine the fastest DNS servers for your network if you are serious about finding the server with the best performance. If you care about DNS security then you probably already have your preferences and I will not expound further. 
-        * Uncheck the Override DNS box - otherwise your ISP DNS can overwrite your config, which I think is garbage
-        * click 'next'
-    * NTP : leave default NTP server unless you have a preference. Select your time zone.'Next' to continue
-    * WAN: 
-        * top of the page: selectedtype = DHCP 
-        * bottom of the page: **uncheck the 'blvck private networks from entering via WAN'** if the WAN side of PFSense is your home network (reccomended config while you get started). This is because your home network uses a reserved private address as defined in RFC 1918 (192.168.x.x, 172.16/12 and 10.x.x.x), so to allow communications through the WAN side, you will have to allow RFC1918 IP traffic through. **PUT A STICKY NOTE TO CHANGE THIS ON YOUR WAN PORT** if you do this, as you will definetely want to uncheck then if / when you move to the edge of your network
-        * leave all other settings, click 'Next'
-    * LAN:
-        * you will see the config you set earlier (10.0.0.1/24 in my case)
-        * leave alone, click 'next'
-    * Set PFSense password, click 'next'
-    * Click 'relaod' to reload with the settings you configured
-    * After a little bit, you will be presented with a congratulations page. click 'finish''
-    * Accept the webgui eula
-    * congrats, you are done with the initial config of PGSense! Advanced configs are at your fingertips, but let's take a moment to leverage all the darn ports you have to get a flat LAN 
-6. You are going to want to build a bridge network in PFSense 
-    * in the pfsense webgui, click Interfaces > assignments. Then click '+ Add' five time to add the remaining interfaces. Click Save. 
-    * These will be named OP1 - OPT5 by default. if you click the interface name, you can rename them (go with LAN2 thorugh LAN5 to match our esxi names)
-    * With all interfaces added in pfsense and renamed, you will build a Bridge network over the LAN ports using This Guide https://eengstrom.github.io/musings/configure-pfsense-bridge-over-multiple-nics-as-lan - it exactly expains the process, I have nothing to add, except that our interfaces will be named differently than his example.
+        4. Set your timezone as appropriate. Leave the ntp server alone unless you have a preference. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs51.jpg))
+        2. On the WAN config page, leave everything at default (DHCP), except for the Block RFC1918 checkbox- uncheck this (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs52.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs53.jpg))
+            - *note: the reason we are unchecking this box is because our WAN port is plugged into another private network - our home network. for double NATting to work, **This box must be unchecked**. you will want to recheck it if you move PFSense to the edge of your network*
+        2. We already configured the LAN port IP, click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs54.jpg))
+        2. set a new admin password for pfsense ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs55.jpg))
+        2. click 'reload' to load configuration ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs56.jpg))
+        2. the system will reload, and you will be presented with a success screen. click 'Finish' (screenshots 
+        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs57.jpg)
+        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs58.jpg))
+        2. click 'Accept' on the copyright notice ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs60.jpg))
+        3. click 'close' on thank you ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs61.jpg))'
+        4. you should see a WAN IP in your home network subnet, and a LAN ip matching what you set the PFSense lan IP to ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs62.jpg))
+        5. if all of that checks out, your PC should be able to access internet resources - try browsing to an internet website on your PC. If you connect, you have successfully configured a double NAT network! 
 
-6. Reconfigure physical cabling
-    * You should have a single ethernet cable plugged into your Server's port configured as LAN in PFSense on one end, and your PC on the other
-    * plug an ethernet cable from your server port configued as WAN in pfsense (labeled '2', vmnic1, em0) to your home network. PFSense should grab a DHCP address and allow devices on the bridged LAN you created (LAN - LAN6) to connect to the internet
-    * plug an ethernet cable from your computer into the bridged netowrk (ports LAN - LAN6 should all behave the same)
-    * if you need to connect to ESXI, you can plug a ethernet cable into the ESXI management port (labeled '1') on one end, and the bridged network on the other. Connect to it using any device on the bridged network. Not sure of the ESXI web configurator's IP? In pfsense, check status > DHCP leases
-    * now, you can connect to pfsense, esxi, and the internet while plugged into the bridge
-    * you can split ports off to create isolated networks as needed
+    6. #### **Rename OPT interfaces**
+
+        1. In PFSense webgui: Interfaces> assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs63.jpg))
+        2. Click 'Add' 5 times. This should assign all available interfaces as OPT1-OPT4. Click 'Save'  (screenshots 
+        [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs67.jpg)
+        [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs68.jpg)) 
+        3. Rename interfaces:
+            Click through all of the OPT interfaces, taking the following steps:
+            
+            1. click the OPT interface name ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs64.jpg))
+            2. check 'enable interface'.  change description to match the ESXI port group it's mapped to - for me 'OPT1' interface was using the em2 network port, which corresponds to the LAN2 port group in ESXI, so I will change the description to 'LAN2' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs65.jpg))
+                - *isn't it nice that you took the time to map port names? I can also say that em2/LAN2 is using vmnic3 / the port labelled '4' because I wrote my mapping down*
+            4. click 'save' , then apply changes ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs66.jpg))
+            5. Interfaces > assignments and click the next OPT interface
+            6. repeat steps 1-5 for all OPT interfaces
+            6. you should end up with all OPT interfaces renamed as LAN2-LAN6 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs69.jpg))
+    7. #### **Understanding firewall / interfaces**
+        Currently, our network is doing the following:
+        - PFSense is working as a NAT router, providing IP translation between our home network (WAN) and homelab network (LAN)
+        - PFSense is using DHCP to obtain a WAN IP - this means that your home router is assigning the PFSense IP on it's WAN interface
+        - PFSense is providing DHCP services on the LAN port, for a subnet and range we specified
+        - all other interfaces are disabled, with no IP/subnet assigned & no dhcp services.
+
+        Let's take a second to understand the default firewall rules and some basics about how traffic is routed
+
+
+        - **What are the rules**
+            
+            PFSense's main job is routing traffic between the various interfaces. To accomplish this, every packet is inspected and either 
+            - Passed (allowed to transit to the destination port)
+            - Blocked (packet is dropped with no message to sender)
+            - Rejected (packet is dropped but sender is informed)
+
+            Firewall rules are used to decide whether to Pass, Block or Reject packets
+
+            The firewall works on some basic principles:
+            1. ALL traffic is blocked by default. If no rule matches a given packet, it is blocked. 
+            2. rules are set to pass/block/reject packets based on various characteristics 
+            3. Packets are checked against rules **top to bottom**
+            4. The action (pass/block/reject) of the **First matching rule** is taken, all rules below it are ignored
+
+            with that in mind, let's take a look at the default firewall rules of PFSense to understand how our network is operating:
+
+            **WAN firewall rules**
+            
+            go to firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
+
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs74.jpg)
+
+            
+            - Block all packets from 'IP addressed reserved/ not assigned by IANA' IP addresses
+                - explanation: this is a box checked in the interface settings page. 
+            - how the WAN firewall works:
+                - PFSense looks at every packet incoming to the WAN
+                - if it matches the rule above it is 
+
+            
+        
+        
+    7. #### **Network expansion**
+        We have set up a working double NAT network, and PFsense is in complete control over the WAN, LAN, and LAN2-6 ports, which are physically and virtually isolated
+
+        
+
+        This means that you have extreme flexibility in what kind of network you build, and the choices you make will largely depend on what you are trying to build / learn
+
+        
+
+        I will briefly describe some easy options for network expansion below. 
+        https://eengstrom.github.io/musings/configure-pfsense-bridge-over-multiple-nics-as-lan 
+
+        - interfaces > assignments [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs63.jpg)
+        - Bridges > Add[screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs70.jpg)
+        - hold CTRL, Click LAN-LAN6. Click 'Save' [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs71.jpg)
+        
+
+    
+
+
+
+
+
+
 
 7. DNS blackhole set up
     * A DNS blackhole is a very effective way of blocking ads / trackers  / malware on the web. I works for all devices on the network, including devices that cannot install an adblocker locally. 
