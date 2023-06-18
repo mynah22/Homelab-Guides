@@ -319,17 +319,12 @@ We are going to go through all of these mappings so that you are able to documen
 4. ### **Labelling and documentation**
     port 1 is our esxi management port and can be labelled as such
 
-    You should record the following information for each of the other port:
+    You should record the following information for each of the other ports:
     - physical label (good time to add one to the blank ports - I went with 'a', 'b', 'c', 'd')
     - NIC name (vmnic0-vmnic7)
     - ESXI port group / vswitch name
 
-    keep this info handy, you will be adding another name once we build PFSense
-
-5. ### **PFSense Interface Names**
-    We will be able to easily map these port groups to their PFSense interface name with the information we gathered here - at that point you will have all names and physical ports mapped 
-
-
+    keep this info handy, you will be adding another name once we build PFSense - at that point you will have all names and physical ports mapped! 
 
 ## Hypervisor set up complete
 

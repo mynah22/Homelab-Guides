@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-18T20:08:21.818Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51" etag="7712YTHYB6h65NLIuGGP" version="21.4.0" type="device">
+<mxfile host="app.diagrams.net" modified="2023-06-18T20:17:34.164Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51" etag="3wn6kKLn1GsuruVXc2Xl" version="21.4.0" type="device">
   <diagram name="Page-1" id="tsVC_WwYR8tC1rwfiVBD">
     <mxGraphModel dx="1386" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -22,12 +22,6 @@
         <mxCell id="K70qggx3PnXP-Oc-jDb_-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="K70qggx3PnXP-Oc-jDb_-4" target="K70qggx3PnXP-Oc-jDb_-15">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="K70qggx3PnXP-Oc-jDb_-4" value="WAN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="120" y="497" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="K70qggx3PnXP-Oc-jDb_-5" value="LAN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="160" y="395.17" width="60" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="K70qggx3PnXP-Oc-jDb_-6" value="LAN6" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="200" y="490" width="60" height="30" as="geometry" />
         </mxCell>
@@ -36,9 +30,6 @@
         </mxCell>
         <mxCell id="K70qggx3PnXP-Oc-jDb_-8" value="LAN4" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="340" y="490" width="60" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="K70qggx3PnXP-Oc-jDb_-10" value="LAN2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="230" y="395.17" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="K70qggx3PnXP-Oc-jDb_-13" value="" style="shape=link;html=1;rounded=0;" edge="1" parent="1" source="K70qggx3PnXP-Oc-jDb_-9">
           <mxGeometry width="100" relative="1" as="geometry">
@@ -88,6 +79,24 @@
         </mxCell>
         <mxCell id="K70qggx3PnXP-Oc-jDb_-26" value="ISP WAN" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="390" y="700" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-29" value="&lt;font color=&quot;#009900&quot;&gt;Allow all&lt;/font&gt;" style="image;html=1;image=img/lib/clip_art/networking/Firewall_02_128x128.png;labelBorderColor=default;" vertex="1" parent="1">
+          <mxGeometry x="140" y="368.5" width="30" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-30" value="&lt;font color=&quot;#009900&quot;&gt;Allow all&lt;/font&gt;" style="image;html=1;image=img/lib/clip_art/networking/Firewall_02_128x128.png;labelBorderColor=default;" vertex="1" parent="1">
+          <mxGeometry x="215" y="368.5" width="30" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-10" value="LAN2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="395.17" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-5" value="LAN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="395.17" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-35" value="&lt;font color=&quot;#ff0000&quot;&gt;&lt;i&gt;BLOCK all&lt;/i&gt;&lt;/font&gt;" style="image;html=1;image=img/lib/clip_art/networking/Firewall_02_128x128.png;labelBorderColor=default;" vertex="1" parent="1">
+          <mxGeometry x="160" y="500" width="30" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="K70qggx3PnXP-Oc-jDb_-4" value="WAN" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="497" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

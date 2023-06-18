@@ -294,7 +294,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
             All packets on LAN will go through the following assesments to determine if they will be routed to another interface:
             - ALLOW if the packet is destined for a LAN address on port 443 or 80
-                - these are the HTTPS / HTTP ports, and is the first rule to ensure you can always connect to the PFSense webconfigurator (anti lock out rule)
+                - *these are the HTTPS / HTTP ports, & this rule ensures you can always connect to the PFSense webconfigurator (anti lock out rule).*
             - ALLOW if the packet is ipv4 and from the LAN network
             - ALLOW if the packet is ipv6 and from the LAN network
             - BLOCK if the packet does not match any of the above rules (firewall default)
@@ -314,14 +314,14 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
             - All traffic trying to get from LAN to another interface is explicitly allowed
             - All traffic trying to get from LAN2-LAN6 to another interface is blocked
         
-    7. #### **Network expansion**
+    7. #### **Expanding the Network**
 
         If you take a look at the summary of firewall rules above, our network currently has a single physical port enabled, and that interface is allowed to connect to any other interface - this is not exactly the most advanced architecture.
 
         Thankfully you have just set up a feature-complete network appliance and have all the tools you need to build the network of your dreams!
 
-        This section is a brief description of a few of the most obvious / simple ways to expand the network we have built
-    8. #### **Net expansion: Enable other interfaces**
+        The following sections are brief descriptions of a few obvious / simple ways to expand the network we have built
+    8. #### **Expanding the Network: Enable other interfaces**
         The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently. 
 
         To do this, we will:
@@ -376,20 +376,33 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         - Connected devices will obtain DHCP IP configuration from the server on that interface. With the settings I used in my example, here are the IP configurations I obtained after plugging into [LAN](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs88.jpg) and [LAN2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs87.jpg) 
 
 
-    8. #### **Net Expansion: add unmanaged switch**
-        This method allows the connection of multiple devices to a single internal network. 
+    8. #### **Expanding the Network: add unmanaged switch**
+
+        *OPTIONAL: REQUIRES ADDITIONAL HARDWARE*
+
+        If you have an unmanaged switch, you can add more ports to a PFSense interface, allowing multiple devices to connect to a single internal network. 
         
-        Start by plugging an ethernet cable into a LAN port on one end, and connect the other end to an unmanaged switch. By doing this, any devices you connect to the unmanaged switch will become part of the LAN network to which the switch is connected.
-            
-    8. #### **Net Expansion: vLAN trunk port**
+        Plug an ethernet cable into a LAN port on one end, and connect the other end to an unmanaged switch. Now, any devices you connect to the unmanaged switch will become part of the LAN network to which the switch is connected.
 
-        This is a technique that allows you to route / firewall traffic between ports on a **managed** switch
+        Example:
+            *Let's say you build a 'workstation' network on LAN4 for your workstations, with detailed firewall rules defining access to / from other networks - but, you only have one port available where those rules apply. If you plug an unmanaged switch into LAN4, you are able to connect several PCs to that network*
+    8. #### **Expanding the Network: vLAN trunk port**
 
-        Here is a [diagram](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/vlanTrunk1.jpg)
+        *OPTIONAL: REQUIRES ADDITIONAL HARDWARE*
+
+        A single PFSense interface can be used to route / manage traffic between all ports / vlans on a managed switch via trunk ports (802.1q)
+
+        This is a very powerful architecture, and is used to create robust networks using only a few ports on the server.
+
+        Here is a simple diagram 
+        
+        ![diagram](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/vlanTrunk1.jpg)
 
         I will link my documentation on this process here when it is complete.
     
-    9. #### **Net Expansion: WAP**
+    9. #### **Expanding the Network: WAP**
+
+        *OPTIONAL: REQUIRES ADDITIONAL HARDWARE*
 
          When you connect a Wireless Access Point (WAP) to a LAN port, all devices that connect to the WAP's SSID will have their traffic managed by PFSense. This means that the firewall rules set for that interface in PFSense will control and route the traffic of those devices.
 
@@ -404,32 +417,30 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         2. plug an ethernet cable into the ESXI management port (vmnic0) on one end, and a LAN2 on the other
         2. the esxi hypervisor will obtain a DHCP lease from the PFSense DHCP server on that interface
         4. Since LAN and LAN2 have a firewall rule allowing all ipv4 packets, traffic can pass between them
-        4. on your PC, browse to the IP of the ESXI server. This IP will be listed on the server display (if you connect a vga monitor), but an easy way to determine this remotely is by looking for the hypervisor's DHCP lease:
+        4. Determine the IP of the ESXI server. This IP will be listed on the server display (if you connect a vga monitor), but an easy way to determine this remotely is by looking for the hypervisor's DHCP lease:
             - Status - dhcp leases ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs89.jpg))
             - This will show dhcp leases for *all interfaces*. Since we have a single device on LAN2, it should be easy to identify using the DHCP ip range on LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs90.jpg))
 
-        ![]()
-        5. Your browser should connect to the ESXI web management server, where you can manage Virtual Machines
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/connectHypervisor.jpg)
+
+        5. With this configuration, your PC can connect to any device on LAN, LAN2, your home network, or the internet. You will be able to access the ESXI webgui and configure VMs by browsing to the IP of the ESXI server (as determined in the step above)
+
 
          
-        
-        - 
+4. ### **Moving forward**
 
+    Let the fun begin!
 
+    you are at a great milestone - you have a NATted lab network managed by pfsense that is happily nested in your home network. PFsense is only using a tiny amount of the available resources on your server, and everything is ready for you to build VMs via ESXI
+    
+    Your PC can connect to your home network and the internet, as well as LAN and LAN2 on the lab network. You can browse the internet, configure pfsense, and manage vms in ESXI all from the same connection, and without affecting the devices in your home network. 
 
+    At this point you will be able to start building out your network and VMs/services to your heart's content. I will demonstrate a [simple example](firstIsoVM.md) specifically for this build, and include generic guides that are not specific to this build
 
+    1. [Isolated Windows Server VM w/ PFSense & ESXI](firstIsoVM.md)
+    2. [DNS black hole]()
+    3. [PFSense openVPN]()
+    4. [free DDNS]()
+    5. [name.com DDNS]()
 
-
-7. DNS blackhole set up
-    * A DNS blackhole is a very effective way of blocking ads / trackers  / malware on the web. I works for all devices on the network, including devices that cannot install an adblocker locally. 
-    * this is definately not required, but only takes a few clicks in PFSense, and is one of the biggest benefits I get out of managing my own network, so I do it right away
-        1. There is one, noteable drabwack to running a DNS blackhole: occasionally, it will affect the performance of internet applications / websites. This is actually really easy to deal with if you follow the PFSense DNS Blackhole Allowlist Guide, but if you get frustrated you can always uninstall the PFBlockerNG-Devel package and keep seeing horrible ads :(
-        2. System > Package Manager
-        3. Available Packages > search for 'pfblockerng'> click 'install' ON PFBLOCKERNG-DEVEL PACKAGE (2nd search result)
-        4. click confirm
-        5. after a moment you should see the success message
-        6. click the PFSense logo at the top left left of the PFSense webgui to return to the main menu. The pfBlockerNG status area on the main page will go green oncew the blocklists load 
-
-8. DDNS
-    * free first
-    * name.com
+    Once you are comfortable with managing your lab network, you will probably want to also manage your home devices with PFSense. Check out the [Moving to the Edge Guide]()
