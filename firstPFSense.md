@@ -215,7 +215,8 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs50.jpg)
         4. Set your timezone as appropriate. Leave the ntp server alone unless you have a preference. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs51.jpg))
         2. On the WAN config page, leave everything at default (DHCP), except for the Block RFC1918 checkbox- uncheck this (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs52.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs53.jpg))
-            - *note: the reason we are unchecking this box is because our WAN port is plugged into another private network - our home network. for double NATting to work, **This box must be unchecked**. you will want to recheck it if you move PFSense to the edge of your network*
+            - *note: the reason we are unchecking this box is because our WAN port is plugged into another private network - our home network.*
+            - *for double NATting to work, **This box must be unchecked**. you will want to recheck it if you move PFSense to the edge of your network*
         2. We already configured the LAN port IP, click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs54.jpg))
         2. set a new admin password for pfsense ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs55.jpg))
         2. click 'reload' to load configuration ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs56.jpg))
@@ -252,7 +253,6 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
         Let's take a second to understand the default firewall rules and some basics about how traffic is routed
 
-
         - **What are the rules**
             
             PFSense's main job is routing traffic between the various interfaces. To accomplish this, every packet is inspected and either 
@@ -270,38 +270,76 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
             with that in mind, let's take a look at the default firewall rules of PFSense to understand how our network is operating:
 
-            **WAN firewall rules**
+        - **WAN firewall rules**
             
             go to firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs74.jpg)
 
-            
-            - Block all packets from 'IP addressed reserved/ not assigned by IANA' IP addresses
-                - explanation: this is a box checked in the interface settings page. 
-            - how the WAN firewall works:
-                - PFSense looks at every packet incoming to the WAN
-                - if it matches the rule above it is 
+            All packets on WAN will go through the following assessments to determine if it will be routed to another interface:
+            - If the packet is from an 'IP addressed reserved/ not assigned by IANA' IP - block the packet (We do not expect bogus IPs on the WAN, so these are **blocked** - this is a checkbox in the interface settings)
+            - otherwise, **block** the packet. Since firewalls block packets by default, packets will be blocked if no rules apply to them
 
-            
-        
+            As you can see, there is no possibility for packets to be allowed, so ALL WAN traffic wanting to be routed to a LAN host will be blocked *(you certainly wouldn't want internet devices to be able to communicate / connect to your equipment)*
+
+            - *note: firewall rules are all about what can OPEN communications - once a communication has been established, return traffic is allowed. WAN traffic **is** routed to LAN networks, but only if the communication was initiated by a LAN IP*
+
+        - **LAN rules**
+
+            firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
+
+            click LAN
+
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg)
+
+            All packets on LAN will go through the following assesments to determine if they will be routed to another interface:
+            - ALLOW if the packet is destined for a LAN address on port 443 or 80
+                - these are the HTTPS / HTTP ports, and is the first rule to ensure you can always connect to the PFSense webconfigurator (anti lock out rule)
+            - ALLOW if the packet is ipv4 and from the LAN network
+            - ALLOW if the packet is ipv6 and from the LAN network
+            - BLOCK if the packet does not match any of the above rules (firewall default)
+
+            As you can see, any traffic from LAN will be routed. There are no Block rules, and the ipv4 and ipv6 Allow rules will match all packets, so the default Block will never occur, and all packets will be routed as requested
+
+        - **LAN2 - LAN6 rules**
+
+            If you click LAN2 under firewall > rules, you will see no rules
+
+            This means that all packets will go through a straightforward assessment:
+
+            - since no rules are set, the firewall will default to Blocking all packets
+
+        - **Summary**
+            - All traffic trying to get from WAN to another interface is blocked
+            - All traffic trying to get from LAN to another interface is explicitly allowed
+            - All traffic trying to get from LAN2-LAN6 to another interface is blocked
         
     7. #### **Network expansion**
-        We have set up a working double NAT network, and PFsense is in complete control over the WAN, LAN, and LAN2-6 ports, which are physically and virtually isolated
 
-        
+        If you take a look at the summary of firewall rules above, our network currently has a single physical port enabled, and that interface is allowed to connect to any other interface - this is not exactly the most advanced architecture.
 
-        This means that you have extreme flexibility in what kind of network you build, and the choices you make will largely depend on what you are trying to build / learn
+        Thankfully you have just set up a feature-complete network appliance and have all the tools you need to build the network of your dreams!
 
-        
+        This section is a brief description of a few of the most obvious / simple ways to expand the network we have built
 
-        I will briefly describe some easy options for network expansion below. 
-        https://eengstrom.github.io/musings/configure-pfsense-bridge-over-multiple-nics-as-lan 
+        - Enable other interfaces
+            The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently
+            1. Configure interface
+                interfaces > LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg))
+                
+                - Enable interface,
+                - set ipv4 to static
+                - set an ipv4 address and subnet that does not overlap with an internal network
+                - click 'save'
+                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg)
+            2. Configure DHCP server
+            3. Configure firewall rules
 
-        - interfaces > assignments [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs63.jpg)
-        - Bridges > Add[screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs70.jpg)
-        - hold CTRL, Click LAN-LAN6. Click 'Save' [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs71.jpg)
-        
+
+        - Put an unmanaged switch on LAN
+            - The LAN port is already functional. Connecting this port to an unmanaged switch gives you a few ports on the same network
+        - vLAN trunk port
+            - you can use a single 
 
     
 
