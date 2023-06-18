@@ -190,7 +190,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
             - Username: admin 
             - Password: pfsense 
         
-            ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs47.jpg))
+            (![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs47.jpg))
         
         #### **PFSense setup wizard**
         1. click 'Next' on the [first screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs48.jpg)
@@ -198,7 +198,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         2. **General information page**
             - Hostname: the hostname that PFSense will respond to. I like the default 'pfSense'
             - Domain: the domain of the internal network. If you own a Domain Name, then it should the domain.TLD (ie google.com). Otherwise the only rules are:
-                - do not use a domain that resolves on WAN (don't use ebay.com - probably )
+                - do not use a domain that resolves on WAN (don't use ebay.com)
                 - do not use a domain with .local as the TLD
                 - apparently these are the recommended TLDs to use for an internal network. I've included them with an example domain name:
                     - .home (yourDomainName.home) - homelab.home
@@ -207,7 +207,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
                     - .internal (yourDomainName.internal) - janesnet.internal
             - Primary / Secondary DNS Servers
 
-                - *note: by default, PFSense will use 127.0.0.1 (ie the loopback IP - use the PFSense server for DNS lookups) first, THEN use the primary / secondary DNS server. There is no need to set the primary to 127.0.0.1 - the local DNS server where cached lookups, Host / Domain Overrides & Aliases are kept is always consulted first, THEN the remote DNS servers you define as primary / secondary here. DNS Blackhole works because it actually resolves an IP address (that does not respond) - if it did not resolve an IP then it would defer the the DNS servers defined here.* 
+                - *note: by default, PFSense will use 127.0.0.1 (ie the loopback IP - use the PFSense server for DNS lookups) first, THEN use the primary / secondary DNS server. There is no need to set the primary to 127.0.0.1 - the local DNS server where cached lookups, Host / Domain Overrides & Aliases are kept is always consulted first, THEN the remote DNS servers you define as primary / secondary here. DNS Blackhole works because it actually resolves an IP address (that does not respond) - if it did not resolve an IP then it would defer to the DNS servers defined here.* 
                 * Set the primary / secondary DNS as you like - I like to steer clear of my ISPs DNS, and use alternates (common ones are the google, opendns, and cloudflare dns services like 8.8.8.8, 4.4.4.4 & 1.1.1.1). [This tool](https://grc.com/dns/benchmark.htm) can determine the fastest DNS servers for your network if you are serious about finding the server with the best performance. If you care about DNS security then you probably already have your preferences and I will not expound further. 
             - uncheck 'override DNS'
             - click 'Next'
@@ -323,23 +323,31 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         This section is a brief description of a few of the most obvious / simple ways to expand the network we have built
 
         - Enable other interfaces
+
             The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently
             1. Configure interface
 
-                interfaces > LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg))
-                
+                interfaces > LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg)) 
+            
                 - Enable interface,
                 - set ipv4 to static
                 - set an ipv4 address and subnet that does not overlap with an internal network
                 - click 'save'
-                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg)
-                - click 'apply'
-                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs79.jpg)
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg)
+            - click 'apply'
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs79.jpg)
 
             2. Configure DHCP server
                 - Services > DHCP Server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs78.jpg))
-                - 
+                - click 'Enable DHCP server'. set the range of DHCP addresses (I chose 100 IPs) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pf82.jpg))
+                - click 'save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pf83.jpg))
             3. Configure firewall rules
+                firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
+                
+                Click the interface you are configuring
+
+                add a rule:
+                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs85.jpg)
 
 
         - Put an unmanaged switch on LAN
