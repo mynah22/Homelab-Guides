@@ -290,7 +290,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 
             click LAN
 
-            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg)
+            ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs77.jpg)
 
             All packets on LAN will go through the following assesments to determine if they will be routed to another interface:
             - ALLOW if the packet is destined for a LAN address on port 443 or 80
@@ -325,6 +325,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
         - Enable other interfaces
             The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently
             1. Configure interface
+
                 interfaces > LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs76.jpg))
                 
                 - Enable interface,
@@ -332,7 +333,12 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
                 - set an ipv4 address and subnet that does not overlap with an internal network
                 - click 'save'
                 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs75.jpg)
+                - click 'apply'
+                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs79.jpg)
+
             2. Configure DHCP server
+                - Services > DHCP Server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs78.jpg))
+                - 
             3. Configure firewall rules
 
 
