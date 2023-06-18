@@ -1,14 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2023-06-18T18:10:58.610Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51" etag="ygdP_omlEUM-_atzmu-3" version="21.4.0" type="device">
+<mxfile host="app.diagrams.net" modified="2023-06-18T18:22:03.225Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51" etag="TF-4dA95MKPxBF3SEEf7" version="21.4.0" type="device">
   <diagram name="Page-1" id="0Cwt4QP0qd3QUfhQO7_g">
     <mxGraphModel dx="924" dy="1652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-17" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="80" y="-20" width="530" height="210" as="geometry" />
+          <mxGeometry x="80" y="-20" width="450" height="210" as="geometry" />
         </mxCell>
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-7" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
-          <mxGeometry x="155" y="320" width="530" height="270" as="geometry" />
+          <mxGeometry x="155" y="320" width="375" height="150" as="geometry" />
         </mxCell>
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="0l7NrBNHvIj9G9taiQ1M-1" target="0l7NrBNHvIj9G9taiQ1M-19">
           <mxGeometry relative="1" as="geometry" />
@@ -26,10 +26,10 @@
           <mxGeometry x="290" y="123.55" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-3" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/PfSense_logo.png/1200px-PfSense_logo.png;" vertex="1" parent="1">
-          <mxGeometry x="390.02" width="169.97" height="50" as="geometry" />
+          <mxGeometry x="360.03" y="50" width="169.97" height="50" as="geometry" />
         </mxCell>
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-4" value="Managed Switch" style="image;html=1;image=img/lib/clip_art/networking/Switch_128x128.png" vertex="1" parent="1">
-          <mxGeometry x="350" y="440" width="250" height="80" as="geometry" />
+          <mxGeometry x="195" y="360" width="250" height="80" as="geometry" />
         </mxCell>
         <mxCell id="0l7NrBNHvIj9G9taiQ1M-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;strokeColor=#FF0000;" edge="1" parent="1" source="0l7NrBNHvIj9G9taiQ1M-5" target="0l7NrBNHvIj9G9taiQ1M-22">
           <mxGeometry relative="1" as="geometry" />
