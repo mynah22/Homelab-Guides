@@ -13,16 +13,31 @@ We are also building a IIS webserver on Windows Server to help demonstrate the f
 
 # Index
 We will be doing the following:
-1. Configure PFSense interface
-1. Build Windows Server VM
-2. Install & Configure Windows Server
-5. Configure PFsense firewall rules
-6. Test network
+1. [Configure PFSense interface](#configure-pfsense-interface)
+    - [Interface Settings](#interface-settings)
+    - [Firewall Rules](#firewall-rules)
+    - [DHCP Config](#dhcp-config)
+1. [Build Windows Server VM](#build-windows-server-vm)
+    - [Upload .iso](#upload-windows-server-iso-to-esxi)
+    - [Build Windows Server VM](#build-windows-server-vm)
+2. [Install & Configure Windows Server](#install--configure-windows-server)
+    - [Configure Networking](#configure-networking)
+    - [Configure DHCP server](#configure-dhcp-server)
+    - [Configure IIS server](#configure-iis-server)
+5. [Configure PFsense firewall rules](#configure-pfsense-firewall-rules)
+    - [Goals](#goals)
+    - [Browse to firewall rules](#browse-to-firewall-rules-page)
+    - [LAN3 rule](#lan3-rule)
+    - [LAN rules](#lan-rules)
+6. [Testing the  network](#testing-the-network)
+    - [LAN to LAN3 - HTTP(s)](#lan-to-lan3---https-traffic-passed)
+    - [LAN to LAN3 - block other traffic](#lan-to-lan3---other-ports-blocked)
+    - [LAN3 to WAN - pass](#lan3-to-wan)
+    - [LAN3 to internal IP - block](#lan3-to-other-lans-blocked)
+    - [Windows DHCP Server](#dhcp)
 
 
-
-
-# **Configure PFSense interface**
+# Configure PFSense interface
 - ## Interface settings
     LAN3 should be unused so far, but we are going to quickly make sure everything is ready on the PFSense side before we build our Windows Server
 
@@ -46,8 +61,8 @@ We will be doing the following:
     1. Make sure 'Enable DHCP server on LAN3 interface' is UNCHECKED. Scroll down and click 'Save' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso54.jpg))
 
 
-# **Build Windows server VM**
-- ## **upload Windows Server ISO to ESXI** 
+# Build Windows server VM
+- ## upload Windows Server ISO to ESXI
 
     1. Browse to the ESXI server IP, and click on 'storage' > datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso1.jpg))
 
@@ -57,7 +72,7 @@ We will be doing the following:
 
     4. and you will see the file when it has uploaded successfully ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso4.jpg))
 
-- ## **Create Virtual Machine**
+- ## Create Virtual Machine
     1. Virtual machines > create / register vm ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso0.jpg))
     2. create a new virtual machine ? next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso5.jpg))
     3. Name- your choice. Guest OS family- Windows. Guest OS Version- Windows server 2016. Click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso6.jpg))
@@ -140,14 +155,13 @@ We will be doing the following:
     1. Default settings for IIS will work fine for this demo
 
 # Configure PFSense firewall rules
-- ## Browse to firewall rules page
-    1. browse to the ip / hostname of your pfsense VM and log in
-    1. Firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso49.jpg))
-
 - ## Goals
     We are attempting to set up the following:
     - LAN can communicate with LAN3, but only on port 80 and 443
     - LAN3 can communicate with WAN, but not any internal resources
+- ## Browse to firewall rules page
+    1. browse to the ip / hostname of your pfsense VM and log in
+    1. Firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso49.jpg))
 - ## LAN3 rule
     1. Click 'LAN3' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso50.jpg))
 
