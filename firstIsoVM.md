@@ -21,6 +21,8 @@ We will be doing the following:
     - [Upload .iso](#upload-windows-server-iso-to-esxi)
     - [Create Virtual Machine](#create-virtual-machine)
 2. [Install & Configure Windows Server](#install--configure-windows-server)
+    - [Install Windows Server](#install-windows-server-to-vm)
+    - [Install Services](#install-services)
     - [Configure Networking](#configure-networking)
     - [Configure DHCP server](#configure-dhcp-server)
     - [Configure IIS server](#configure-iis-server)
