@@ -51,7 +51,7 @@ Here are the steps taken below:
     - [RAID - Creating Logical Drives](#creating-logical-drives-in-the-raid-menu)
     - [Examine Logical Drives](#examining-logical-drives)
     - [Setting a boot disk](#setting-a-boot-disk)
-1. [Install hypervisor (ESXI 6.0.0)](#install-esxi-to-boot-disk)
+1. [Install hypervisor (ESXI 6.0.0)](#installing-hypervisor-esxi)
     - [Install ESXI](#install-esxi-to-boot-disk)
     - [Connect to ESXI management interface](#connect-to-esxi-management-interface)
 1. [ESXI Web Configuration](#esxi-web-configuration)
