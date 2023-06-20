@@ -25,11 +25,10 @@ Initial set up requires the following:
 
 - Installation tools
     - ESXI 6.0.0 HP custom image installed on a bootable USB
-    -  A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
-
+    - PFSense 2.6.0  installation .iso downloaded to your PC
 - Connections
     - Server and VGA monitor plugged into power
-    - VGA Cable plugged into monitor and server
+    - VGA Cable plugged into server and monitor
     - Bootable USB inserted into USB slot on server 
     - Keyboard plugged into server
     - At least one 2.5" SATA disk installed into caddy / slot
@@ -66,7 +65,7 @@ Here are the steps taken below:
 
 
 # Initialize disk(s) in RAID menu
-With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
+After preparing everything in the [Requirements](#requirements) section above, we are ready to get started initializing our disk(s) on the RAID controller. This is required for all disks (even those not in an array with other disks)
 - To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
 
 - ## RAID modes reminder
@@ -131,7 +130,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
         - Single disk ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate3.jpg))
         - RAID 1 array (two disks mirrored - this controller calls that RAID 1 + 0 ) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate5.jpg))
     2. Press ENTER when you are done with the array and you will see a confirmation screen. Press F8 to save (Screenshots:
-    RAID [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg)
+    RAID [0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate4.jpg)
     RAID [1+0](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate6.jpg))
     3. Repeat until you have assigned all disks to a logical drive
 
