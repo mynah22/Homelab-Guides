@@ -12,13 +12,13 @@ I highly recommend looking at the [Simple Network Explanations](simpleNetworks.m
 
 The 'Intro Network' is advised at first, I recommend you take a look at it
 
-## Requirements
+# Requirements
 Initial set up requires the following:
 
-### Existing home network
+## Existing home network
 * You will need one open port in in your home network in order to give your laboratory network a path to the internet
 
-### Hardware
+## Hardware
 
 * HP DL380 g7 rack server
 * VGA Capable monitor
@@ -30,11 +30,11 @@ Initial set up requires the following:
 * power cables
 * PC with ethernet port (for configuring ESXI and PFSense)
 
-### Installation tools
+## Installation tools
 * ESXI 6.0.0 HP custom image installed on a bootable USB (see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides) 
 * A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
 
-###  Connections
+##  Connections
 * Server and VGA monitor plugged into power
 * VGA Cable plugged into monitor and server
 * Keyboard plugged into server
@@ -45,7 +45,7 @@ Initial set up requires the following:
     2. Insert the caddy fully into the drive bay
     3. Push the locking lever back into the caddy to lock the caddy to the drive bay.
     1. you should see status LEDs visible on the right side of the caddy 
-    3. It's best to follow steps 1-6 for all disks you plan to use - that way you do not need to get into the RAID menu when you add them later
+    3. It's best to follow steps 1-6 for all disks you plan to use - that way you do not need to get into the RAID menu to add them later
 * Bootable USB inserted into USB slot on server 
 
 # Instructions Index
@@ -63,8 +63,15 @@ Here are the steps taken below:
     - [Connect to ESXI management interface](#connect-to-esxi-management-interface)
 1. [ESXI Web Configuration](#esxi-web-configuration)
     - [License ESXI](#license-esxi)
-    - [ESCI Network Config](#set-up-networking)
-    - [Understanding port assignments / names](#understanding-port-assignments)
+    - [ESXI Network Config](#set-up-networking)
+1. [Understanding port assignments / names](#understanding-port-assignments)
+    - [Physical port and NIC names](#physical-ports--nic-names)
+    - [Port group / vSwitch names](#port-group-names)
+    - [Check your understanding](#check-your-understanding)
+    - [Labelling and documentation](#labelling-and-documentation)
+1. [Next steps](#n=)
+
+
 # Initialize disk(s) in RAID menu
 With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
 - To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
@@ -209,13 +216,13 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
     There are two easy ways of doing this: DHCP and Link-Local (APIPA)
 
-    1. **DHCP**
+    1. DHCP
         - the Dynamic Host Configuration Protocol is an effective way for clients to obtain network configuration and unused IP addresses when they connect to a network
         - if you are following the 'Intro Network' architecture, all you have to do the ESXI webgui to obtain a DHCP address is:
             1. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an open port on your home network
             1. ESXI will obtain a DHCP lease from your home router
             2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) - note that the IP address will depend on the range of the DHCP server it obtained it's lease from
-    2. **Link-local (APIPA)**
+    2. Link-local (APIPA)
         - if a client does not get any responses from a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
         - configuring a Link-Local network is as simple as placing devices on a network without a DHCP server:
             1. Disconnect your PC from all networks, including wireless
@@ -240,7 +247,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
-- ## **License ESXI**
+- ## License ESXI
     1. If it's not already expanded, click 'navigator' on the left side to expand the main menu
     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) 
     2. Click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (screenshots 
@@ -248,7 +255,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
     [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm.jpg)
     [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm2.jpg))
 
-- ## **Set up networking:**
+- ## Set up networking:
 
     We will have to configure virtual networks in order to expose physical ports to our VMs
 
@@ -260,7 +267,8 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 
         *ESXI vSwitches and port groups can create very complex networks, and can be leveraged for many of the functions we are using PFSense for.  I want to stress that using ESXI for network functions **should be avoided**. ESXI is **not designed to be a primary network appliance**. PFSense IS built to be a primary network appliance - It has bulletproof security, can provide any network service you need, and is super easy to configure to boot. Use PFSense for all traffic management, including between VMs.*
 
-    - ### vSwitches
+    - **vSwitches**
+
         [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitchNavigate.jpg) to Networking > Virtual switches > Add standard virtual switch. Enter appropriate details then click 'Add'. Repeat for all of these nics:
         1. vswitch Name = WAN , Uplink 1 = vmnic1 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch.jpg))
         2. vswitch Name = LAN , Uplink 1 = vmnic2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVSwitch2.jpg))
@@ -270,7 +278,8 @@ Once your PC and ESXI management webserver are on the same network, open a web b
         6. vswitch Name = LAN4 , Uplink 1 = vmnic6
         7. vswitch Name = LAN4 , Uplink 1 = vmnic7
 
-    - ### Port Groups
+    - **Port Groups**
+
         [Navigate](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroupNavigate.jpg) to Networking > port groups > add port group. Enter following details (keep vlan at 0!), then click 'Add'. Repeat for all of the following port groups
         1. name = WAN, Virtual Switch = WAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup1.jpg))
         2. name = LAN, Virtual Switch = LAN ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup2.jpg)) 
@@ -280,18 +289,16 @@ Once your PC and ESXI management webserver are on the same network, open a web b
         6. name = LAN5, Virtual Switch = LAN5
         7. name = LAN6, Virtual Switch = LAN6
 
+        [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
-    [Here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSensePortGroup4.jpg) is what your port groups should look like once you have set up all of your virtual switches and port groups. MAKE SURE vSwitch0 is not assigned to any of the port groups you created
 
-
-- ## **Understanding port assignments**
+# Understanding port assignments
 Port names can be confusing:
 
 The port number physically listed on the server, the hardware NIC name, port group/vswitch in ESXI, and interface name in PFSense are all different. 
 
 We are going to go through all of these mappings so that you are able to document / label your ports with confidence
-
-1. ### **Physical ports & NIC names**
+- ## Physical ports & NIC names
     There are 9 total ethernet ports on this server. Four are unlabeled, and the other five are labeled 1-4 and 'ILO'. 
     - the ILO port is for hardware management, and will not be available for our use
     - the four labeled and four unlabeled NICs are named vmnic0-vmnic7:
@@ -301,7 +308,7 @@ We are going to go through all of these mappings so that you are able to documen
     - vmnic3 is the NIC on the port labelled '4'
     - vmnic4-7 need to be mapped to physical ports
 
-    **How to identify physical ports**
+    How to identify physical ports
 
     go to Networking > Physical NICs ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs24.jpg))
 
@@ -323,7 +330,7 @@ We are going to go through all of these mappings so that you are able to documen
 
 
 
-2. ### **Port Group Names**
+- ## Port Group Names
     you now should be able to look at a physical port and say it's NIC name (vmnic0-7) 
 
     We will now determine which NICs are attached to the port groups in ESXI
@@ -343,10 +350,10 @@ We are going to go through all of these mappings so that you are able to documen
 
         Repeat for all port groups - you now know which NIC is on each port group
 
-3. ### **Check your understanding**
+- ## Check your understanding
     as an exercise, pick one of the unlabelled physical ports. At this point, you should be able to determine the name of the NIC (vmnic_), and the port group name (WAN, LAN, or LAN2-6). Doing this a couple of times will help you keep all of these port names straight in your head - and make sure you get your labelling right!
 
-4. ### **Labelling and documentation**
+- ## Labelling and documentation
     port 1 is our esxi management port and can be labelled as such
 
     You should record the following information for each of the other ports:
@@ -356,8 +363,9 @@ We are going to go through all of these mappings so that you are able to documen
 
     keep this info handy, you will be adding another name once we build PFSense - at that point you will have all names and physical ports mapped! 
 
-## Hypervisor set up complete
+# Next steps
+There are a lot of things you can build with this hardware and a good hypervisor, but a robust firewall will probably be a key component regardless of what you create. 
 
-The next step is to set up a PFSense VM in order to manage our network
+PFSense is a robust, secure, and easy to configure firewall / network appliance. Let's build a PFSense VM to in ESXI to manage the networks we configured above
 
-That is documented in the [ESXI PFSense guide](firstPFSense.md) 
+continue this build with the [ESXI PFSense guide](firstPFSense.md) 

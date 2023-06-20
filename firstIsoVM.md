@@ -91,7 +91,7 @@ We will be doing the following:
     7. after a short delay you will see the new VM under Virtual Machines. Click the VM name to open it's configuration page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso11.jpg))
     8. click the console preview window to start the VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso12.jpg))
 
-# **Install & Configure Windows Server**
+# Install & Configure Windows Server
 - ## Install windows server to VM
     1. windows server should boot (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso13.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso14.jpg))
     2. change language, time, and keyboard settings if needed, click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso15.jpg))
