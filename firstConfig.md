@@ -6,17 +6,11 @@ Please note the following caveats:
 - *Version 6.0.0 of ESXI is the newest that will work on this server- this is an old version, and is unsupported. 6.5.0 will install, but crashes as soon as it tries to write to the filesystem*
 - *The license for 6.0.0 is free, but I cannot find a way to obtain license keys or installation ISOs any longer. If you do not already have them, then you will need to either use a different hypervisor like proxmox, or a different server compatible with ESXI 7+*
 
-
-
-I highly recommend looking at the [Simple Network Explanations](simpleNetworks.md) - this will explain the high level network architecture used for a few different situations. 
-
-The 'Intro Network' is advised at first, I recommend you take a look at it
-
 # Requirements
 Initial set up requires the following:
 
 ## Existing home network
-* You will need one open port in in your home network in order to give your laboratory network a path to the internet
+* You will need one open ethernet port in in your existing home network in order to give your laboratory network a path to the internet
 
 ## Hardware
 
@@ -69,7 +63,7 @@ Here are the steps taken below:
     - [Port group / vSwitch names](#port-group-names)
     - [Check your understanding](#check-your-understanding)
     - [Labelling and documentation](#labelling-and-documentation)
-1. [Next steps](#n=)
+1. [Next steps](#next-steps)
 
 
 # Initialize disk(s) in RAID menu

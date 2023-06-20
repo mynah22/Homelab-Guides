@@ -117,7 +117,7 @@ This guide will cover:
     PFSense has been installed and is ready to be configured!
 
 # Understanding network interfaces in PFSense
-to proceed, you are really going to want to make sure you know which pfsense interface names for all of the physical ports on the server
+to proceed, you are really going to want to make sure you know which pfsense interface names represent each physical port on the server
 
 Thankfully, this is easy if you have followed [the Understanding Port Assignment instructions here](firstConfig.md#understanding-port-assignments).
 
