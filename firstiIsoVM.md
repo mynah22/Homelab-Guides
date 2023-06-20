@@ -6,7 +6,12 @@ However, in a laboratory environment, you might want to experiment with differen
 We are also building a IIS webserver on Windows Server to help demonstrate the firewall rules
 
 *It's important to note that isolating Windows Server it in this manner is **Not Required** (you could just place it on LAN). The example provided here specifically addresses scenarios where the server is responsible for services that are typically handled by PFSense (such as DHCP and DNS).*
+## Requirements
+1. Completed the [Server & Hypervisor Setup Instructions](firstConfig.md) 
+2. Completed the [PFSense Setup instructions](firstPFSense.md)
+3. Windows server installation ISO on your PC
 
+# Index
 We will be doing the following:
 1. Configure PFSense interface
 1. Build Windows Server VM
@@ -15,13 +20,10 @@ We will be doing the following:
 6. Test network
 
 
-## Requirements
-1. Completed the [Server & Hypervisor Setup Instructions](firstConfig.md) 
-2. Completed the [PFSense Setup instructions](firstPFSense.md)
-3. Windows server ISO on your PC
 
-## **Configure PFSense interface**
-- ### Interface settings
+
+# **Configure PFSense interface**
+- ## Interface settings
     LAN3 should be unused so far, but we are going to quickly make sure everything is ready on the PFSense side before we build our Windows Server
 
     1. browse to the IP address / hostname of your PFSense VM
@@ -33,19 +35,19 @@ We will be doing the following:
         - Set static IP and subnet (I went with 10.0.3.0/24)
         - Click 'save'
     1. Click 'apply' to save interface configuration ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso47.jpg))
-- ### Firewall rules
+- ## Firewall rules
     1. Firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso49.jpg))
     1. Click 'LAN3' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso50.jpg))
     1. You should see no rules under LAN3. If you created any, delete them now ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso51.jpg))
     1. we will be creating firewall rules once the windows server is up and running
-- ### DHCP config
+- ## DHCP config
     1. Services > DHCP Server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso52.jpg))
     1. Click 'LAN3' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso53.jpg))
     1. Make sure 'Enable DHCP server on LAN3 interface' is UNCHECKED. Scroll down and click 'Save' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso54.jpg))
 
 
-## **Build Windows server VM**
-- ### **upload Windows Server ISO to ESXI** 
+# **Build Windows server VM**
+- ## **upload Windows Server ISO to ESXI** 
 
     1. Browse to the ESXI server IP, and click on 'storage' > datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso1.jpg))
 
@@ -55,7 +57,7 @@ We will be doing the following:
 
     4. and you will see the file when it has uploaded successfully ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso4.jpg))
 
-- ### **Create Virtual Machine**
+- ## **Create Virtual Machine**
     1. Virtual machines > create / register vm ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso0.jpg))
     2. create a new virtual machine ? next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso5.jpg))
     3. Name- your choice. Guest OS family- Windows. Guest OS Version- Windows server 2016. Click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso6.jpg))
@@ -71,8 +73,8 @@ We will be doing the following:
     7. after a short delay you will see the new VM under Virtual Machines. Click the VM name to open it's configuration page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso11.jpg))
     8. click the console preview window to start the VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso12.jpg))
 
-## **Install & Configure Windows Server**
-- ### Install windows server to VM
+# **Install & Configure Windows Server**
+- ## Install windows server to VM
     1. windows server should boot (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso13.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso14.jpg))
     2. change language, time, and keyboard settings if needed, click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso15.jpg))
     3. clcik 'Install now' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso16.jpg))
@@ -84,7 +86,7 @@ We will be doing the following:
     9. Windows should install ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso22.jpg))
     10. after installation, windows should boot (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso23.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso24.jpg))
     9. Set admin password, click 'Finish' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso25.jpg))
-- ### Install services
+- ## Install services
     1. You need to press Ctrl + Alt + Delete on the guest (windows server) in order to log in. To do this, Right Click the top bar of the VM console window, then Guest os > send keys > Ctrl-Atl-Delete ([screenshot](https://github.com/mynah22/Homelab-Guides/ raw/main/screenshots/firstConfig/iso26.jpg))
     9. Type the administrator password you set above, ENTER to log in ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso27.jpg))
     9. It will take a moment for Windows Server to load. Server Manager will be automatically launched, and you will be presented with a pop-up informing you about Windows Admin Center. Check 'Don't show this message again' and click X to close the pop up  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso28.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso29.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso30.jpg))
@@ -100,7 +102,7 @@ We will be doing the following:
     13. click 'Next' on the Web Server (IIS) screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso60.jpg))
     14. click 'Next' on the Role Services screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso61.jpg))
     13. click 'Install' on the confirmation screen. click 'Close' after installation completes (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso40.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso41.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso42.jpg))
-- ### Configure Networking
+- ## Configure Networking
     We are going to set a static IP for the windows server on the same subnet that we configured for PFSense above
 
     1. right click start menu > network connections (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso62.jpg)) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso63.jpg)))
@@ -113,7 +115,7 @@ We will be doing the following:
         - DNS servers: 127.0.0.1, 8.8.8.8
         - Click 'OK'
     1. Close windows. You may see a pop up asking if you want to be discoverable on this network - click 'Yes' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso68.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso68.jpg))
-- ### Configure DHCP server
+- ## Configure DHCP server
 
     1. In the Server Manager window, click the flag icon, then 'complete DHCP configuration' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso43.jpg))
     2. Commit, close (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso44.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso45.jpg))
@@ -134,22 +136,22 @@ We will be doing the following:
     5. click 'finish' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso84.jpg))
     5. You will see your new scope under IPv4 in DHCP manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso82.jpg))
 
-- ### Configure IIS server
+- ## Configure IIS server
     1. Default settings for IIS will work fine for this demo
 
-## Configure PFSense firewall rules
-- ### Browse to firewall rules page
+# Configure PFSense firewall rules
+- ## Browse to firewall rules page
     1. browse to the ip / hostname of your pfsense VM and log in
     1. Firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso49.jpg))
 
-- ### Goals
+- ## Goals
     We are attempting to set up the following:
     - LAN can communicate with LAN3, but only on port 80 and 443
     - LAN3 can communicate with WAN, but not any internal resources
-- ### LAN3 rules
-    2. Click 'LAN3' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso50.jpg))
+- ## LAN3 rule
+    1. Click 'LAN3' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso50.jpg))
 
-    Click to add a rule to the top ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso100.jpg))
+        Click to add a rule to the top ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso100.jpg))
 
     1. LAN3 to WAN rule ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso101.jpg))
 
@@ -163,7 +165,7 @@ We will be doing the following:
         - Click Save
     1. You should have one rule on LAN3. Click 'Apply Changes' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso111.jpg))
 
-- ### LAN rules
+- ## LAN rules
 
     1. Click 'LAN' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso108.jpg))
 
@@ -199,26 +201,26 @@ We will be doing the following:
         - Click Save
     1. You should have three new rules set on LAN. MAke sure they are in this order, click 'apply changes' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso110.jpg))
 
-## Testing the network
-- ### LAN to LAN3 - HTTP(S) traffic passed
+# Testing the network
+- ## LAN to LAN3 - HTTP(S) traffic passed
     We are hoping to be able to send port 80 and 443 traffic from LAN to LAN3, lets give it a try
     1. Ensure PC is plugged into the PFSense LAN interface
     2. your IP configuration should have details matching the configuration of the PFSense DHCP server on LAN  ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso105.jpg))
     3. browse to the static IP you assigned to the windows server (10.0.3.2 in my example) - you should see the default windows server page! congrats, LAN devices can open HTTP(S) connections to LAN3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso106.jpg))
-- ### LAN to LAN3 - other ports blocked
+- ## LAN to LAN3 - other ports blocked
     We know that port 80 and 443 are being passed to LAN3, but let's make sure that no other ports are working
     1. With your PC still on LAN, ping the IP of the windows server - the ping packets should time out ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso107.jpg))
     2. This is because icmp echo packets (the packets sent when you 'ping' are) not using TCP/UDP port 80 or 443, so they do not match our first two LAN firewall rule, but do match the third one which blocks the packets
-- ### LAN3 to WAN
+- ## LAN3 to WAN
     We would like the LAN3 devices to communicate with the internet. Let's make sure our firewall rules allow this
     1. Go back to ESXI and open your windows server console (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso112.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso113.jpg))
     4. To test your WAN connection on the windows server VM, open powershell and ping a public IP (like 1.1.1.1), or open internet explorer and browse to a webpage ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso114.jpg))
 
-- ### LAN3 to other LANs blocked
+- ## LAN3 to other LANs blocked
     We do not want LAN3 to be able to open communications with other internal networks. 
     1. Your PC should still be plugged into LAN - use powershell on the windows server vm to ping the IP of your PC - requests should all time out, as they are being blocked by the PFSense firewall ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso115.jpg))
 
-- ### DHCP 
+- ## DHCP 
     now that we know traffic is being routed as desired, let's make sure the windows DHCP server is working
     1. Plug your PC into LAN3. After a short while it should obtain DHCP configuration from your windows server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso115.jpg))
     2. Plug your PC back into a network where you can connect to your ESXI managment webpage (LAN), browse to the ESXI server iP,  and open the windows server VM console
