@@ -8,7 +8,7 @@ The first order of business is to set up the VM that will be managing the networ
 
 My steps are based on the official guide [here](https://docs.netgate.com/pfsense/en/latest/recipes/virtualize-esxi.html), but is specific to this build.
 # Requirements
-1. Completed the [DL380G7 ESXI install guide]()
+1. Completed the [DL380G7 ESXI install guide](firstConfig.md)
 2. PFSense 2.6.0 installation ISO file on your PC
 
 
@@ -196,7 +196,7 @@ that's it - all names for ports have been mapped! Your future self will thank yo
     - the remaining 6 ports are managed by PFSense
     - at first, port 3 (or whichever port you have assigned to LAN in PFSense) will be the only way to connect to / configure PFSense
 
-    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/firstConfigDoubleNat.jpg)
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/firstConfigDoubleNat.jpg)
 
     Here a rundown of the new cabling:
     - remove all network cabling from your server
