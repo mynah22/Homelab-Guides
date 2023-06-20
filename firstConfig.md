@@ -9,38 +9,37 @@ Please note the following caveats:
 # Requirements
 Initial set up requires the following:
 
-## Existing home network
-* You will need one open ethernet port in in your existing home network in order to give your laboratory network a path to the internet
+- Existing home network
+    - You will need one open ethernet port in in your existing home network in order to give your laboratory network a path to the internet
 
-## Hardware
+- Hardware
+    - HP DL380 g7 rack server
+    - VGA Capable monitor
+    - at least one 2.5" SATA drive
+    - 2.5" SATA caddy for every drive SATA drive
+    - VGA cable
+    - 2-5 ethernet cables (on top of what you are currently using in your home net)
+    - USB keyboard
+    - power cables
+    - PC with ethernet port (for configuring ESXI and PFSense)
 
-* HP DL380 g7 rack server
-* VGA Capable monitor
-* at least one 2.5" SATA drive
-* 2.5" SATA caddy for every drive SATA drive
-* VGA cable
-* 2-5 ethernet cables (on top of what you are currently using in your home net)
-* USB keyboard
-* power cables
-* PC with ethernet port (for configuring ESXI and PFSense)
+- Installation tools
+    - ESXI 6.0.0 HP custom image installed on a bootable USB (see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides) 
+    -  A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
 
-## Installation tools
-* ESXI 6.0.0 HP custom image installed on a bootable USB (see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides) 
-* A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
-
-##  Connections
-* Server and VGA monitor plugged into power
-* VGA Cable plugged into monitor and server
-* Keyboard plugged into server
-* At least one 2.5" SATA disk installed into caddy / slot
-    1. Remove existing partitions from the drive
-    1. Mount your SATA disk into a drive caddy
-    1. Press the red button on the caddy to release the locking lever
-    2. Insert the caddy fully into the drive bay
-    3. Push the locking lever back into the caddy to lock the caddy to the drive bay.
-    1. you should see status LEDs visible on the right side of the caddy 
-    3. It's best to follow steps 1-6 for all disks you plan to use - that way you do not need to get into the RAID menu to add them later
-* Bootable USB inserted into USB slot on server 
+- Connections
+    - Server and VGA monitor plugged into power
+    - VGA Cable plugged into monitor and server
+    - Bootable USB inserted into USB slot on server 
+    - Keyboard plugged into server
+    - At least one 2.5" SATA disk installed into caddy / slot
+        1. Remove existing partitions from the drive
+        1. Mount your SATA disk into a drive caddy
+        1. Press the red button on the caddy to release the locking lever
+        2. Insert the caddy fully into the drive bay
+        3. Push the locking lever back into the caddy to lock the caddy to the drive bay.
+        1. you should see status LEDs visible on the right side of the caddy 
+        3. It's best to follow the above steps for all disks you plan to use - that way you do not need to get into the RAID menu to add them later
 
 # Instructions Index
 Here are the steps taken below:
