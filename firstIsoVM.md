@@ -6,12 +6,12 @@ However, in a laboratory environment, you might want to experiment with differen
 We are also building a IIS webserver on Windows Server to help demonstrate the firewall rules
 
 *It's important to note that isolating Windows Server it in this manner is **Not Required** (you could just place it on LAN). The example provided here specifically addresses scenarios where the server is responsible for services that are typically handled by PFSense (such as DHCP and DNS).*
-## Requirements
+# Requirements
 1. Completed the [Server & Hypervisor Setup Instructions](firstConfig.md) 
 2. Completed the [PFSense Setup instructions](firstPFSense.md)
 3. Windows server installation ISO on your PC
 
-# Index
+# Instructions Index
 We will be doing the following:
 1. [Configure PFSense interface](#configure-pfsense-interface)
     - [Interface Settings](#interface-settings)
