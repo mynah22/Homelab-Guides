@@ -16,9 +16,9 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 This guide will cover:
 1. [Create PFSense VM](#create-pfsense-virtual-machine)
     - [Add .iso to server](#add-installation-iso-to-server)
-    - [Create PFSense VM](#create-pfsense-virtual-machine)
-    - [Map Virtual NICs to VM](#map-virtual-nics)
-    - [Install / configure PFSense VM](#install-and-configure-pfsense-vm)
+    - [Build PFSense VM](#build-pfsense-vm)
+    - [Map Virtual NICs](#map-virtual-nics)
+    - [Install PFSense onto VM](#install-pfsense-onto-vm)
 1. [Understanding Network Interfaces in PFSense](#understanding-network-interfaces-in-pfsense)
 1. [Configure PFSense](#configure-pfsense)
     - [Assign Interfaces](#assign-interfaces)
@@ -36,7 +36,6 @@ This guide will cover:
     - [adding a WAP](#expanding-the-network-wap)
 1. [Connecting to the hypervisor](#connecting-to-hypervisor)
 1. [Moving Forward](#moving-forward)
-    - []()
 
 # **Create PFSense Virtual Machine**
 - ## **Add installation ISO to server**
@@ -47,7 +46,7 @@ This guide will cover:
     * Click upload and upload the PFSense 2.6.0 installation .ISO ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadISO.jpg))
     * you can see the progress in the top right of the datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadProgress.jpg))
 
-- ## **Create PFSense VM**
+- ## **Build PFSense VM**
     * Virtual Machines > Create / Register VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM.jpg))
     * Create a new virtual machine, next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM2.jpg))
     * Select a name and guest OS screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM3.jpg))
@@ -434,7 +433,7 @@ The following sections are brief descriptions of a few obvious / simple ways to 
 
     *OPTIONAL: REQUIRES ADDITIONAL HARDWARE*
 
-        When you connect a Wireless Access Point (WAP) to a LAN port, all devices that connect to the WAP's SSID will have their traffic managed by PFSense. This means that the firewall rules set for that interface in PFSense will control and route the traffic of those devices.
+    When you connect a Wireless Access Point (WAP) to a LAN port, all devices that connect to the WAP's SSID will have their traffic managed by PFSense. This means that the firewall rules set for that interface in PFSense will control and route the traffic of those devices.
 
 
 # **Connecting to hypervisor**
