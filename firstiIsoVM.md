@@ -42,13 +42,14 @@ We will be doing the following:
     LAN3 should be unused so far, but we are going to quickly make sure everything is ready on the PFSense side before we build our Windows Server
 
     1. browse to the IP address / hostname of your PFSense VM
-    2. on the top menu bar, Interfaces > LAN3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso48.jpg)
-    1. Options  ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso46.jpg))
+    2. on the top menu bar, Interfaces > LAN3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso48.jpg))
+    1. Options
         - Enable interface
         - Static IPv4
             - *Devices on this subnet attempting to send packets outside of the subnet will need the IP of the gateway (router). Since PFSense will be the router, we are setting it's IP here.*
         - Set static IP and subnet (I went with 10.0.3.0/24)
         - Click 'save'
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso46.jpg)
     1. Click 'apply' to save interface configuration ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso47.jpg))
 - ## Firewall rules
     1. Firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso49.jpg))
@@ -83,7 +84,9 @@ We will be doing the following:
         - hard disk 1- 100 GB
         - network adapter 1- LAN3
         - CD/DVD Drive 1- Datastore ISO file ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso10))
-        - click 'Next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso8.jpg))
+        - click 'Next 
+        
+            ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso8.jpg)
     6. Review details, click 'Finish' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso9.jpg))
     7. after a short delay you will see the new VM under Virtual Machines. Click the VM name to open it's configuration page ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso11.jpg))
     8. click the console preview window to start the VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso12.jpg))
@@ -111,7 +114,8 @@ We will be doing the following:
     10. click 'next' to install to this windows server instance ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso34.jpg))
     10. click the checkbox next to the DHCP server role, then click 'add features' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso35.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso36.jpg))
     10. click the checkbox next to the Web Server (IIS) role, then click 'add features' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso57.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso58.jpg)
-    11. click 'Next' [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso37.jpg)
+    11. click 'Next' 
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso37.jpg)
     12. click 'Next' without adding any features ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso38.jpg))
     13. click 'Next' on the DHCP server screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso39.jpg))
     13. click 'Next' on the Web Server (IIS) screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso60.jpg))
@@ -140,7 +144,7 @@ We will be doing the following:
     4. Click 'Next' to begin wizard ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso72.jpg))
     4. Type a name, click 'Next' to continue ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso74.jpg))
     5. Enter the IP range you would like the DHCP to assign to,  and subnet settings ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso75.jpg))
-    - *Note: PFSense (the gateway) is on 10.0.3.1, and this server is on 10.0.3.2, so mny range starts at 10.0.3.3, and I've given it 100 IPs*
+        - *Note: PFSense (the gateway) is on 10.0.3.1, and this server is on 10.0.3.2, so my range starts at 10.0.3.3, and I've given it 100 IPs*
     5. We are not configuring any exclusions or a delay. Click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso76.jpg))
     5. Leave lease duration at default. Click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso77.jpg))
     5. Leave 'Yes I want to configure these options now' selected. Click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso78.jpg))
@@ -149,7 +153,7 @@ We will be doing the following:
     5. Leave WINS servers empty, click next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso82.jpg))
     5. click 'next' to activate scope ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso83.jpg))
     5. click 'finish' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso84.jpg))
-    5. You will see your new scope under IPv4 in DHCP manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso82.jpg))
+    5. You will see your new scope under IPv4 in DHCP manager (![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso85.jpg))
 
 - ## Configure IIS server
     1. Default settings for IIS will work fine for this demo
@@ -194,7 +198,9 @@ We will be doing the following:
         - Source: LAN net
         - Destination: LAN3 net
         - Click Save
-    2. LAN to LAN3 HTTP rule ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso102.jpg))
+    2. LAN to LAN3 HTTP rule 
+
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso102.jpg)
         - Action: Pass
         - Interface: LAN
         - Address Family: IPv4
@@ -239,6 +245,7 @@ We will be doing the following:
     1. Plug your PC into LAN3. After a short while it should obtain DHCP configuration from your windows server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso115.jpg))
     2. Plug your PC back into a network where you can connect to your ESXI managment webpage (LAN), browse to the ESXI server iP,  and open the windows server VM console
     3. Open DHCP Manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso116.jpg))
-    4. you should see the lease of your PC under your server name> IPv4> the scope you created> address leases ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso117.jpg)) 
+    4. you should see the lease of your PC under your server name> IPv4> the scope you created> address leases
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso117.jpg)
 
 
