@@ -139,7 +139,7 @@ After preparing everything in the [Requirements](#requirements) section above, w
 
     It's a good idea to double check what logical drive number each array was assigned
     1. in [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg), highlight 'View logical drives', hit ENTER
-    2. you will be presented with a [view](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate12.jpg) of your logical drives - write this information down
+    2. you will be presented with a [view](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate12.jpg) of your logical drives. Record this information
     3. if you hit ENTER while highlighting an array you will see [a screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate13.jpg) displaying the physical slots each disk is inserted into. Write this info down or label it on the disk caddies
     4. ESC to return to the main RAID menu
 
@@ -147,6 +147,10 @@ After preparing everything in the [Requirements](#requirements) section above, w
 - ## Setting a boot disk
 
     Last thing in the RAID menu - setting a boot drive
+
+    The RAID array can handle sever disks / logical drives, but speicifies one as the primary boot device
+
+    Here is how to configure the RAID controller to boot from the logical drive of your choice
     
     1. in [main RAID menu]( https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate7.jpg), highlight 'Select Boot Volume', hit ENTER
     2. on the [next screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate8.jpg), highlight 'Direct Attached Storage', hit ENTER
