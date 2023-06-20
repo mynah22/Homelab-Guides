@@ -49,7 +49,7 @@ Here are the steps taken below:
     - [RAID Main Menu](#raid-main-menu)
     - [RAID - Deleting Logical Drives](#deleting-logical-drives-in-the-raid-menu)
     - [RAID - Creating Logical Drives](#creating-logical-drives-in-the-raid-menu)
-    - [Examine Logical Drives](#take-a-second-to-look-at-your-logical-drive-numbers)
+    - [Examine Logical Drives](#examining-logical-drives)
     - [Setting a boot disk](#setting-a-boot-disk)
 1. [Install hypervisor (ESXI 6.0.0)](#install-esxi-to-boot-disk)
     - [Install ESXI](#install-esxi-to-boot-disk)
