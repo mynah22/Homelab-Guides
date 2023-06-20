@@ -175,7 +175,6 @@ After preparing everything in the [Requirements](#requirements) section above, w
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_5.jpg))
 
 - ## Install ESXI to boot disk
-    Proceed with steps in the [ESXI Installation Guide]() - it's pretty simple:
     1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_6.jpg))
     2. F11 to accept EULA (screenshots 
     [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_7.jpg)
