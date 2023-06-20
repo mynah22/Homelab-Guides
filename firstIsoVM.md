@@ -19,7 +19,7 @@ We will be doing the following:
     - [DHCP Config](#dhcp-config)
 1. [Build Windows Server VM](#build-windows-server-vm)
     - [Upload .iso](#upload-windows-server-iso-to-esxi)
-    - [Build Windows Server VM](#build-windows-server-vm)
+    - [Create Virtual Machine](#create-virtual-machine)
 2. [Install & Configure Windows Server](#install--configure-windows-server)
     - [Configure Networking](#configure-networking)
     - [Configure DHCP server](#configure-dhcp-server)
@@ -249,5 +249,3 @@ We will be doing the following:
     3. Open DHCP Manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso116.jpg))
     4. you should see the lease of your PC under your server name> IPv4> the scope you created> address leases
         ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso117.jpg)
-
-
