@@ -24,7 +24,7 @@ Initial set up requires the following:
     - PC with ethernet port (for configuring ESXI and PFSense)
 
 - Installation tools
-    - ESXI 6.0.0 HP custom image installed on a bootable USB (see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides) 
+    - ESXI 6.0.0 HP custom image installed on a bootable USB
     -  A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
 
 - Connections
