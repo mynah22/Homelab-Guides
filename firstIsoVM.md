@@ -153,7 +153,9 @@ We will be doing the following:
     5. Leave WINS servers empty, click next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso82.jpg))
     5. click 'next' to activate scope ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso83.jpg))
     5. click 'finish' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso84.jpg))
-    5. You will see your new scope under IPv4 in DHCP manager (![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso85.jpg))
+    5. You will see your new scope under IPv4 in DHCP manager
+    
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso85.jpg)
 
 - ## Configure IIS server
     1. Default settings for IIS will work fine for this demo

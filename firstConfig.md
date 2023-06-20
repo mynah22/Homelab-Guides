@@ -12,8 +12,29 @@ I highly recommend looking at the [Simple Network Explanations](simpleNetworks.m
 
 The 'Intro Network' is advised at first, I recommend you take a look at it
 
-## Materials
+## Requirements
 Initial set up requires the following:
+
+### Existing home network
+* You will need one open port in in your home network in order to give your laboratory network a path to the internet
+
+### Hardware
+
+* HP DL380 g7 rack server
+* VGA Capable monitor
+* at least one 2.5" SATA drive
+* 2.5" SATA caddy for every drive SATA drive
+* VGA cable
+* 2-5 ethernet cables (on top of what you are currently using in your home net)
+* USB keyboard
+* power cables
+* PC with ethernet port (for configuring ESXI and PFSense)
+
+### Installation tools
+* ESXI 6.0.0 HP custom image installed on a bootable USB (see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides) 
+* A copy of the other OSes you plan to install downloaded to your PC. PFsense 2.6.0 is required
+
+###  Connections
 * Server and VGA monitor plugged into power
 * VGA Cable plugged into monitor and server
 * Keyboard plugged into server
@@ -25,28 +46,40 @@ Initial set up requires the following:
     3. Push the locking lever back into the caddy to lock the caddy to the drive bay.
     1. you should see status LEDs visible on the right side of the caddy 
     3. It's best to follow steps 1-6 for all disks you plan to use - that way you do not need to get into the RAID menu when you add them later
-* ESXI 6.0.0 HP custom image installed on a bootable USB (See Rufus and Ventoy guides) 
-* Bootable USB inserted into USB slot - see [Rufus](rufus.md) and [Ventoy](ventoy.md) guides
-* VMWare account & ESXI license (free, see caveats at the top of this guide)
-* Copy of PFSense 2.6.0 and Ubuntu server 22.04 disk images (.ISO) on your computer
-* an ethernet cable ready for use
-* no ethernet cables plugged into server
-* an open port on your home network
+* Bootable USB inserted into USB slot on server 
 
-# **Instructions**
+# Index
+Here are the steps taken below:
+1. [Initialize disks in RAID menu](#initialize-disks-in-raid-menu)
+    - [RAID modes](#raid-modes-reminder )
+    - [How to get to RAID menu](#how-to-get-to-the-raid-menu)
+    - [RAID Main Menu](#raid-main-menu)
+    - [RAID - Deleting Logical Drives](#deleting-logical-drives-in-the-raid-menu)
+    - [RAID - Creating Logical Drives](#creating-logical-drives-in-the-raid-menu)
+    - [Examine Logical Drives](#take-a-second-to-look-at-your-logical-drive-numbers)
+    - [Setting a boot disk](#setting-a-boot-disk)
 
-## **Initialize disk(s) in RAID menu**
+
+1. [Configure PFSense interface](#configure-pfsense-interface)
+    - [Interface Settings](#interface-settings)
+    - [Firewall Rules](#firewall-rules)
+    - [DHCP Config](#dhcp-config)
+
+**Instructions**
+
+# Initialize disk(s) in RAID menu
 With everything in the Server Setup section above ready, we are ready to get started initializing our disk(s) with the RAID controller. This is required for all disks (even those not in an array with other disks)
 - To get everything successfully working, you ***MUST*** enter the RAID controller menu before installing / trying to boot a hypervisor.
 
-- RAID (Redundant Array of Inexpensive Disks) is a set of storage technologies that allow multiple disks to be used in tandem. As a reminder, here are a few common RAID modes:
+- ## RAID modes reminder
+    RAID (Redundant Array of Inexpensive Disks) is a set of storage technologies that allow multiple disks to be used in tandem. As a reminder, here are a few common RAID modes:
     * 0 : 'Striped' - treats disks in the array as one big drive. No redundancy. This RAID controller calls everything RAID 0, even standalone disks
     * 1 : 'Mirrored' - data is written to disks identically - if one goes down the other still has everything. No increase in storage capacity
     * 10 (1+0) - A striped array is mirrored with another array. Usually described as requiring 4 disks -  Because this controller calls everything RAID 0, it describes a 2-disk RAID 1 config as RAID 1+0 
     * 5 / 50 - cool modes utilizing the XOR function to create parity drives able to recover any other drive - this server's RAID controller requires a license to set those up
 
 
-- **How to get to the RAID menu**
+- ## How to get to the RAID menu
 
     The RAID menu is not hard to get to if you know how, but  ***there is only a narrow window when you can enter the menu***
     1. Hold power button for about a second to turn the power on, and after a while you will be presented with a boot screen 
@@ -55,8 +88,6 @@ With everything in the Server Setup section above ready, we are ready to get sta
         You can stop pressing F8 once the screen goes black
 
         ![press f8 here](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proLiantInitialBoot.jpg)
-
-         
 
     3. The ILO menu will load. Press DOWN, ENTER and ENTER to exit that menu 
         - (screenshots 
@@ -67,7 +98,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
         ![raid controller loading](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidController2.jpg) 
 
-- **RAID main menu**
+- ## RAID main menu
 
     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
 
@@ -75,11 +106,10 @@ With everything in the Server Setup section above ready, we are ready to get sta
     
     We will define what physical drives make up the 'logical drives' (RAID arrays that the hypervisor will see as a single disk). 
 
-    
-    
+
     *Be prepared to lose all data on a drive if you change it's RAID configuration*
     
-- **Deleting logical drives in the RAID menu**
+- ## Deleting logical drives in the RAID menu
 
     The first order of business is to delete ALL logical drives. do the following until you no longer see drives in the deletion menu:
     1. Use UP/DOWN to navigate to 'Delete Logical Drive', then ENTER to enter the submenu 
@@ -93,7 +123,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 
     Now we must create logical drives so the controller properly maps physical disks to RAID arrays:
 
-- **Creating logical drives in the RAID menu**
+- ## Creating logical drives in the RAID menu
 
     To get started, enter the 'Create Logical Drive' submenu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate1.jpg))
 
@@ -108,7 +138,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
     3. Repeat until you have assigned all disks to a logical drive
 
  
-- **Take a second to look at your logical drive numbers**
+- ## Examining logical drives
 
     It's a good idea to double check what logical drive number each array was assigned
     1. in [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg), highlight 'View logical drives', hit ENTER
@@ -117,7 +147,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
     4. ESC to return to the main RAID menu
 
 
-- **Setting a boot disk**
+- ## Setting a boot disk
 
     Last thing in the RAID menu - setting a boot drive
     
@@ -132,7 +162,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
     5. Press F8 if you are ready to exit the RAID menu - otherwise press ENTER to go back to the main RAID menu (good idea to double check / write your config down). You can press ESCAPE at the [main RAID menu](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg) when you are ready to install the hypervisor
     6. *you do not need to come back to the RAID menu again unless you are adding / changing disk configuration* 
 
-## **Installing hypervisor (ESXI)**
+# Installing hypervisor (ESXI)
 - When you exit the RAID menu, the server will start to attempt to boot from the various bootable hardware (CD, USB, network/PXE over ethernet and fiber, and finally the RAID controller), in the order configured in BIOS 
 - I use Ventoy, so I was presented with an OS select screen (screenshots
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantESXIVentoy.jpg)
@@ -143,7 +173,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_4.jpg)
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_5.jpg))
 
-### **Install ESXI to boot disk**
+## Install ESXI to boot disk
  Proceed with steps in the [ESXI Installation Guide]() - it's pretty simple:
 1. ENTER to begin install([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_6.jpg))
 2. F11 to accept EULA (screenshots 
@@ -159,7 +189,7 @@ With everything in the Server Setup section above ready, we are ready to get sta
 8. Once installation is complete you will be presented with this [success screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_15.jpg). 
 9. Remove the USB boot drive from the server, the press ENTER to reboot - ESXI will take a moment to shut down ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_16.jpg)), then the server will reboot
 
-### **Network connection to ESXI management interface**
+## Network connection to ESXI management interface
 With the USB drive removed and network cables disconnected from the server, it will attempt to boot from the logical drive assigned as the boot disk by the RAID array
 
 If all goes well, you should see ESXI begin to boot  (screenshots 
@@ -167,7 +197,7 @@ If all goes well, you should see ESXI begin to boot  (screenshots
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot3.jpg)
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot4.jpg))
 
-* ***Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate18.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*** 
+* *Note: if installation succeeded but you still have difficulty booting to ESXI (particularly the ['No system disk'](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidCreate18.jpg) message on boot), you probably need to reconfigure your RAID Setup. Your best bet is to follow the ['Initialize disk(s) in RAID menu'](firstConfig.md#initialize-disks-in-raid-menu) section above once more. If that does not work go ahead and reinsert the USB stick where you have the ESXI 6.0.0 installer and reinstall ESXI.*
 
 
 Once ESXI has booted, you will be presented with a simple window showing the network status of the web configuration server
@@ -198,7 +228,7 @@ There are two easy ways of doing this: DHCP and Link-Local (APIPA)
 *Again, the goal here is to have your computer on the same network as the ESXI webserver so that you can communicate with it. Checking your PC's subnet and pinging the IP on the server are obvious ways to confirm that you are on the same network*
 
 
-### **ESXI Web Management**
+# **ESXI Web Management**
 Once your PC and ESXI management webserver are on the same network, open a web browser and browse to the IP address shown on the ESXI status page (
 [DHCP](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) / 
 [APIPA](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot7.jpg))
@@ -212,7 +242,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
-### **License ESXI**
+## **License ESXI**
 1. If it's not already expanded, click 'navigator' on the left side to expand the main menu
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/ESXIExpandNavigator.jpg) 
 2. Click Manage (under Host) > licensing > assign license, and enter your ESXI 6 license key (screenshots 
@@ -220,7 +250,7 @@ Once your PC and ESXI management webserver are on the same network, open a web b
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm.jpg)
 [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxilicenseConfirm2.jpg))
 
-### **Set up networking:**
+## **Set up networking:**
 
 We will have to configure virtual networks in order to expose physical ports to our VMs
 
