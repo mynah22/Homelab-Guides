@@ -101,8 +101,8 @@ This guide will cover:
         1. ENTER to proceed with ZFS in stripe mode ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs5.jpg))
         1. SPACE to select VMware Virtual Disk, ENTER to proceed ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs6.jpg))
         1. LEFT, ENTER to acknowledge disk overwrite ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs7.jpg))
-        1. Installation will commence ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8.jpg))
-        1. in a couple of minutes you will be at [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs9.jpg). ENTER to skip a manual shell
+        1. Installation will commence (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8_2.jpg))
+        1. When installation is complete, you will be at [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs9.jpg). ENTER to skip a manual shell
         1. ENTER again to reboot the VM. This may take a couple of minutes ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs10.jpg))
 
  
