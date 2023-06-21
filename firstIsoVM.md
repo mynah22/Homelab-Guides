@@ -123,7 +123,7 @@ We will be doing the following:
     10. click the checkbox next to the DHCP server role, then click 'add features' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso35.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso36.jpg))
     10. click the checkbox next to the Web Server (IIS) role, then click 'add features' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso57.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso58.jpg)
     11. click 'Next' 
-        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso37.jpg)
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso37_2.jpg)
     12. click 'Next' without adding any features ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso38.jpg))
     13. click 'Next' on the DHCP server screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso39.jpg))
     13. click 'Next' on the Web Server (IIS) screen ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso60.jpg))
@@ -132,14 +132,15 @@ We will be doing the following:
 - ## Configure Networking
     We are going to set a static IP for the windows server on the same subnet that we configured for PFSense above
 
-    1. right click start menu > network connections (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso62.jpg)) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso63.jpg)))
+    1. right click start menu > network connections (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso62.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso63.jpg)))
     2. click 'change adapter options'. Then, right click the Ethernet network and click 'Properties' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso65.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso64.jpg)) 
     1. click 'Internet Protocol Version 4', then 'Properties' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso66.jpg))
     1. IPV4 options ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso67.jpg))
         - Select the 'use the following IP address' radio button
-        - IP address: this will be the IP of the DNS, DHCP, and IIS server. It must be on the same subnet as the PFSense IP you configured for this interface
+        - IP address: this will be the IP of the windows server (therefore DHCP, and IIS). It must be on the same subnet as the PFSense IP you configured for this interface
         - Subnet mask: must match the subnet of the PFSense IP
-        - DNS servers: 127.0.0.1, 8.8.8.8
+        - Gateway: must be the PFSense IP on this interface
+        - DNS servers: 4.4.4.4, 8.8.8.8
         - Click 'OK'
     1. Close windows. You may see a pop up asking if you want to be discoverable on this network - click 'Yes' (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso68.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso68.jpg))
 - ## Configure DHCP server
@@ -220,7 +221,6 @@ We will be doing the following:
         - Destination port range: HTTP (80) (pick from drop down)
         - Click Save
     1. LAN to LAN3 HTTPS rule ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso103.jpg))
-        - Click 'LAN' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso108.jpg))
         - Action: Pass
         - Interface: LAN
         - Address Family: IPv4
@@ -229,18 +229,18 @@ We will be doing the following:
         - Destination: LAN3 net
         - Destination port range: HTTPS (443) (pick from drop down)
         - Click Save
-    1. You should have three new rules set on LAN. MAke sure they are in this order, click 'apply changes' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso110.jpg))
+    1. You should have three new rules set on LAN. Make sure they are in this order, click 'apply changes' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso110.jpg))
 
 # Testing the network
 - ## LAN to LAN3 - HTTP(S) traffic passed
     We are hoping to be able to send port 80 and 443 traffic from LAN to LAN3, lets give it a try
     1. Ensure PC is plugged into the PFSense LAN interface
-    2. your IP configuration should have details matching the configuration of the PFSense DHCP server on LAN  ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso105.jpg))
+        - your PC's IP configuration should have details matching the configuration of the PFSense DHCP server on LAN  ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso105.jpg))
     3. browse to the static IP you assigned to the windows server (10.0.3.2 in my example) - you should see the default windows server page! congrats, LAN devices can open HTTP(S) connections to LAN3 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso106.jpg))
 - ## LAN to LAN3 - other ports blocked
     We know that port 80 and 443 are being passed to LAN3, but let's make sure that no other ports are working
     1. With your PC still on LAN, ping the IP of the windows server - the ping packets should time out ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso107.jpg))
-    2. This is because icmp echo packets (the packets sent when you 'ping' are) not using TCP/UDP port 80 or 443, so they do not match our first two LAN firewall rule, but do match the third one which blocks the packets
+    2. This is because icmp echo packets (the packets sent when you 'ping' are) are not using TCP/UDP port 80 or 443, so they do not match our first two LAN firewall rule. They do match the third one which blocks the packets
 - ## LAN3 to WAN
     We would like the LAN3 devices to communicate with the internet. Let's make sure our firewall rules allow this
     1. Go back to ESXI and open your windows server console (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso112.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso113.jpg))
@@ -253,7 +253,7 @@ We will be doing the following:
 - ## DHCP 
     now that we know traffic is being routed as desired, let's make sure the windows DHCP server is working
     1. Plug your PC into LAN3. After a short while it should obtain DHCP configuration from your windows server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso115.jpg))
-    2. Plug your PC back into a network where you can connect to your ESXI managment webpage (LAN), browse to the ESXI server iP,  and open the windows server VM console
+    2. Plug your PC back into a network where you can connect to your ESXI managment webpage (LAN), browse to the ESXI server IP,  and open the windows server VM console
     3. Open DHCP Manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso116.jpg))
     4. you should see the lease of your PC under your server name> IPv4> the scope you created> address leases
         ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso117.jpg)
