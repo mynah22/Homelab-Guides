@@ -132,13 +132,13 @@ Having determined the NIC and port group of each physical port, we are ready to 
 3. In the PFSense page on the ESXI web management, click a network adapter to expand it's view
 4. You can see the MAC address of the network adapter. Look for the interface in the PFSense window with the matching MAC address
     ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28_2.jpg)
-    
+
 [The Understanding Port Assignment instructions](firstConfig.md#understanding-port-assignments) left you with a map of the following information for the 7 NICs we are managing with PFSense:
 1. physical port label
 1. NIC name
 1. ESXI port group / vSwitch name
 
-You should have recorded the information above for all NICs. To that information, add the interface name as PFSense sees it. For example, I had the following for one of my ports:
+You should have recorded the information above for all NICs. To that information, add the interface name as PFSense sees it. Do this for all NICs (WAN, LAN, LAN2-LAN6)([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28_3.jpg)) For example, I had the following for one of my ports:
 - Port label: 'a'
 - NIC name: vmnic5
 - ESXI port group / vSwitch name: LAN6
