@@ -66,7 +66,7 @@ This guide will cover:
         * Click 'Add Network Adapter' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetAdapt.jpg)) 6 times (so you end up with 7 adapters)
             * ***note: don't worry about assigning Port Groups on this screen. If you do that here you will certainly end up with mixed up port assignments. We will make sure they are correct shortly***
         * Click [Next](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsNext.jpg)
-        * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseNetworkSetup.jpg)
+        * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsFinish.jpg)
 - ## **Map virtual NICs**
 
     This is a very important step!
