@@ -71,9 +71,11 @@ This guide will cover:
 
     This is a very important step!
 
-    1. After you create your VM (and a brief delay), you will see your virtual machine show in the Virtual Machines section of the ESXI webgui. Click it to bring up that VM's detail ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseVMSuccess.jpg))
+    1. After you create your VM (and a brief delay), you will see your virtual machine show in the Virtual Machines section of the ESXI webgui. Click it to bring up that VM's detail (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfsvm0.jpg) [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfsvm1.jpg))
     
-   2. click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14.jpg))
+    2. click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6 
+   
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14.jpg)
     
 - ## **Install PFSense onto VM**
 
