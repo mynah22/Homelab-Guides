@@ -73,7 +73,9 @@ This guide will cover:
 
     1. After you create your VM (and a brief delay), you will see your virtual machine show in the Virtual Machines section of the ESXI webgui. Click it to bring up that VM's detail (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfsvm0.jpg) [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfsvm1.jpg))
     
-    2. click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6 
+    2. click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6. 
+    3. Check 'Connect' on CD/DVD Drive 1
+    4. Click 'Save'
    
         ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14_2.jpg)
     
@@ -101,7 +103,7 @@ This guide will cover:
         1. ENTER to proceed with ZFS in stripe mode ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs5.jpg))
         1. SPACE to select VMware Virtual Disk, ENTER to proceed ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs6.jpg))
         1. LEFT, ENTER to acknowledge disk overwrite ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs7.jpg))
-        1. Installation will commence (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8_2.jpg))
+        1. Installation will commence (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8_2.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs8.jpg))
         1. When installation is complete, you will be at [this screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs9.jpg). ENTER to skip a manual shell
         1. ENTER again to reboot the VM. This may take a couple of minutes ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs10.jpg))
 
@@ -126,23 +128,23 @@ Having determined the NIC and port group of each physical port, we are ready to 
 
 1. Type '1' at the PFSense main menu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs16.jpg)), press ENTER
 2. you should see a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28.jpg). It displays the interfaces that PFSense sees, including their name and MAC address. 
+    ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28.jpg)
 3. In the PFSense page on the ESXI web management, click a network adapter to expand it's view
 4. You can see the MAC address of the network adapter. Look for the interface in the PFSense window with the matching MAC address
-
-    ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs29.jpg)
-
+    ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs28_2.jpg)
+    
 [The Understanding Port Assignment instructions](firstConfig.md#understanding-port-assignments) left you with a map of the following information for the 7 NICs we are managing with PFSense:
-5. physical port label
-6. NIC name
-7. ESXI port group / vSwitch name
+1. physical port label
+1. NIC name
+1. ESXI port group / vSwitch name
 
-You should have recorded the information above for all NICs. Add the interface name as PFSense sees it. For example, I had the following for one of my ports:
+You should have recorded the information above for all NICs. To that information, add the interface name as PFSense sees it. For example, I had the following for one of my ports:
 - Port label: 'a'
 - NIC name: vmnic5
 - ESXI port group / vSwitch name: LAN6
 - PFSense interface: em6
 
-Using the above technique (expand network adapter, match to interface name in pfsense using MAC), add the interface names for all 7 ports we are managing (WAN, LAN, and LAN2-6)
+
 
 that's it - all names for ports have been mapped! Your future self will thank you for taking the time to understand and write these details down
 
