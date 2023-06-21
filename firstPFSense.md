@@ -75,7 +75,7 @@ This guide will cover:
     
     2. click 'edit' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs13.jpg)), and map the network adapters in this order: WAN, LAN, LAN2-LAN6 
    
-        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14.jpg)
+        ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs14_2.jpg)
     
 - ## **Install PFSense onto VM**
 
