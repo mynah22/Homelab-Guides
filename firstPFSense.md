@@ -44,7 +44,7 @@ This guide will cover:
     [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateDir.jpg)
     [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateOSISOFolder.jpg))
     * Click upload and upload the PFSense 2.6.0 installation .ISO ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadISO.jpg))
-    * you can see the progress in the top right of the datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupUploadProgress.jpg))
+    * you can see the progress in the top right of the datastore browser ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupISOUploadProgress.jpg))
 
 - ## **Build PFSense VM**
     * Virtual Machines > Create / Register VM ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiSetupCreateVM.jpg))
