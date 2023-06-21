@@ -275,7 +275,7 @@ With the above network changes, you should be able to use a browser on your PC t
         - *isn't it nice that you took the time to map port names? I can also say that em2/LAN2 is using vmnic3 / the port labelled '4' because I wrote my mapping down*
     4. click 'save' , then apply changes ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs66.jpg))
     5. Interfaces > assignments and click the next OPT interface
-    6. repeat steps 1-5 for all OPT interfaces
+    6. repeat the above steps for all OPT interfaces
     6. you should end up with all OPT interfaces renamed as LAN2-LAN6 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs69.jpg))
 - ## **Understanding firewall / interfaces**
     Currently, our network is doing the following:
@@ -353,7 +353,6 @@ If you take a look at the summary of firewall rules above, our network currently
 
 Thankfully you have just set up a feature-complete network appliance and have all the tools you need to build the network of your dreams!
 
-The following sections are brief descriptions of a few obvious / simple ways to expand the network we have built
 - ## **Expanding the Network: Enable other interfaces**
     The easiest way to expand on our network is to get another port to behave in the manner that LAN does currently. 
 
@@ -377,6 +376,7 @@ The following sections are brief descriptions of a few obvious / simple ways to 
 
     2. *Configure DHCP server*
         - Services > DHCP Server ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs78.jpg))
+        - click LAN2 to configure DHCP on LAN2 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs78_2.jpg))
         - click 'Enable DHCP server'. set the range of DHCP addresses (I chose 100 IPs) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs82.jpg))
         - click 'save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs83.jpg))
     3. *Configure firewall rules*
@@ -387,7 +387,7 @@ The following sections are brief descriptions of a few obvious / simple ways to 
 
         firewall > rules ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73.jpg))
         
-        Click the interface you are configuring
+        Click the interface you are configuring (LAN2) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs73_2.jpg))
 
         add a rule ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs84.jpg))
 
@@ -471,9 +471,3 @@ Your PC can connect to your home network and the internet, as well as LAN and LA
 At this point you will be able to start building out your network and VMs/services to your heart's content. I will demonstrate a [simple example](firstIsoVM.md) specifically for this build, and include generic guides that are not specific to this build
 
 1. [Isolated Windows Server VM w/ PFSense & ESXI](firstIsoVM.md)
-2. [DNS black hole]()
-3. [PFSense openVPN]()
-4. [free DDNS]()
-5. [name.com DDNS]()
-
-Once you are comfortable with managing your lab network, you will probably want to also manage your home devices with PFSense. Check out the [Moving to the Edge Guide]()
