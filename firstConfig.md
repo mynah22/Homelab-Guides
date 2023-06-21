@@ -168,7 +168,7 @@ After preparing everything in the [Requirements](#requirements) section above, w
 - I use Ventoy, so I was presented with an OS select screen (screenshots
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantESXIVentoy.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantESXIVentoy2.jpg)) - I selected the ESXI 6.0.0 image and it began to boot. If you are using Rufus or a similar tool you should see ESXI load directly
-- When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay [screenshot]((https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_2.jpg))
+- When ESXI boots you will be briefly shown a boot menu. It will proceed to boot the ESXI image after a short delay ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_2.jpg))
 - ESXI will take a few minutes to load (screenshots 
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_3.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxi600_4.jpg)
@@ -204,21 +204,20 @@ After preparing everything in the [Requirements](#requirements) section above, w
 
     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot6_2.jpg)
 
-    All further configuration of ESXI and Virtual Machines is done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical method for managing everything about the hypervisor & Virtual Machines.
+    Any further configuration of the hypervisor / VMs will be done via the ESXI webgui. This is a webserver running on the hypervisor that provides a graphical management interface
 
     In order to connect to the webgui, we will have to place a pc with a web browser on the same network as the server, and ensure both are configured so that they can communicate
-
 
     There are two easy ways of doing this: DHCP and Link-Local (APIPA)
 
     1. DHCP
         - the Dynamic Host Configuration Protocol is an effective way for clients to obtain network configuration and unused IP addresses when they connect to a network
-        - if you are following the 'Intro Network' architecture, all you have to do the ESXI webgui to obtain a DHCP address is:
+        - here is how to get ESXI to  obtain a DHCP IP:
             1. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an open port on your home network
             1. ESXI will obtain a DHCP lease from your home router
-            2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) - note that the IP address will depend on the range of the DHCP server it obtained it's lease from
+            2. after obtaining a DHCP lease, ESXI will display a screen like [this one](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiBoot5.jpg) - note that the IP address will depend on the dhcp range of your home network
     2. Link-local (APIPA)
-        - if a client does not get any responses from a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
+        - if a client cannot establish communications with a DHCP server, it will grab a random IP in the Automatic Private IP Addressing (APIPA) range - 169.254.0.0/16 (255.255.0.0)
         - configuring a Link-Local network is as simple as placing devices on a network without a DHCP server:
             1. Disconnect your PC from all networks, including wireless
             2. Use an ethernet cable to connect the first logical port of the server (labeled '1') to an ethernet port on your PC
@@ -239,6 +238,9 @@ Once your PC and ESXI management webserver are on the same network, open a web b
     - *Note: when you browse to the ESXI webgui, you will be presented with a certificate error. This is because the server is using a self-signed certificate - it is still safely encrypting your communication with the server, but it's identity is not vouched for by any authorities trusted by your machine.*
 
 * On the [Welcome Screen](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/connectionChoicesESXI.jpg) click 'Open the VMWare Host Client' to open the web interface
+* to log in:
+    - username = root
+    - password = what   you set when you [Installed ESXI](#install-esxi-to-boot-disk)
 * congrats, you are now able to fully configure your server and VMs!
 * you can safely unplug the display and keyboard from the server - you will only need to connect them if you add disks later, otherwise all configuration will be done via the ESXI webgui
 
