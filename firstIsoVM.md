@@ -77,7 +77,7 @@ We will be doing the following:
 
 - ## Create Virtual Machine
     1. Virtual machines > create / register vm ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso0.jpg))
-    2. create a new virtual machine ? next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso5.jpg))
+    2. create a new virtual machine,  next ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso5.jpg))
     3. Select name and guest os
         - Name: your choice
         - Guest OS family: Windows
@@ -88,10 +88,10 @@ We will be doing the following:
     4. Select the datastore for the VM's virtual hard drive, click 'Next' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso7.jpg))
     5. customize settings screen:
         - CPU- 16
-        - memory- 16MB (16384 MB)
+        - memory- 16GB (16384 MB)
         - hard disk 1- 100 GB
         - network adapter 1- LAN3
-        - CD/DVD Drive 1- Datastore ISO file ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso10))
+        - CD/DVD Drive 1- Datastore ISO file (select the windows server .iso you uploaded) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso10.jpg)) 
         - click 'Next 
         
             ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/iso8.jpg)
