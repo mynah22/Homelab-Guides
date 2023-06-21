@@ -182,11 +182,11 @@ that's it - all names for ports have been mapped! Your future self will thank yo
     - enter the bitwise subnet mask - 24 in our case ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs29.jpg)). ENTER
     - We are configuring a LAN - ENTER for no upstream gateway ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs40.jpg))
     - ENTER for no ipv6 address ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs41.jpg))
-    - type 'y' to enable DHCP on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs42.jpg))
+    - type 'y' to enable DHCP on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs42.jpg)). ENTER
     - The PFSense DHCP server we just enabled will assign IPs in a fixed range. Enter the beginning of that range (I went with 10.0.1.2  - the next available IP), ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs43.jpg))
     - Enter the end of the DHCP range. I went with 100 IPs, so 10.0.1.102 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs44.jpg)), ENTER
     - type 'n' then ENTER to keep webconfigurator connections encrypted ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs45.jpg)) 
-    - Things will reload and you will se the new ip assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs46.jpg)). Press ENTER to return to the PFSense console main menu
+    - Things will reload and you will see the new ip assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs46.jpg)). Press ENTER to return to the PFSense console main menu
 
 - ## Network rearrange
 
