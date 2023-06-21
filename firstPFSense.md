@@ -67,6 +67,7 @@ This guide will cover:
             * ***note: don't worry about assigning Port Groups on this screen. If you do that here you will certainly end up with mixed up port assignments. We will make sure they are correct shortly***
         * Click [Next](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsNext.jpg)
         * Scroll thorugh confirmation screen. click [Finish](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/esxiPFSenseCustomizeSettingsFinish.jpg)
+    - Set PFSense to autostart ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs91.jpg))
 - ## **Map virtual NICs**
 
     This is a very important step!
@@ -449,6 +450,14 @@ Assuming you followed the [instructions to enable a secondary interface](#net-ex
 1. Your PC should be plugged in to LAN. WAN port on the server should be plugged into your home network. Your PC has a DHCP IP on the LAN subnet, and is able to communicate with WAN (both your home network and the internet) and LAN2 due to our  firewall configuration
 2. plug an ethernet cable into the ESXI management port (vmnic0) on one end, and a LAN2 on the other
 2. the esxi hypervisor will obtain a DHCP lease from the PFSense DHCP server on that interface
+    - In testing, I noticed that ESXI would hold onto the DHCP from my home network (if it obtained one)
+    - If you connect vmnic0 to LAN2 but do not see a new IP corresponding to the LAN2 DHCP range, you can reset the management network 
+        1. Press F2 on keyboard ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs92.jpg))
+        1. TAB to move cursor to password field. Type the ESXI password you set, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs93.jpg))
+        1. Use the arrow keys to navigate to 'Restart Management Network'. ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs94.jpg))
+        1. F11 to confirm ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs95.jpg))
+        1. ENTER after network has restarted([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs96.jpg))
+        1. ESC to leave menu ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs97.jpg))
 4. Since LAN and LAN2 have a firewall rule allowing all ipv4 packets, traffic can pass between them
 4. Determine the IP of the ESXI server. This IP will be listed on the server display (if you connect a vga monitor), but an easy way to determine this remotely is by looking for the hypervisor's DHCP lease:
     - Status - dhcp leases ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs89.jpg))
