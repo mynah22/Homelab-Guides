@@ -10,10 +10,8 @@ I will describe the basic of connecting to this device, and installing PFSense
 1. PuTTY or similar tool installed on your PC
 
 # Index
-1. [Connect to device]()
-    - []()
-2. [Install PFsense]()
-    - []()
+1. [Connect to device](#connect-to-device)
+2. [Install PFsense](#install-pfsense)
 
 # Connect to device
 I am pretty much just following the recommendations in the [device manual](https://advdownload.advantech.com/productfile/Downloadfile4/1-1TBDP2H/FWA-1320_User_Manual_Ed.2-D1.pdf)  
@@ -21,8 +19,7 @@ I am pretty much just following the recommendations in the [device manual](https
 We will be using PuTTY on windows to connect to the device using a USB to RJ45 serial console cable
 
 Once you have PuTTY installed on your PC and a console cable connected to the network appliance, here are the settings you will need to configure in PuTTY
-1. 
-    - Make sure the Serial option is selected under Session. Under 'Serial Line', type the number of the COM port of your USB console cable (COM40 in my case)
+1. Make sure the Serial option is selected under Session. Under 'Serial Line', type the number of the COM port of your USB console cable (COM40 in my case)
 
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/fwa0.jpg)
 
