@@ -1,8 +1,10 @@
 # Advantech FWA1320
 
-This is a little 6 port network appliance, with an msata drive, a couple of DIMM slots, and some usb ports for installation media. No video output, so the only way to connect to the device is by using a console cable (RJ45 to USB)
+This is a little 6 port network appliance, with an msata drive, a couple of DIMM slots, and some usb ports for installation media. 
 
-I will describe the basic of connecting to this device, and installing PFSense 
+No video output, so the only way to connect to the device is by using a console cable (RJ45 to USB)
+
+This guide describes the basics of connecting to this device and installing PFSense 
 
 # Requirements
 1. RJ45 to USB console cable
