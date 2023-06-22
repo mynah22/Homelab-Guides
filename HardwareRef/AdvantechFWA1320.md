@@ -50,3 +50,4 @@ This confirms that you are connected to the device over the console cable. Power
     - use RIGHT and LEFT to move to the Save & Exit tab
     - use UP and DOWN to select your USB drive
     - ENTER to boot from usb
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/fwa3.jpg)
