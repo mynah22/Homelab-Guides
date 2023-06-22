@@ -23,7 +23,7 @@ We will be using PuTTY on windows to connect to the device using a USB to RJ45 s
 Once you have PuTTY installed on your PC and a console cable connected to the network appliance, here are the settings you will need to configure in PuTTY
 1. Make sure the Serial option is selected under Session. Under 'Serial Line', type the number of the COM port of your USB console cable (COM40 in my case)
 
-![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/fwa0.jpg)
+    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/fwa0.jpg)
 
 2. Under Connection > Serial, set the following parameters:
     - speed: 115200
