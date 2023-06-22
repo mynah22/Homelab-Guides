@@ -99,7 +99,7 @@ After preparing everything in the [Requirements](#requirements) section above, w
 
     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/proliantRaidDelete1.jpg)
 
-    The RAID menu you just entered is used to configure RAID controller on how it will handle attached physical disks
+    The RAID menu you just entered is used to configure how the RAID controller  will handle attached physical disks
     
     We will define what physical drives make up the 'logical drives' (RAID arrays that the hypervisor will see as a single disk). 
 
