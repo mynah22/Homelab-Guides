@@ -19,13 +19,11 @@ I'll write an explaination of DNS blackholes later, and link it here
 
 
 # Install PFBlockerNG
-1. in the pfsense webgui, click System > Package manager [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb0.jpg)
+1. in the pfsense webgui, click System > Package manager ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb0.jpg))
 2. Click 'available Packages' - PFsense will load them shortly. Type 'pfblockerng' in the search bar. Click 'Search'. 
-3. Click install on the entry for ***pfBlockerNG-devel***, not the non-devel package 
-
-    ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb1.jpg)
+3. Click install on the entry for ***pfBlockerNG-devel***, not the non-devel package ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb1.jpg))
 4. Click to confirm installation. You will see a success notice when installation is complete (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb2.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb3.jpg))
-5. in the top menu of pfSense, click Firewall > pfBlockerNG [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb5.jpg)
+5. in the top menu of pfSense, click Firewall > pfBlockerNG ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb5.jpg))
 6. An easy configuration wizard will run (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb6.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb7.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb8.jpg) [4](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb9.jpg) [5](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb10.jpg))
 7. After you click 'Finish', pfblockerng will pull the blocklist definitions. You will see a blue success screen when everything is finalized (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb11.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/dnsb12.jpg))
 
