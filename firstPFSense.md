@@ -278,6 +278,7 @@ With the above network changes, you should be able to use a browser on your PC t
     5. Interfaces > assignments and click the next OPT interface
     6. repeat the above steps for all OPT interfaces
     6. you should end up with all OPT interfaces renamed as LAN2-LAN6 ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs69.jpg))
+
 - ## **Understanding firewall / interfaces**
     Currently, our network is doing the following:
     - PFSense is working as a NAT router, providing IP translation between our home network (WAN) and homelab network (LAN)
@@ -480,3 +481,4 @@ Your PC can connect to your home network and the internet, as well as LAN and LA
 At this point you will be able to start building out your network and VMs/services to your heart's content. I will demonstrate a [simple example](firstIsoVM.md) specifically for this build, and include generic guides that are not specific to this build
 
 1. [Isolated Windows Server VM w/ PFSense & ESXI](firstIsoVM.md)
+2. [Ad/tracking blocker in pfsense in a few clicks](pfsenseDNSBlackhole.md)
