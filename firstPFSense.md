@@ -10,6 +10,7 @@ My steps are based on the official guide [here](https://docs.netgate.com/pfsense
 # Requirements
 1. Completed the [DL380G7 ESXI install guide](firstConfig.md)
 2. PFSense 2.6.0 installation ISO file on your PC
+1. read and understand [Network Explanation document](basicNetworkExplain.md)
 
 
 # Instructions Index
