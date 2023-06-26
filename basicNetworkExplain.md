@@ -1,4 +1,4 @@
-# Basic Network explaination
+# Basic Network explanation
 
 This documents attempts to explain the big picture of the network architecture I recommend for building your first homelab
 
@@ -27,6 +27,7 @@ This documents attempts to explain the big picture of the network architecture I
 The above diagram depicts a theoretical home network, which is probably similar to your home network
 
 *note: In this diagram, the cable modem, router, and WAP are separate physical devices. In your environment, 2 or more of those functions may be performed by a single device*
+
 *IPs have been changed to protect the identity of the innocent. The IPs listed are just for demonstration purposes*
 
 This vanilla home network works in the following way:
