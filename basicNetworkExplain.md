@@ -149,4 +149,16 @@ With an understanding of the above items, let's run through some communication e
 
 
 # Further config
-You should be able to understand the 
+You should be able to understand the way the various networks interact above. Once you have that in your head, the world is your oyster!
+
+Here are a couple of obvious things you can do extend the architecture above, without losing it's key benefits
+
+1. Move some home net devices to a lab network
+    This is one of the first things you will do, and is usually required to configure devices on the lab net
+
+    in the [LANx to WAN (home net)](#lanx-to-wan-home-network) section above, you can see that devices on your home net cannot connect to devices on the lab net. 
+    
+    But what if you want to connect to a resource on the lab net using your desktop on the home net?
+    - The easiest way to do this is to move the desktop onto one of the lab nets
+    - Then set appropriate firewall rules so that the interface it's plugged into can communicate with the other lab subnets & WAN
+    - If you break your lab net, plug the desktop back into your home net and everything works again (so you can research what you broke :)
