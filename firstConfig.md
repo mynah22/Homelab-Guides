@@ -40,6 +40,9 @@ Initial set up requires the following:
         1. you should see status LEDs visible on the right side of the caddy 
         3. It's best to follow the above steps for all disks you plan to use - that way you do not need to get into the RAID menu to add them later
 
+- Understand network 
+    - okay, this is not required now. But you should take a look at the [Network Explanation](basicNetworkExplain.md) document, which describes the recommended network architecture built later 
+
 # Instructions Index
 Here are the steps taken below:
 1. [Initialize disks in RAID menu](#initialize-disks-in-raid-menu)
