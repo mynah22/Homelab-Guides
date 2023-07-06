@@ -13,3 +13,4 @@ pfsense:
     - username: username in token *takes a few minutes to generate*
     - password: api token 
     - save & force reload
+    - make sure domain is set under system > general set up
