@@ -4,7 +4,7 @@ This is the first thing I do after installing PFSense - it only takes a couple o
 
 A DNS blackhole is used to block connections to ads, trackers, and malware for all devices on a network
 
-I'll write an explaination of DNS blackholes later, and link it here
+I'll write an explanation of DNS blackholes later, and link it here
 
 # Requirements
 1. PFSense installed

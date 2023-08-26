@@ -88,7 +88,7 @@ Lets make sure your homelab is not a toy; here are some of the services you can 
 
 ### Utilities
 - GParted
-    * Swiss army knife for parititioning disks
+    * Swiss army knife for partitioning disks
 - Rufus
     * Create bootable USBs
 - Ventoy
@@ -120,7 +120,7 @@ Lets make sure your homelab is not a toy; here are some of the services you can 
 - DNS
     * Provide an IP address for a given hostname when asked by a device on the network
 - DDNS
-    * Map your non-static WAN IP address to a hostname publically
+    * Map your non-static WAN IP address to a hostname publicly
 - DHCP
     * Allow client devices to obtain IP addresses dynamically. Lease and reserve as needed
 - DNS Blackhole
