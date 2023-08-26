@@ -14,7 +14,9 @@ New baseline Architecture:
         - proxmox
         - acme.sh for scripts / custom tools
     - Services
+        - pfsense DDNS
         - pfsense vpn (wireguard)
+            - split tunnel guide
         - pfsense dns blackhole
         - traefik container
         - vaultwarden container
@@ -38,7 +40,9 @@ New baseline Architecture:
         - homeauto all in ~, zip via cron
         - proxmox VM & system container backup
         - mssql script
-
+        - pfsense XML
+    - VSCode setup & workflow
+    - migrate VM / container (proxmox)
 
 New stuff:
     - proxmox cluster
@@ -50,4 +54,6 @@ New stuff:
     - containerize homeuto 
     - docker swarm / kubernetes
     - backblaze
-
+    - SSH keys
+    - proxmox user administration
+    - windows DC (nested net)
