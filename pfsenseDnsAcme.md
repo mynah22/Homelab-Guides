@@ -22,3 +22,10 @@
      - name.com username: NOT your email. The username listed on your api token (see name.com account settings > api tokens)
      - name.com api token: token info from above
    - click save at bottom of page
+     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme7.jpg)
+8. services>acme certificates>Certificates> click 'issue / renew'. After a success you can refresh the page and see the issuance dates (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme8.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme9.jpg))
+9. services>acme certificates>general settings> enable Acme client renewal job (automatically renews all certs), save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme10.jpg))
+10. system>advanced>admin access> select the newly issued certificate, save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme11.jpg))
+11. webconfigurator will restart.
+12. pfsense must be accessed by hostname, or else the ssl cert is invalid (only signed for hostname, not ip)
+13. other services, such as encrypted DNS, can be set to use the newly issued cert (not covered here)
