@@ -6,18 +6,21 @@ This documents attempts to explain the big picture of the network architecture I
 1. Understand the basics of DHCP and IP subnets
 
 # Index
-1. [Your home network](#your-home-network)
-    - [LAN to LAN](#lan-to-lan)
-    - [LAN to WAN](#lan-to-wan)
-    - [WAN to LAN](#wan-to-lan)
-
-2. [Adding a lab network](#adding-a-lab-network)
-    - [Why double NAT?](#why-double-nat)
-    - [Understanding PFsense lab network](#understanding-pfsense-lab-net)
-    - [LANx to WAN (home net)](#lanx-to-wan-home-network)
-    - [LANx to WAN (internet)](#lanx-to-wan-internet)
-    - [LANx to LANy](#lanx-to-lany)
-    - [WAN (home net) to lab net](#wan-home-network-to-lanx)
+- [Basic Network explanation](#basic-network-explanation)
+- [Requirements](#requirements)
+- [Index](#index)
+- [Your Home Network](#your-home-network)
+  - [LAN to LAN](#lan-to-lan)
+  - [LAN to WAN](#lan-to-wan)
+  - [WAN to LAN](#wan-to-lan)
+- [Adding a lab network](#adding-a-lab-network)
+  - [Why double NAT?](#why-double-nat)
+  - [Understanding PFSense lab net](#understanding-pfsense-lab-net)
+  - [LANx to WAN (home network)](#lanx-to-wan-home-network)
+  - [LANx to WAN (internet)](#lanx-to-wan-internet)
+  - [LANx to LANy](#lanx-to-lany)
+  - [WAN (home network) to LANx](#wan-home-network-to-lanx)
+- [Further config](#further-config)
 
 
 
@@ -39,7 +42,7 @@ This vanilla home network works in the following way:
         1. When packets go out across the NAT boundary to the WAN side, the NAT router changes the sender's IP to the WAN IP
         2. It also remembers which IP on the LAN started this conversation 
         3. this way, response packets from the internet will be able to be returned to the router
-        4. and, since the router remembers who started the conversation, packets will be routed to the IP that started the conversation
+        4. and, since the router remembers who started the conversation, packets will be routed to the LAN IP that started the conversation
     - No packets are allowed to go from WAN to LAN unless they are in response to a conversation the LAN-side device started
 1. your router is also a DHCP server, automatically providing DHCP leases/IP assignments, subnet info, and DNS server IPs to any clients that connect to your network.
 1. Your router uses a RFC1918 subnet. These are IP addresses that are reserved to NEVER be used on the internet. Using a 'private' (RFC1918) subnet ensures that the NAT always has a different subnet on either side of the boundary
