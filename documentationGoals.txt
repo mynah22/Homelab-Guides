@@ -1,0 +1,53 @@
+things I want to document for the rebuild. Some may already be written, but this pass should include a recheck of those items. 
+
+
+New baseline Architecture:
+    - OS builds
+        - hypervisor (proxmox)
+        - pfsense on net appliance (via console cable)
+    - VM builds
+        - Ubuntu
+        - System container (proxmox)
+    - DNS based ACME certs
+        - pfsense
+        - traefik
+        - proxmox
+        - acme.sh for scripts / custom tools
+    - Services
+        - pfsense vpn (wireguard)
+        - pfsense dns blackhole
+        - traefik container
+        - vaultwarden container
+        - nextcloud container
+        - minecraft server (bedrock + rtx) container
+        - mssql container
+        - homeauto vm (containerize after other docs built)
+    - service chart depicting where each service is running & net interactions
+    - Network Architecture
+        - vlans with appropriate firewall rules:
+            - untrusted wifi (iot net)
+            - workstations
+            - trusted wifi ( no direct server access)
+            - hypervisor / vm 
+            - ?
+        - charts for the above
+            - logical networks
+            - subnets & dhcp scopes
+            - firewall interactions
+    - backup strategies
+        - homeauto all in ~, zip via cron
+        - proxmox VM & system container backup
+        - mssql script
+
+
+New stuff:
+    - proxmox cluster
+        - backup datastore
+        - HA & failover
+    - sendgrid 
+        - bitwarden & nextcloud
+        - python api
+    - containerize homeuto 
+    - docker swarm / kubernetes
+    - backblaze
+
