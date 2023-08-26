@@ -19,9 +19,13 @@ I used PuTTY on windows  (freeware) with the following settings:
 
 plug the console cable into your pc and the bootable usb into the net appliance
 open a putty session with the settings above
-turn on the network appliance, then press DELETE on your pc until you see the BIOS menu (should be shortly after the fan starts spinning hard)
+turn on the network appliance, then press DELETE in the putty window until you see the BIOS menu (should be shortly after the fan starts spinning hard)
 go to the 'save and exit' tab, and select your USB drive under the boot override menu (Not the UEFI option)
 
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/advantechBios.jpg)
 
-You should see PFSense boot as normal in the terminal console. The display will be slightly different, but otherwise set up matches the [Basic PFSense guide](pfsenseBasic.md) from this point forward. Looks like WAN defaulted to port MGT1 and LAN to port MG2 by default. 
+ENTER to select the default terminal type (vt100) 
+![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense0.jpg)
+
+
+You should see PFSense boot as normal in the terminal console. The display will be slightly different ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense1.jpg)), but otherwise set up matches the [Basic PFSense guide](pfsenseBasic.md) from this point forward. Looks like WAN defaulted to port MGT1 and LAN to port MG2. 
