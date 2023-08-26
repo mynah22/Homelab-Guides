@@ -28,4 +28,4 @@ ENTER to select the default terminal type (vt100)
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense0.jpg)
 
 
-You should see PFSense boot as normal in the terminal console. The display will be slightly different ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense1.jpg)), but otherwise set up matches the [Basic PFSense guide](pfsenseBasic.md) from this point forward. Looks like WAN defaulted to port MGT1 and LAN to port MG2. 
+You should see PFSense boot as normal in the terminal console. The display will be slightly different ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense1.jpg)), but otherwise set up matches the [Basic PFSense guide](pfsenseBasic.md) from this point forward. Looks like WAN defaulted to port MGT1 (igb0 in pfsense) and LAN to port MG2 (igb0 in pfsense). 
