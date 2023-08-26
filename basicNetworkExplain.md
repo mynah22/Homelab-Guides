@@ -44,7 +44,7 @@ This vanilla home network works in the following way:
         3. this way, response packets from the internet will be able to be returned to the router
         4. and, since the router remembers who started the conversation, packets will be routed to the LAN IP that started the conversation
     - No packets are allowed to go from WAN to LAN unless they are in response to a conversation the LAN-side device started
-1. your router is also a DHCP server, automatically providing DHCP leases/IP assignments, subnet info, and DNS server IPs to any clients that connect to your network.
+1. your router is also a DHCP server on the LAN interface, automatically providing DHCP leases/IP assignments, subnet info, and DNS server IPs to any clients that connect to your network.
 1. Your router uses a RFC1918 subnet. These are IP addresses that are reserved to NEVER be used on the internet. Using a 'private' (RFC1918) subnet ensures that the NAT always has a different subnet on either side of the boundary
 
 ## LAN to LAN
