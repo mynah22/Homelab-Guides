@@ -1,6 +1,7 @@
 I have installed pfsense on an Advantech fwa-1320 network appliance
 
-This requires a serial interface. I bought a usb console cable for under $10 (usefull for other net appliances without video out). Install the drivers (most likely ftdi). 
+This requires a serial interface. I bought a usb console cable for under $10 (useful for other net appliances that lack video out). Install the drivers (most likely [ftdi](https://ftdichip.com/drivers/)). 
+
 For this installation you need to download the ***USB Memstick Installer*** from the [PFSense Download page]https://www.pfsense.org/download/  
 Achitecture: AMD64
 Console: Serial
@@ -21,4 +22,6 @@ open a putty session with the settings above
 turn on the network appliance, then press DELETE on your pc until you see the BIOS menu (should be shortly after the fan starts spinning hard)
 go to the 'save and exit' tab, and select your USB drive under the boot override menu (Not the UEFI option)
 
-You should see PFSense boot as normal in the terminal console. The display will be slightly different, but otherwise set up matches the [Basic PFSense guide] from this point forward. Looks like WAN defaulted to port MGT1 and LAN to port MG2 by default. 
+![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/advantechBios.jpg)
+
+You should see PFSense boot as normal in the terminal console. The display will be slightly different, but otherwise set up matches the [Basic PFSense guide](pfsenseBasic.md) from this point forward. Looks like WAN defaulted to port MGT1 and LAN to port MG2 by default. 
