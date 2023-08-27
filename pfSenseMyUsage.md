@@ -1,4 +1,4 @@
-# Traefik Basics
+# What I use pfSense for
 
 ## Article type: reference
 this is a reference for my own usage of pfSense. There are links to some how-to documents for most of the services I utilize
