@@ -12,6 +12,8 @@ things I want to document for the rebuild. Some may already be written, but this
     - ACME & DNS validation
     - vpn & split tunnel
     - WHYireguard
+-Reference:
+    - What I do w/ pfSense
 -Reconcile dupe docs (advantech)
 -organize, index pages
 
@@ -25,13 +27,12 @@ New baseline Architecture:
         x ____namecom api key____
         x ____pfsense____
         x ____proxmox____
-        - traefik
-        - acme.sh for scripts / custom tools
+        x ____traefik____
     - virtualization
         x ____proxmox vm (easy, link to guide)_____
         - basic ubu vm example proxmox
         - Ubuntu docker environment
-        - System container (proxmox)
+        x ____System container (proxmox)____
         - proxmox create datastore (backups, ISOs etc)
     - Services
         x ____pfsense DDNS____
@@ -77,3 +78,4 @@ New stuff:
     - SSH keys
     - proxmox user administration
     - windows DC (nested net)
+    - acme.sh for scripts / custom tools
