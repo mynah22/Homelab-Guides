@@ -5,12 +5,15 @@ things I want to document for the rebuild. Some may already be written, but this
     - just explain end config, making sure all steps are documented
 - create some tutorials 
     - All primary services in one host example
+    - detailed proxmox setup w/o guests (updates, datastores, certs etc)
     - ubuntu docker host with traefik
-    - dynamic dns options on pfsense 
-Explanation docs:
+    - dynamic dns options on pfsense
+-Explanation docs:
     - ACME & DNS validation
     - vpn & split tunnel
     - WHYireguard
+-Reconcile dupe docs (advantech)
+-organize, index pages
 
 
 New baseline Architecture:
@@ -25,10 +28,11 @@ New baseline Architecture:
         - traefik
         - acme.sh for scripts / custom tools
     - virtualization
-        - proxmox vm (easy, link to guide)
+        x ____proxmox vm (easy, link to guide)_____
         - basic ubu vm example proxmox
         - Ubuntu docker environment
         - System container (proxmox)
+        - proxmox create datastore (backups, ISOs etc)
     - Services
         x ____pfsense DDNS____
         x ____pfsense vpn (wireguard)____
