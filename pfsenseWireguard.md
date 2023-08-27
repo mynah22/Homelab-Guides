@@ -67,6 +67,28 @@ set primary dns server to internal (for pfblockerng)
         3. create tunnel and generate key
             - name the tunnel. Under addresses **enter the IP address this client will have**, along with the bitwise subnet mask for the wireguard interface you configured in pfsense
             - Enter the DNS servers you would like to use for this interface 
+            - click the arrows icon to generate a public / private keypair
             - save
-            - 
-        4. click the arrows icon to generate a public / private keypair
+                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard19.jpg)
+
+                ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard18.jpg)
+        4. In pfsense, add a peer
+            - vpn > wireguard > peers > add peer ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard22.jpg))
+            - peer edit screen
+                - tunnel: select the wireguard interface / tunnel you created
+                - description: of client (peer)
+                - public key: obtained from client (peer), should match 'public key' field on client. 
+                - allowed IPs: the IPs that the **client will have when on the vpn** - this should match the addresses field on the client, but with a mask of 32 (ie, only one ip address allowed)
+                - save
+                    ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard23.jpg)
+        5. Configure server details on client
+            - obtain your wireguard tunnel public key. This can be found at vpn > wireguard > tunnels > edit pencil ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard24.jpg))
+            - in the client config, open the tunnel and tap 'add peer' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard25.jpg))
+            - public key: the public key of the wireguard tunnel you obtained above
+            - endpoint: the public IP and port of your wireguard server (default port is 51820)
+            - allowed IPs:
+                - Here is where you can configure a split tunnel. For more, see [split tunnel explanation](splitTunnel.md)
+                - for a full tunnel, leave it blank ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard26.jpg))
+                - for a split tunnel, enter the subnet(s) you would like to pass through the vpn ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard27.jpg))
+            - save
+        6. client should now be able to connect to server
