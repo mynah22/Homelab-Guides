@@ -16,6 +16,6 @@
      - hostname: host in one field, domain in another (ie hostname | domainName.com)
      - username: your TOKEN's username (see api token info on name.com)
      - password: api key
-   ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseDdns0.jpg)
+   ![screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseDdns2.jpg)
    - scroll to bottom, save
  3. you should see a green cached IP in the Dynamic DNS client screen. You should also see the A record update in your DNS provider
