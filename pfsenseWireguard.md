@@ -7,8 +7,9 @@ set primary dns server to internal (for pfblockerng)
   This guide is a how-to guide for setting up a wireguard VPN in pfSense
 
 # Requirements
-1. ideally, a dynamic DNS record pointing to your WAN IP, or static a IP
-   - there are free dynamic DNS services, and domain names are not prohibitively expensive - all the big domain name providers include DNS resolution with any domain. 
+1. A dynamic DNS record pointing to your WAN IP, or static a IP
+   - there are free dynamic DNS services
+   - Domain names are not prohibitively expensive: all the big domain name providers include DNS resolution with any domain. 
 2. if pfSense is inside of another private network, you will need to configure appropriate port forwarding rules on the outside network
 
 # Instructions
