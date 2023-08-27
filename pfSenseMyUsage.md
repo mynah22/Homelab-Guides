@@ -12,6 +12,7 @@ this is a reference for my own usage of pfSense. There are links to some how-to 
     - It also routes traffic between LANs
 2. Firewall
     - determine if / what packets are allowed to route between interfaces
+    - used to create robust, secure, and segmented networks
 3. DNS server
     - pfSense is proving name resolution services on all of my interfaces
     - I am blocking ads at the dns level (see [installed packages](#packages-installed))
