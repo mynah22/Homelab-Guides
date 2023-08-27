@@ -1,7 +1,6 @@
 # Wireguard on pfsense
 [og source](https://www.wundertech.net/how-to-set-up-wireguard-on-pfsense/)
 
-set primary dns server to internal (for pfblockerng)
 # Wireguard VPN via pfSense
 - ## Article type: how-to
   This guide is a how-to guide for setting up a wireguard VPN in pfSense
