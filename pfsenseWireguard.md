@@ -25,4 +25,29 @@ set primary dns server to internal (for pfblockerng)
     - set description / interface name as desired
     - set ip address / subnet scope for this tunnel (must be unused)
     - save
-        [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10.jpg)
+    - apply changes
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10.jpg)
+
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard11.jpg)
+10. you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
+11. Firewall rules
+    - please note, these are simply a bare minimum example for function testing. **your production firewall rules should be more thought out**
+    - At a bare minimum, you will need 2 firewall rules for the vpn to function:
+        1. A firewall rule allowing traffic out of the wireguard interface
+        2. a firewall rule allowing WAN traffic (ie traffic from outside your network) to enter on the wireguard port
+            - *the pfsense wireguard package is listening on this port, so if a correctly configured request comes thorugh it will respond, otherwise it is stealthed - it does not send any packet in response*
+    - Wireguard interface to anywhere rule:
+        - firewall > rules > select wireguard interface. Click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard13.jpg))
+        - change protocol to 'any'
+        - add a description
+        - save
+              ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard14.jpg)
+    - WAN allow WG port rule:
+        - firewall > rules > WAN. Click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard15.jpg))
+        - change protocol to udp
+        - set destination to 'WAN address'
+        - set destin
+        - add a description
+        - save
+              ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard13.jpg)              
+  
