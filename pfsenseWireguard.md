@@ -8,7 +8,7 @@ set primary dns server to internal (for pfblockerng)
 
 # Requirements
 1. ideally, a dynamic DNS record pointing to your WAN IP, or static a IP
-   - there are free dynamic DNS services, and domain names are not prohibitively expensive - all the big providers include DNS resolution with any domain. 
+   - there are free dynamic DNS services, and domain names are not prohibitively expensive - all the big domain name providers include DNS resolution with any domain. 
 2. if pfSense is inside of another private network, you will need to configure appropriate port forwarding rules on the outside network
 
 # Instructions
@@ -23,10 +23,11 @@ set primary dns server to internal (for pfblockerng)
 9. interface edit screen:
     - enable interface checkbox
     - set description / interface name as desired
+    - **MTU must equal 1420**!!
     - set ip address / subnet scope for this tunnel (must be unused)
     - save
     - apply changes
-        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10.jpg)
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10_1.jpg)
 
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard11.jpg)
 10. you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
@@ -46,8 +47,26 @@ set primary dns server to internal (for pfblockerng)
         - firewall > rules > WAN. Click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard15.jpg))
         - change protocol to udp
         - set destination to 'WAN address'
-        - set destin
+        - set destination port to 51820
+            - *this is the default port the wireguard service is listening on. this can be edited in vpn > wireguard > tunnels.*
         - add a description
         - save
-              ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard13.jpg)              
-  
+              ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard16.jpg)
+    - apply firewall changes
+        ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard17.jpg)
+12. Peer configuration
+    - The precise details of the configuration varies with each peer UI, but the idea is the same across all operating systems:
+        1. peer creates a public / private keypair
+        2. peer adds server public key to it's config
+        3. server adds peer public key to it's allowed peer list
+        4. server sets peer network configuration
+        5. peer is configured to point to server, with dns settings as desired by the client
+    - here's an example with an Android client (using the wireguard app from the google play store)
+        1. in the client, tap + to create a new tunnel config ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard21.jpg))
+        2. from scratch ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard20.jpg))
+        3. create tunnel and generate key
+            - name the tunnel. Under addresses **enter the IP address this client will have**, along with the bitwise subnet mask for the wireguard interface you configured in pfsense
+            - Enter the DNS servers you would like to use for this interface 
+            - save
+            - 
+        4. click the arrows icon to generate a public / private keypair
