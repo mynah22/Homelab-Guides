@@ -1,9 +1,13 @@
 # Traefik Basics
 
-- ## Article type: reference
-  this is a reference for my own usage of Traefik. It is by no means comprehensive, and I have not studied the fundamentals of Traefik, so my explanations of how it functions may be flawed. 
+## Article type: reference
+this is a reference for my own usage of Traefik. It is by no means comprehensive, and I have not studied the fundamentals of Traefik, so my explanations of how it functions may be flawed. 
 
-  
+# Contents
+- [example Docker compose](#example-docker-compose)
+- [DNS Acme Validation](#dns-acme-validation)
+- [HTTPS redirect](#https-redirect)
+
 
 # example Docker compose
 
