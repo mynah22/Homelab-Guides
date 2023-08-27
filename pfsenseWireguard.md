@@ -13,16 +13,19 @@
 
 # Instructions
 1. system > package manager > available packages, search 'wireguard', and click the install button on the wireguard package, then confirm. You will see a success page (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard0.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard1.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard2.jpg))
-2. vpn > wireguard > settings > check 'enable wireguard'. Save. Apply changes. (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard6.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
-3. vpn > wireguard > tunnels, click Add Tunnel ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
-4. enter a description, then generate public / private keypair ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard4.jpg))
-5. copy public key and put it somewhere easy to get to. We will need this for the client configurations later. 
-6. Scroll to the bottom of the page, click 'save tunnel'. Apply changes.  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard5.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
-7. Interfaces > interface assignments, select the tunnel you just made, click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard8.jpg))
-8. click the name of the new interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard9.jpg))
-9. interface edit screen:
+2. vpn > wireguard > settings > check 'enable wireguard'. [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard6.jpg)
+3.  Save. Apply changes. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
+4. enter a description, then generate public / private keypair ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard4.jpg)
+5. vpn > wireguard > tunnels, click Add Tunnel ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
+)
+1. copy public key and put it somewhere easy to get to. We will need this for the client configurations later. 
+2. Scroll to the bottom of the page, click 'save tunnel'. Apply changes.  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard5.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
+3. Interfaces > interface assignments, select the tunnel you just made, click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard8.jpg))
+4. click the name of the new interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard9.jpg))
+5. interface edit screen:
     - enable interface checkbox
     - set description / interface name as desired
+    - ipv4: static
     - **MTU must equal 1420**!!
     - set ip address / subnet scope for this tunnel (must be unused)
     - save
@@ -30,8 +33,8 @@
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10_1.jpg)
 
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard11.jpg)
-10. you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
-11. Firewall rules
+6.  you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
+7.  Firewall rules
     - please note, these are simply a bare minimum example for function testing. **your production firewall rules should be more thought out**
     - At a bare minimum, you will need 2 firewall rules for the vpn to function:
         1. A firewall rule allowing traffic out of the wireguard interface
@@ -54,7 +57,7 @@
               ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard16.jpg)
     - apply firewall changes
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard17.jpg)
-12. Peer configuration
+8.  Peer configuration
     - The precise details of the configuration varies with each peer UI, but the idea is the same across all operating systems:
         1. peer creates a public / private keypair
         2. peer adds server public key to it's config
@@ -69,6 +72,7 @@
             - Enter the DNS servers you would like to use for this interface 
             - click the arrows icon to generate a public / private keypair
             - save
+            
                 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard19.jpg)
 
                 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard18.jpg)
@@ -79,7 +83,8 @@
                 - description: of client (peer)
                 - public key: obtained from client (peer), should match 'public key' field on client. 
                 - allowed IPs: the IPs that the **client will have when on the vpn** - this should match the addresses field on the client, but with a mask of 32 (ie, only one ip address allowed)
-                - save
+                - save and apply changes
+  
                     ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard23.jpg)
         5. Configure server details on client
             - obtain your wireguard tunnel public key. This can be found at vpn > wireguard > tunnels > edit pencil ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard24.jpg))
@@ -92,3 +97,4 @@
                 - for a split tunnel, enter the subnet(s) you would like to pass through the vpn ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard27.jpg))
             - save
         6. client should now be able to connect to server
+        7. to check, go to vpn > wireguard > status and expand the tunnel. if the client handshake icon is green everything has succeeded. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard28.jpg))
