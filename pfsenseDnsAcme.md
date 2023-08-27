@@ -7,7 +7,7 @@
 2. API tokens / credentials configured (see [name.com](namecomDnsApi.md) instructions)
 
 # Instructions 
-1. Login pfSense
+1. Login to pfSense
 2. system>Package Manager > Available Packages> search 'acme'> click install, then confirm (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme0.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme1.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme2.jpg))
 3. services>acme certificates>account keys>add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme3.jpg))
 4. fill in the name and description. Then select the Let's Encrypt prod server. Enter your Email address (for automatic cert expiration notice), then click 'create new account key' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/pfsenseAcme4.jpg))
