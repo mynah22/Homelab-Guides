@@ -1,20 +1,33 @@
 things I want to document for the rebuild. Some may already be written, but this pass should include a recheck of those items. 
 
+- every how-to along the way
+- no interconnected guides
+    - just explain end config, making sure all steps are documented
+- create some tutorials 
+    - All primary services in one host example
+
+Explanation docs:
+    - ACME & DNS validation
+    - vpn & split tunnel
+    - WHYireguard
 
 New baseline Architecture:
-    - OS builds
-        - hypervisor (proxmox)
-        - pfsense on net appliance (via console cable)
-    - VM builds
-        - Ubuntu
-        - System container (proxmox)
+    x ____OS builds____
+        x ____hypervisor (proxmox)____
+        x ____pfsense on net appliance (via console cable)____
+
     - DNS based ACME certs
-        - pfsense
+        x ____namecom api key____
+        x ____pfsense____
         - traefik
-        - proxmox
+        x ____proxmox____
         - acme.sh for scripts / custom tools
+    - virtualization
+        - proxmox vm (easy, link to guide)
+        - Ubuntu docker environment
+        - System container (proxmox)
     - Services
-        - pfsense DDNS
+        x ____pfsense DDNS____
         - pfsense vpn (wireguard)
             - split tunnel guide
         - pfsense dns blackhole
@@ -43,6 +56,7 @@ New baseline Architecture:
         - pfsense XML
     - VSCode setup & workflow
     - migrate VM / container (proxmox)
+    - homeauto services, endpoints
 
 New stuff:
     - proxmox cluster
