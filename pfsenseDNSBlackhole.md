@@ -12,8 +12,8 @@ I'll write an explanation of DNS blackholes later, and link it here
 1. PFSense has a WAN connection (can communicate with the internet)
 
 # Index
-1. [Install pfBlockerNG]()
-2. [Managing pfBlockerNG]()
+1. [Install pfBlockerNG](#install-pfblockerng)
+2. [Managing pfBlockerNG](#managing-pfblockerng)
     - [Disable pfBlockerNG](#disable-pfblockerng)
     - [Create blocklist exceptions](#add-temporary-and-permanent-exceptions)
 
