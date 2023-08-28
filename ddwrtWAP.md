@@ -9,6 +9,7 @@
     5. set password / username ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap11.jpg))
     6. admin > management 
         - set web protocol to https only ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap10.jpg))
+        - reconnect at https://192.168.1.1
     7. setup > basic setup
        - WAN Connection Type: Disabled
        - Local IP Address: e.g. 10.242.242.2 (same subnet as pfsense gateway but outside the DHCP range)
@@ -23,9 +24,10 @@
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap8.jpg)
 
     8. plug ddwrt LAN into network w/dhcp (pfsense)
-    9. setup > Advanced routing , set operating mode to router ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap7.jpg))
-    10. wireless > basic settings, set SSID(s) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap6.jpg))
-    11. wireless > wireless security
+    9. connect pc to IP you set as 'local ip address' above (https)
+    10. setup > Advanced routing , set operating mode to router ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap7.jpg))
+    11. wireless > basic settings, set SSID(s) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap6.jpg))
+    12. wireless > wireless security
         - wpa2-psk
         - tkip+ccmp
         - set psk
@@ -33,7 +35,7 @@
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap5.jpg)
 
-    12. services > services
+    13. services > services
         - disable dnsmasq
         - disable telnet
         - disable ttraf
@@ -43,8 +45,8 @@
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap3.jpg)
 
-    13. security > firewall
+    14. security > firewall
         - disable spi firewall, save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap2.jpg))
-    14. administration > management
+    15. administration > management
         - check 'info site password protection', save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap1.jpg))
-    15. reboot router
+    16. reboot router
