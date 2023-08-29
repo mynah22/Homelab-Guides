@@ -65,6 +65,17 @@ New baseline Architecture:
     - migrate VM / container (proxmox)
     - homeauto services, endpoints
 
+    - Tplink WAP
+    - multi SSID + vlan tutorial
+
+    - pfSense tutorial: interface creation
+        - interface, incl vlans
+        - dhcp
+        - firewall
+    - pfsense tutorial: static ips
+
+
+
 New stuff:
     - proxmox cluster
         - backup datastore
