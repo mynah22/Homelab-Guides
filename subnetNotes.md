@@ -3,51 +3,56 @@
   - [user0 phone subnet](#user0-phone-subnet)
   - [user1 subnet](#user1-subnet)
   - [non-personal subnet](#non-personal-subnet)
-- [VPN subnets](#vpn-subnets)
-  - [Management VPN](#management-vpn)
-  - [user0 vpn](#user0-vpn)
-  - [user1 vpn](#user1-vpn)
 - [Homelab subnets](#homelab-subnets)
   - [hypervisor management subnet](#hypervisor-management-subnet)
   - [hypervisor backup subnet](#hypervisor-backup-subnet)
   - [Services subnet](#services-subnet)
   - [Database subnet](#database-subnet)
   - [homeauto front end subnet](#homeauto-front-end-subnet)
+- [VPN subnets](#vpn-subnets)
+  - [Management VPN](#management-vpn)
+  - [user0 vpn](#user0-vpn)
+  - [user1 vpn](#user1-vpn)
 - [Restricted access subnets](#restricted-access-subnets)
-  - [Control tablet](#control-tablet)
   - [iot pi](#iot-pi)
   - [iot uc](#iot-uc)
   - [IOT camera](#iot-camera)
   - [Streaming devices](#streaming-devices)
+  - [Control tablet](#control-tablet)
 
 
 # Privileged subnets
 ## Workstation subnet
+  - subnet: 
+    - `10.11.1.0/24`
   - Description:
 
-      *Subnet for personal workstations*
+    *Subnet for personal workstations*
   - Devices to be joined:
-      - personal PCs
+    - personal PCs
   - WLAN:
-      - no        
+    - no        
   - Egress subnet(s):
-      - WAN
-          - allow all
-      - services subnet:
-          - allow only specific service ip:ports
-          - ip:ports allowing standard management level (day to day)
-      - non-VPN subnets(except control tablet):
-          - allow all
+    - WAN
+        - allow all
+    - services subnet:
+        - allow only specific service ip:ports
+        - ip:ports allowing standard management level (day to day)
+    - non-VPN subnets(except control tablet):
+        - allow all
   - Ingress subnet(s):
-      - user0 & management VPN
+      - user0 vpn 
+      - management VPN
       - user0 phone
 
 ## user0 phone subnet
+  - subnet: 
+    - `10.12.1.0/24`
   - Description:
 
       *Subnet for personal phone*
   - Devices to be joined:
-      - personal cell(s) (WLAN)
+      - personal cell(s)
   - WLAN:
       - yes        
   - Egress subnet(s):
@@ -63,11 +68,13 @@
       - Workstation
 
 ## user1 subnet
+  - subnet: 
+    - `10.13.1.0/24`
   - Description:
 
       *Subnet for all user1 devices*
   - Devices to be joined:
-      - personal cell(s) (WLAN)
+      - personal cell(s)
   - WLAN:
       - yes
   - Egress subnet(s):
@@ -81,6 +88,8 @@
       - user0 & management VPN
       - Workstation
 ## non-personal subnet
+  - subnet: 
+    - `10.14.1.0/24`
   - Description:
 
       *Subnet for all corporate issued devices*
@@ -97,52 +106,11 @@
       - Management VPN
        
 
-# VPN subnets
-## Management VPN
-  - Description:
-
-      *Subnet for management. Not used normally, only for administration. All ports and ips.*
-  - Type of devices to be joined:
-      - all personal devices, whether remote or local, when admin network access is required
-  - Egress subnet(s):
-      - Allow all on all subnets (except control tablet)
-  - Ingress subnet(s):
-      - none
-
-## user0 vpn
-  - Description:
-
-      *Subnet for remote access for user0's devices. Service and std management ports.*
-  - Devices to be joined:
-      - all of user0's mobile devices
-  - Egress subnet(s):
-      - WAN
-          - allow all
-      - services subnet:
-          - allow only specific service ip:ports
-          - ip:ports allowing standard management level (day to day)
-      - non-VPN subnets (except control tablet):
-          - allow all
-  - Ingress subnet(s):
-      - management VPN
-
-## user1 vpn
-  - Description:
-
-      *Subnet for remote access for user1's devices. Service ports only*
-  - Devices to be joined:
-      - all of user1's mobile devices
-  - Egress subnet(s):
-      - WAN
-          - allow all
-      - services subnet:
-          - allow only specific service ip:ports
-  - Ingress subnet(s):
-      - Management VPN
-        
 
 # Homelab subnets
 ## hypervisor management subnet
+  - subnet: 
+    - `10.21.1.0/24`
   - Description:
 
       *Subnet to access hypervisor management*
@@ -158,6 +126,8 @@
   - Ingress subnet(s):
       - management VPN
 ## hypervisor backup subnet
+  - subnet: 
+    - `10.22.1.0/24`
   - Description:
 
       *Subnet for proxmox backups. Only accessible to VE and backup instances*
@@ -172,6 +142,8 @@
       - management VPN
       - hypervisor management
 ## Services subnet
+  - subnet: 
+    - `10.23.1.0/24`
   - Description:
 
       *Subnet where services will be located*
@@ -191,6 +163,8 @@
           - All other privileged subnets
 
 ## Database subnet
+  - subnet: 
+    - `10.24.1.0/24`
   - Description:
 
       *Subnet where service DBs will be located*
@@ -209,6 +183,8 @@
         - Hypervisor management 
 
 ## homeauto front end subnet
+  - subnet: 
+    - `10.25.1.0/24`
   - Description:
 
       *Subnet where services will be located*
@@ -227,23 +203,65 @@
       - End user access (just standard ports):
           - All other privileged subnets
 
-# Restricted access subnets
-## Control tablet 
+
+# VPN subnets
+## Management VPN
+  - subnet: 
+    - `10.31.1.0/24`
   - Description:
 
-      *Subnet that only allows access to a homeauto frontend*
-  - Devices to be joined:
-      - old EOL android tablets
-  - WLAN:
-      - yes, 2.4Ghz isolated
+      *Subnet for management. Not used normally, only for administration. All ports and ips.*
+  - Type of devices to be joined:
+      - all personal devices, whether remote or local, when admin network access is required
   - Egress subnet(s):
-      - homeauto front end subnet 
-          - only 80/443
-          - only to specified server IP
+      - Allow all on all subnets except:
+        - iot camera
+        - control tablet
   - Ingress subnet(s):
       - none
 
+## user0 vpn
+  - subnet: 
+    - `10.32.1.0/24`
+  - Description:
+
+      *Subnet for remote access for user0's devices. Service and std management ports.*
+  - Devices to be joined:
+      - all of user0's mobile devices
+  - Egress subnet(s):
+      - WAN
+          - allow all
+      - services subnet:
+          - allow only specific service ip:ports
+          - ip:ports allowing standard management level (day to day)
+      - non-VPN subnets (except control tablet):
+          - allow all
+  - Ingress subnet(s):
+      - management VPN
+
+## user1 vpn
+  - subnet: 
+    - `10.33.1.0/24`
+  - Description:
+
+      *Subnet for remote access for user1's devices. Service ports only*
+  - Devices to be joined:
+      - all of user1's mobile devices
+  - Egress subnet(s):
+      - WAN
+          - allow all
+      - services subnet:
+          - allow only specific service ip:ports
+  - Ingress subnet(s):
+      - Management VPN
+        
+
+# Restricted access subnets
+
+
 ## iot pi
+  - subnet: 
+    - `10.91.1.0/24`
   - Description:
 
       *Subnet for iot endpoints running a full os stack*
@@ -262,6 +280,8 @@
       - services subnet
 
 ## iot uc
+  - subnet: 
+    - `10.92.1.0/24`
   - Description:
 
       *Subnet for iot endpoints running only microcontroller firmware*
@@ -278,6 +298,8 @@
       - services subnet
 
 ## IOT camera
+  - subnet: 
+    - `10.93.1.0/24`
   - Description:
 
       *Subnet for internet-based cameras*
@@ -291,7 +313,9 @@
   - Ingress subnet(s):
       - none
 
-## Streaming devices 
+## Streaming devices
+  - subnet: 
+    - `10.94.1.0/24`
   - Description:
 
       *Subnet for streaming devices*
@@ -305,3 +329,19 @@
   - Ingress subnet(s):
       - none
 
+## Control tablet
+  - subnet: 
+    - `10.99.99.0/24`
+  - Description:
+
+      *Subnet that only allows access to a homeauto frontend*
+  - Devices to be joined:
+      - old EOL android tablets
+  - WLAN:
+      - yes, 2.4Ghz isolated
+  - Egress subnet(s):
+      - homeauto front end subnet 
+          - only 80/443
+          - only to specified server IP
+  - Ingress subnet(s):
+      - none
