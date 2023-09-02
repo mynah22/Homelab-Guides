@@ -24,8 +24,7 @@ this is a reference for my own usage of pfSense. There are links to some how-to 
    -  I set host overrides in the DNS resolver, notably for docker container aliases and proxmox hosts.
 4. DHCP server
    - I have a DHCP server on all of my interfaces except those with fully static configs (like my vpn interface)
-   - I have a couple of static mappings for personal devices for convenience 
-
+   - I have quite a few static mappings - see [pfSense Static IP Tutorial]()
 
 # Packages installed
 1. `WireGguard`
@@ -34,6 +33,9 @@ this is a reference for my own usage of pfSense. There are links to some how-to 
    - SSL certs for pfSense webConfigurator. See DNS validation [how-to](/pfsenseDnsAcme.md)
 3. `pfBlockerNG-devel`
    - DNS and IP based adblocker. See [how-to](/pfsenseDNSBlackhole.md)
+4. `nmap`
+   - obviously great to have for mapping your network
+   - it also enables manufacturer code decoding on MAC addresses in the pfsense GUI
 
 # Other services
 1. Dynamic DNS 
