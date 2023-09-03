@@ -1,7 +1,6 @@
 - follow [official docs](https://wiki.dd-wrt.com/wiki/index.php/Wireless_Access_Point) (normal version) to build WAP:
     1. prepare an interface network for use with WAP
         - requires DHCP server
-        - requires static ip reserved for this ddwrt device
         - requires appropriate firewall rules
     2. install ddwrt if it's not already - [link](https://ftp.dd-wrt.com/dd-wrtv2/downloads/betas/) to firmware
     3. hard reset router
@@ -13,6 +12,7 @@
         - Apply
         - reconnect at `https://192.168.1.1`, `http://` will fail.
         - enable remote access, apply
+  
             *Note, the port does not matter, you will still be able to connect over 80/443 remotely. Leave it at 8080.*
     8. setup > basic setup
        - WAN Connection Type: Disabled
@@ -34,8 +34,10 @@
           1. check firewall rules - can you access the interface you created from your PC?
           2. http / https
           3. was remote access enabled? Did you restrict access by IP?
+          4. are you connecting to the new ip?
+          5. is wap connected to the correct interface / port?
     11. setup > Advanced routing: set operating mode to router, apply ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap7.jpg))
-    12. wireless > basic settings, set SSID(s) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap6.jpg))
+    12. wireless > basic settings, set SSID(s). Apply. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap6.jpg))
     13. wireless > wireless security
         - wpa2-psk
         - tkip+ccmp
@@ -48,7 +50,7 @@
         - disable dnsmasq
         - disable telnet
         - disable ttraf
-        - save
+        - apply
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap4.jpg)
 
