@@ -12,11 +12,13 @@
         - reconnect at https://192.168.1.1
     7. setup > basic setup
        - WAN Connection Type: Disabled
+       - set host / domain names
        - Local IP Address: e.g. 10.242.242.2 (same subnet as pfsense gateway but outside the DHCP range)
-       - DHCP Server: Disable
-       - uncheck DNSmasq, dhcp authoritative
        - Gateway: IP address of pfsense on this interface
        - Local DNS: pfsense IP on this interface
+       - DHCP Server: Disable
+       - uncheck DNSmasq, dhcp authoritative
+
        - save
 
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap9.jpg)
@@ -24,7 +26,7 @@
             ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap8.jpg)
 
     8. plug ddwrt LAN into network w/dhcp (pfsense)
-    9. connect pc to IP you set as 'local ip address' above (https)
+    9. connect pc to IP you set for this ddwrt device ('local ip address' above). Must use `https://`
     10. setup > Advanced routing , set operating mode to router ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap7.jpg))
     11. wireless > basic settings, set SSID(s) ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap6.jpg))
     12. wireless > wireless security
@@ -50,3 +52,4 @@
     15. administration > management
         - check 'info site password protection', save ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/netgearWap1.jpg))
     16. reboot router
+    17. see [ddwrt multiple wlan guide](/ddwrtMultipleWlan.md) for setting up wlans on separate vlans
