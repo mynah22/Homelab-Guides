@@ -13,9 +13,8 @@
     7. setup > basic setup
        - WAN Connection Type: Disabled
        - set host / domain names
-       - Local IP Address: e.g. 10.242.242.2 (same subnet as pfsense gateway but outside the DHCP range)
-       - Gateway: IP address of pfsense on this interface
-       - Local DNS: pfsense IP on this interface
+       - Local IP Address: same subnet as pfsense gateway on the interface your configured, but outside the DHCP range
+       - Gateway & Local DNS: IP address of pfsense on interface you will be using for management
        - DHCP Server: Disable
        - uncheck DNSmasq, dhcp authoritative
 
