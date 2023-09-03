@@ -1,23 +1,40 @@
 1. follow process in [ddwrt WAP guide](/ddwrtWAP.md) for initial device configuration
-2. create vap
-    - create VAP
-    - set wireless security
-3. create vlan (3 or above for safety), trunk to physical port
+2. Create a virtual AP
+    - wireless > basic settings, add virtual AP ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan0.jpg))
+    - wireless > wireless security
+      - set wireless security (wpa2+psk, tkip+ccmp, set password)
+3. Enable VLANs
     - setup > switch config
-    - enable vlans, apply
-    - reload, enable, apply
-    - remove 2 from everything (internal vlan used by firmware for WAN)
-    - add vlan row
-    - set trunk port, tagged with trunked vlans (add 1 if you want web management)
+    - enable vlans, apply ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan1.jpg))
+    - refresh the page, enable again, apply ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan2.jpg))
+    - Administration > reboot router
+4. create vlan for use with SSID
+    - setup > switch config 
+    - add vlan row ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan4.jpg))
+    - set vlan tag number for new vlan ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan5.jpg))
+    - remove 2 from all columns ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan3.jpg))
+    
+        *dd-wrt internal vlan used by firmware for WAN*
+    - trunked port:
+      - tagged
+      - check the vlans you want to trunk
+      - add vlan 1 if you want web management of ddwrt
+        - you will have to update pfsense interface /subnet for ddwrt to use vlan 1 (instead of untagged)
+      - check CPUPORT column for this vlan
+        - *CPUPORT is needed in order to add to the vlan to the bridge later*
+    - non-trunked port:
+      - untagged
+      - check the members vlans
+
+        [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/ddwrtVlan3.jpg)
     - leave pc plugged into a port on vlan 1 (default)
-    - administration > reboot router
     - reconnect
-    - setup > switch config, add new VLAN to CPUPORT 
+    - setup > switch config, add new VLAN to CPUPORT (reboot router if you do not see CPUPORT column)
       - *CPUPORT needed in order to add to the vlan to the bridge.*
-4. create bridge
+5. create bridge
     - STP off
     - add two assignments: target wireless interface and vlan
     - apply settings, ensuring bridging table looks correct
-5. add vlan and vap interface to new bridge
-6. setup>networking>interface setup : wan port disable
-7. interface macs
+6. add vlan and vap interface to new bridge
+7. setup>networking>interface setup : wan port disable
+8. interface macs
