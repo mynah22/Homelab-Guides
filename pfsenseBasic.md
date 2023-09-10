@@ -46,16 +46,18 @@ PFSense has been installed and is ready to be configured!
     7. type 'y', then ENTER to confirm assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs33.jpg))
     8. PFSense will take a little while to apply the interface settings. You will then return to the console main menu
 - ## Change LAN IP Configuration
-    - At the PFSense console main menu, '2' and ENTER to assign IP address on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs35.jpg))
-      -     There are a few IP ranges that are reserved for 'private' networks (inside at NAT router, not internet-facing IPs):
-            - 192.168.0.0/16
-            - 172.16.0.0/12
-            - 10.0.0.0/8
+    - At the PFSense console main menu, '2' and ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs35.jpg))
+    - if asked if you want to use DHCP to pick the LAN IP, type 'n', then press ENTER 
+      - There are a few IP ranges that are reserved for 'private' networks (inside at NAT router, not internet-facing IPs):
+        - 192.168.0.0/16
+        - 172.16.0.0/12
+        - 10.0.0.0/8
 
     - '2' for LAN, ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs36.jpg))
     - type the ip address ***you want PFSense to have***. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs38.jpg)). **Write this IP down - you will need it to connect to the PFSense webconfigurator**. ENTER
     - enter the bitwise subnet mask - 24 in our case ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs29.jpg)). ENTER
     - We are configuring a LAN - ENTER for no upstream gateway ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs40.jpg))
+    - if asked if you want to use DHC6P to pick the LAN IPv6 address, type 'n', then press ENTER 
     - ENTER for no ipv6 address ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs41.jpg))
     - type 'y' if you wish to enable DHCP on the LAN interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs42.jpg)). ENTER
     - The PFSense DHCP server we just enabled will assign IPs in a fixed range (must be within subnet scope). Enter the beginning of that range,  ENTER ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs43.jpg))
@@ -123,13 +125,13 @@ With the above network changes, you should be able to use a browser on your PC t
     [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs58.jpg))
     10. click 'Accept' on the copyright notice ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs60.jpg))
     11. click 'close' on thank you ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs61.jpg))'
-    12. you should see a WAN IP in your home network subnet, and a LAN ip matching what you set the PFSense lan IP to ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs62.jpg))
-    13. if all of that checks out, your PC should be able to access internet resources - try browsing to an internet website on your PC. If you connect, you have successfully configured a double NAT network! 
+    12. On the main page, under interfaces, you should see a WAN IP (your ISP if on edge, or home network subnet if double NATting), and a LAN ip matching what you set the PFSense lan IP to ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs62.jpg))
+    13. if all of that checks out, your PC should be able to access internet resources - try browsing to an internet website on your PC
 
 - ## **Rename OPT interfaces**
 
 1. In PFSense webgui: Interfaces> assignments ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs63.jpg))
-2. Click 'Add' to add the remaining interfaces. This should assign all available interfaces as OPT1, OPT2, etc. Click 'Save'  (screenshots 
+2. Click 'Add' to add the remaining interfaces. This will create all available interfaces and name them OPT1, OPT2, etc. Click 'Save'  (screenshots 
 [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs67.jpg)
 [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs68.jpg)) 
 3. Rename and enable interfaces:
@@ -144,3 +146,7 @@ With the above network changes, you should be able to use a browser on your PC t
     4. Interfaces > assignments and click the next OPT interface
     5. repeat the above steps for all OPT interfaces
     6. you should end up with all OPT interfaces renamed ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/firstConfig/pfs69.jpg))
+
+- ## interface management
+    - for further details on configuring interfaces, including DHCP, firewall rules, and see the [interface setup guide]()
+    - for notes on the services I manage with pfSense, see [this](/pfSenseMyUsage.md) document
