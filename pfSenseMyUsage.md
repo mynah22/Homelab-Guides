@@ -4,7 +4,9 @@
 this is a reference for my own usage of pfSense. There are links to some how-to documents for most of the services I utilize
 
 ## Contents
-- [Packages and services](#packages-and-services)
+- [Built-in Functions](#built-in-functions)
+- [Packages installed](#packages-installed)
+- [Other services](#other-services)
 
 # Built-in Functions
 1. Router
