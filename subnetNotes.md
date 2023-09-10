@@ -54,7 +54,7 @@
   - Devices to be joined:
       - personal cell(s)
   - WLAN:
-      - yes        
+      - yes, 5Ghz        
   - Egress subnet(s):
       - WAN
           - allow all
@@ -76,7 +76,7 @@
   - Devices to be joined:
       - personal cell(s)
   - WLAN:
-      - yes
+      - yes, 5ghz
   - Egress subnet(s):
       - WAN
           - allow all
@@ -96,7 +96,7 @@
   - Devices to be joined:
       - work cells, laptops 
   - WLAN:
-      - yes, 5Ghz 
+      - yes, 5Ghz & 2.4Ghz
   - Egress subnet(s):
       - WAN
           - allow all
@@ -255,6 +255,38 @@
   - Ingress subnet(s):
       - Management VPN
         
+# Device Management subnets
+
+
+## wap0 management subnet
+  - subnet: 
+    - `10.50.1.0/30`
+  - Description:
+
+      *wap0 communicates on a specific vlan. I give it it's own subnet / pfsense interface in order to give it it's own firewall rules*
+  - Devices to be joined:
+      - wap0
+  - WLAN:
+      - no
+  - Egress subnet(s):
+      - None
+  - Ingress subnet(s):
+      - management vpn
+
+## wap1 management subnet
+  - subnet: 
+    - `10.51.1.4/30`
+  - Description:
+
+      *wap1 communicates on a specific vlan. I give it it's own subnet / pfsense interface in order to give it it's own firewall rules*
+  - Devices to be joined:
+      - wap1
+  - WLAN:
+      - no
+  - Egress subnet(s):
+      - None
+  - Ingress subnet(s):
+      - management vpn
 
 # Restricted access subnets
 
