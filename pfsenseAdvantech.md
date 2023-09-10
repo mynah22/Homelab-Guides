@@ -25,6 +25,7 @@ go to the 'save and exit' tab, and select your USB drive under the boot override
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/advantechBios.jpg)
 
 ENTER to select the default terminal type (vt100) 
+
 ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/cmdPfsense0.jpg)
 
 
