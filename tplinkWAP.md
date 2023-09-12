@@ -22,3 +22,5 @@ update gateway
     - I also create an interface for the trunk (ie untagged packets) - this so I can access the web gui using specific firewall rules
 7. wap will reboot
 8. under Network > LAN settings, change the gateway to your upstream ip (pfsense interface ip)
+9. dhcp>dhcp settings
+  - disable again, save
