@@ -1,8 +1,5 @@
 things I want to document for the rebuild. Some may already be written, but this pass should include a recheck of those items. 
 
-- every how-to along the way
-- no interconnected guides
-    - just explain end config, making sure all steps are documented
 - create some tutorials 
     - All primary services in one host example
     - detailed proxmox setup w/o guests (updates, datastores, certs etc)
@@ -65,10 +62,10 @@ New baseline Architecture:
     - migrate VM / container (proxmox)
     - homeauto services, endpoints
 
-    - Tplink WAP
-    - multi SSID + vlan tutorial
+    - WAPs
+    - multi SSID + vlan + pfSense tutorial
 
-    - pfSense tutorial: interface creation
+    - pfSense tutorial: interface creation 
         - interface, incl vlans
         - dhcp
         - firewall
