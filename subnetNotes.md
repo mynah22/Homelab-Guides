@@ -329,9 +329,25 @@
       - privileged & vpn subnets
       - services subnet
 
-## IOT camera
+## Streaming devices
   - subnet: 
     - `10.93.1.0/24`
+  - Description:
+
+      *Subnet for streaming devices*
+  - Devices to be joined:
+      - chrome
+  - WLAN:
+      - yes, 2.4Ghz isolated
+  - Egress subnet(s):
+      - WAN
+          - allow all
+  - Ingress subnet(s):
+      - none
+
+## IOT camera
+  - subnet: 
+    - `10.94.1.0/24`
   - Description:
 
       *Subnet for internet-based cameras*
@@ -345,21 +361,6 @@
   - Ingress subnet(s):
       - none
 
-## Streaming devices
-  - subnet: 
-    - `10.94.1.0/24`
-  - Description:
-
-      *Subnet for streaming devices*
-  - Devices to be joined:
-      - chrome
-  - WLAN:
-      - yes, 2.4Ghz isolated
-  - Egress subnet(s):
-      - WAN
-          - allow all
-  - Ingress subnet(s):
-      - none
 
 ## Control tablet
   - subnet: 
