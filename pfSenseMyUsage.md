@@ -38,6 +38,9 @@ this is a reference for my own usage of pfSense. There are links to some how-to 
 4. `nmap`
    - obviously great to have for mapping your network
    - it also enables manufacturer code decoding on MAC addresses in the pfsense GUI
+5. `Avahi`
+   - mDNS reflection across interfaces
+   - facilitates use of iot things like speakers and streamers across subnets
 
 # Other services
 1. Dynamic DNS 
