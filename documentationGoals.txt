@@ -61,7 +61,7 @@ New baseline Architecture:
     - VSCode setup & workflow
     - migrate VM / container (proxmox)
     - homeauto services, endpoints
-
+    - pfsense chromecast / avahi mdns
     - WAPs
     - multi SSID + vlan + pfSense tutorial
 
