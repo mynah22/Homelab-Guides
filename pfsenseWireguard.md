@@ -15,15 +15,13 @@
 1. system > package manager > available packages, search 'wireguard', and click the install button on the wireguard package, then confirm. You will see a success page (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard0.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard1.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard2.jpg))
 2. vpn > wireguard > settings > check 'enable wireguard'. [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard6.jpg)
 3.  Save. Apply changes. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
-4.  vpn > wireguard > tunnels > click 'add tunnel' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard29.jpg))
+4.  vpn > wireguard > tunnels > click 'add tunnel' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
 5. enter a description, then generate public / private keypair ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard4.jpg)
-6. vpn > wireguard > tunnels, click Add Tunnel ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
-)
-1. copy public key and put it somewhere easy to get to. We will need this for the client configurations later. 
-2. Scroll to the bottom of the page, click 'save tunnel'. Apply changes.  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard5.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
-3. Interfaces > interface assignments, select the tunnel you just made, click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard8.jpg))
-4. click the name of the new interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard9.jpg))
-5. interface edit screen:
+6. copy public key and put it somewhere easy to get to. We will need this for the client configurations later. 
+7. Scroll to the bottom of the page, click 'save tunnel'. Apply changes.  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard5.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
+8. Interfaces > interface assignments, select the tunnel you just made, click Add ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard8.jpg))
+9. click the name of the new interface ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard9.jpg))
+10. interface edit screen:
     - enable interface checkbox
     - set description / interface name as desired
     - ipv4: static
@@ -34,8 +32,8 @@
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard10_1.jpg)
 
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard11.jpg)
-6.  you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
-7.  Firewall rules
+11. you should see the assigned interface on your tunnel at vpn > wireguard > tunnels ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard12.jpg))
+12. Firewall rules
     - please note, these are simply a bare minimum example for function testing. **your production firewall rules should be more thought out**
     - At a bare minimum, you will need 2 firewall rules for the vpn to function:
         1. A firewall rule allowing traffic out of the wireguard interface
@@ -58,7 +56,7 @@
               ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard16.jpg)
     - apply firewall changes
         ![](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard17.jpg)
-8.  Peer configuration
+13. Peer configuration
     - The precise details of the configuration varies with each peer UI, but the idea is the same across all operating systems:
         1. peer creates a public / private keypair
         2. peer adds server public key to it's config
