@@ -15,8 +15,9 @@
 1. system > package manager > available packages, search 'wireguard', and click the install button on the wireguard package, then confirm. You will see a success page (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard0.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard1.jpg) [3](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard2.jpg))
 2. vpn > wireguard > settings > check 'enable wireguard'. [screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard6.jpg)
 3.  Save. Apply changes. ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
-4. enter a description, then generate public / private keypair ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard4.jpg)
-5. vpn > wireguard > tunnels, click Add Tunnel ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
+4.  vpn > wireguard > tunnels > click 'add tunnel' ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard29.jpg))
+5. enter a description, then generate public / private keypair ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard4.jpg)
+6. vpn > wireguard > tunnels, click Add Tunnel ([screenshot](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard3.jpg))
 )
 1. copy public key and put it somewhere easy to get to. We will need this for the client configurations later. 
 2. Scroll to the bottom of the page, click 'save tunnel'. Apply changes.  (screenshots [1](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard5.jpg) [2](https://github.com/mynah22/Homelab-Guides/raw/main/screenshots/wireguard7.jpg))
