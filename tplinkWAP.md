@@ -21,6 +21,7 @@ update gateway
     - create an interface in pfSense for each vlan
     - I also create an interface for the trunk (ie untagged packets) - this so I can access the web gui using specific firewall rules
 7. wap will reboot
-8. under Network > LAN settings, change the gateway to your upstream ip (pfsense interface ip)
-9. dhcp>dhcp settings
-  - disable again, save
+8. set manual ip to match wap
+9. under Network > LAN settings, change the gateway to your upstream ip (pfsense interface ip)
+10. dhcp>dhcp settings
+  - disable again, save (it should stay disabled, but seems like it will re-enable dhcp if it sees unanswered requests)
