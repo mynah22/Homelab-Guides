@@ -41,6 +41,12 @@ this is a reference for my own usage of pfSense. There are links to some how-to 
 5. `Avahi`
    - mDNS reflection across interfaces
    - facilitates use of iot things like speakers and streamers across subnets
+6. `arpwatch`
+   - monitor the arp table 
+   - for detecting intrusions / arp poisioning
+		 - able to send notifications via email etc
+7. `snort`
+			- ips / ids service
 
 # Other services
 1. Dynamic DNS 
