@@ -9,7 +9,12 @@
 
 ## Installing WSL
 
-1. install hyper-v and wsl features
+1. Enable Windows Features (control panel applet)
+
+    - containers
+    - Hyper-v (expand and select all!!)
+    - WSL
+    
 2. configure bridge
 
 ## Installing / configuring Kali
