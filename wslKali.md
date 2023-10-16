@@ -27,23 +27,23 @@
 
 - In windows terminal:
 
-    - `wsl --install -d kali-linux`
-    - Set kali username / password
-    - you will be presented with a kali prompt (zsh shell)
-    - enter:
+  - `wsl --install -d kali-linux`
+  - Set kali username / password
+  - you will be presented with a kali prompt (zsh shell)
+  - enter:
 
-        1. `sudo apt update -y; sudo apt upgrade -y`
-        2. `sudo apt install kali-win-kex -y; sudo apt install kali-linux-large -y`
-        3. You will be prompted with some package options:
-            - randomize MAC: your choice.
+    1. `sudo apt update -y; sudo apt upgrade -y`
+    2. `sudo apt install kali-win-kex -y; sudo apt install kali-linux-large -y`
+    3. You will be prompted with some package options:
+        - randomize MAC: your choice.
 
-                I left mine unrandomized (so I can easily ID the device when not testing)
+            I left mine unrandomized (so I can easily ID the device when not testing)
 
-                I only initiate a random mac as needed.
+            I only initiate a random mac as needed.
 
-            - Kismet: non -sudo mode, enter your username
-            - dumpcap: non sudo mode
-        1. it will take a while for all packages to download / install. When done you will be at the ZSH prompt
+        - Kismet: non -sudo mode, enter your username
+        - dumpcap: non sudo mode
+    4. it will take a while for all packages to download / install. When done you will be at the ZSH prompt
 
 ## Configure network bridge
 
