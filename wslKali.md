@@ -8,6 +8,15 @@
 
 ## Contents
 
+- [Kali via Windows Subsystem for Linux](#kali-via-windows-subsystem-for-linux)
+  - [Contents](#contents)
+  - [Prerequisites](#prerequisites)
+  - [Installing WSL](#installing-wsl)
+  - [Installing / configuring Kali](#installing--configuring-kali)
+  - [Configure network bridge](#configure-network-bridge)
+  - [Kex setup](#kex-setup)
+  - [Kex usage](#kex-usage)
+
 ## Prerequisites
 
 - Windows 11
@@ -55,8 +64,19 @@
 6. Leave 'allow management operating system to share this network adapter' checked
 7. Apply
 
+## Kex setup
+
+1. install kex
+
+    ```bash
+    sudo apt install kali-win-kex
+    ```
+
+2. add packages
+
+    ```bash
+    sudo apt install kali-linux-large
+    ```
+
 ## Kex usage
 
-1. install wsl vm
-2. kex
-3. add packages
